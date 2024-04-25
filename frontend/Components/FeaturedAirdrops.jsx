@@ -1,0 +1,65 @@
+import { useState, useEffect } from 'react';
+
+// Skeleton component for FeaturedAirdrops
+const FeaturedAirdropsSkeleton = () => {
+  return (
+    <section className="featured-airdrops my-20">
+      <h2 className="text-lg md:text-xl lg:text-3xl font-bold mb-8 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500 animate-pulse">
+        Featured Airdrops
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[1, 2, 3].map((index) => (
+          <div key={index} className="bg-white shadow-md rounded-md p-4 animate-pulse">
+            <div className="h-60 bg-gray-200 rounded-t-md mb-4"></div>
+            <div className="p-4">
+              <div className="h-4 bg-gray-200 mb-2 rounded"></div>
+              <div className="h-4 bg-gray-200 mb-2 rounded"></div>
+              <div className="h-4 bg-gray-200 mb-2 rounded"></div>
+              <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"></button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const FeaturedAirdrops = () => {
+  const [airdrops, setAirdrops] = useState([]);
+
+  // Fetch airdrops from server
+  useEffect(() => {
+    fetch('http://localhost:1225/api/featured-airdrops')
+      .then(response => response.json())
+      .then(data => setAirdrops(data))
+      .catch(error => console.error('Error fetching airdrops:', error));
+  }, []);
+
+  return (
+    <div>
+      {airdrops.length > 0 ? (
+        <section className='featured-airdrops my-20'>
+          <h2 className="text-lg md:text-xl lg:text-3xl font-bold mb-2 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
+            Featured Airdrops
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {airdrops.map((airdrop, index) => (
+              <div key={index} className="bg-white shadow-md rounded-md p-4">
+                <img src={airdrop.image} alt={airdrop.title} className="w-full h-60 rounded-t-md" />
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold">{airdrop.title}</h2>
+                  <p className="text-sm text-gray-600">{airdrop.description}</p>
+                  <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">View Guide</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <FeaturedAirdropsSkeleton />
+      )}
+    </div>
+  );
+};
+
+export default FeaturedAirdrops;

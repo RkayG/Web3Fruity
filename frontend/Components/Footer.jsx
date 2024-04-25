@@ -5,7 +5,7 @@ const Footer = () => {
   const contactList = ["support@web3fruity.com", "info@example.com", "Contact Us"];
   const usefulLink = ["Home", "About Us", "Blog"];
   return (
-    <footer className='text-center text-white backgroundMain lg:text-left'>
+    <footer className='text-center text-white bg-black lg:text-left '>
       <div className='mx-6 py-10 text-center md:text-left'>
         <div className='grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
           <div className=''>
@@ -48,7 +48,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className='backgroundMain p-6 text-center'>
+      <div className='bg-black p-6 text-center'>
         <span>2024 Copyright: </span>
         <a href='https://tailwind-elements.com' className='font-semibold'>Web3Fruity</a>
       </div>

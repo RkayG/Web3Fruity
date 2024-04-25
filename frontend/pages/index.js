@@ -1,9 +1,15 @@
-import React from 'react'
+//import { useRouter } from 'next/router';
+
+// INTERNAL IMPORTS
+import { ParentBanner, FeaturedAirdrops, Airdrops } from "../Components";;
 
 const index = () => {
   return (
-    <div>index</div>
-  )
+    <>
+      <ParentBanner />
+      <FeaturedAirdrops />  
+      <Airdrops />
+    </>
+  );
 }
-
-export default index
+export default index;

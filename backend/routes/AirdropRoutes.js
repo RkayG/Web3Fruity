@@ -1,8 +1,20 @@
+// Import necessary modules
 const express = require('express');
 const router = express.Router();
-const Airdrop = require('../models/Airdrop'); 
+const Airdrop = require('../models/AirdropModel');
 
-// Route for fetching all airdrops
+// Route to create a new airdrop
+router.post('/airdrops', async (req, res) => {
+  try {
+    const airdrop = await Airdrop.create(req.body);
+    console.log(airdrop);
+    res.status(201).json(airdrop);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Route to retrieve all airdrops
 router.get('/airdrops', async (req, res) => {
   try {
     const airdrops = await Airdrop.find();
@@ -12,65 +24,39 @@ router.get('/airdrops', async (req, res) => {
   }
 });
 
-// Route for adding a new airdrop
-router.post('/airdrops', async (req, res) => {
-  const airdrop = new Airdrop({
-    image: req.body.image,
-    details: req.body.details,
-    startDate: req.body.startDate
-  });
-
-  try {
-    const newAirdrop = await airdrop.save();
-    res.status(201).json(newAirdrop);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Route for retrieving a specific airdrop
-router.get('/airdrops/:id', getAirdrop, (req, res) => {
-  res.json(res.airdrop);
-});
-
-// Middleware function to retrieve a specific airdrop by ID
-async function getAirdrop(req, res, next) {
+// Route to retrieve a specific airdrop by ID
+router.get('/airdrops/:id', async (req, res) => {
   try {
     const airdrop = await Airdrop.findById(req.params.id);
-    if (airdrop == null) {
+    if (!airdrop) {
       return res.status(404).json({ message: 'Airdrop not found' });
     }
-    res.airdrop = airdrop;
-    next();
+    res.json(airdrop);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
-}
+});
 
-// Route for updating an existing airdrop
-router.patch('/airdrops/:id', getAirdrop, async (req, res) => {
-  if (req.body.image != null) {
-    res.airdrop.image = req.body.image;
-  }
-  if (req.body.details != null) {
-    res.airdrop.details = req.body.details;
-  }
-  if (req.body.startDate != null) {
-    res.airdrop.startDate = req.body.startDate;
-  }
-
+// Route to update a specific airdrop by ID
+router.patch('/airdrops/:id', async (req, res) => {
   try {
-    const updatedAirdrop = await res.airdrop.save();
-    res.json(updatedAirdrop);
+    const airdrop = await Airdrop.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!airdrop) {
+      return res.status(404).json({ message: 'Airdrop not found' });
+    }
+    res.json(airdrop);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Route for deleting an existing airdrop
-router.delete('/airdrops/:id', getAirdrop, async (req, res) => {
+// Route to delete a specific airdrop by ID
+router.delete('/airdrops/:id', async (req, res) => {
   try {
-    await res.airdrop.remove();
+    const airdrop = await Airdrop.findByIdAndDelete(req.params.id);
+    if (!airdrop) {
+      return res.status(404).json({ message: 'Airdrop not found' });
+    }
     res.json({ message: 'Airdrop deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
