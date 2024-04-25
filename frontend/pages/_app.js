@@ -1,15 +1,15 @@
 import "../styles/globals.css";
 
 // INTERNAL IMPORTS
-import { NavBar, Footer, Logo, Menu } from "../Components";;
+import { NavBar, Footer } from "../Components";;
 
 export default function App({ Component, pageProps }) {
+
   return (
     <>
-     <NavBar/>
-      <Menu/>
+      <NavBar />
       <Component {...pageProps} />
-      <Footer/>
+      <Footer />
     </>
-  ) 
+  );
 }
