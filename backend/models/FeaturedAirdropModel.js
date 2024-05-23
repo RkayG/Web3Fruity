@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+// Model for Featured Airdrops on Homepage
+// Required fields: image, title, description, guideLink
+// Other fields: participateButton
+
 const featuredAirdropSchema = new mongoose.Schema(
   {
     image: {

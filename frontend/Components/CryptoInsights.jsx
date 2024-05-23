@@ -1,0 +1,65 @@
+import { useEffect, useState } from 'react';
+import { getTimeDifference } from '../utils';
+
+const CryptoInsights = () => {
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await fetch('http://localhost:1225/crypto-news');
+        const data = await response.json();
+        setNews(data);
+      } catch (error) {
+        console.error('Error fetching crypto news:', error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  return (
+    <section className="py-12 md:py-24 lg:py-32">
+      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
+      text-transparent bg-gradient-to-r from-blue-500 to-red-500">Crypto Insights</h2>
+      <div className="mx-6">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+          {news.map((item, index) => (
+            <a href={item.fields.websiteUrl}>
+              <div key={index} className="rounded-lg bg-[#f5f5f5] dark:bg-[#1a1a1a] p-6 hover:opacity-80">
+                <div className="relative h-[300px] overflow-hidden rounded-lg">
+                  <img
+                    
+                    className="h-full w-full object-cover object-center"
+                    height="300"
+                    src={item.fields.newsThumbnailLink}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h2 className="text-2xl font-bold text-white bg-black bg-opacity-50 px-2 py-2">{item.fields.cryptoNewsTitle}</h2>
+                    <p className="mt-2 text-white/80"></p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-gray-500 dark:text-gray-400 mr-3">Source: 
+                    <a href={item.fields.websiteUrl} className="text-blue-200 hover:underline ml-3" title={item.fields.websiteUrl}
+                    >{item.fields.cryptoNewsSiteName}</a>
+                  </p>
+                  <p className="text-gray-500 dark:text-gray-400">{getTimeDifference(item.fields.timestamp)}</p>
+              
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
+         text-black active:bg-blue-100 rounded-xl shadow-md hover:ease-in-out' style={{border: "1px solid blue"}}>
+          More
+        </button>
+    </section>
+  );
+};
+
+export default CryptoInsights;
+

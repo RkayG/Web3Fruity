@@ -1,3 +1,5 @@
+// pages/index.js
+
 import React, { useState, useEffect } from 'react';
 
 const Banner = ({ bannerTexts }) => {
@@ -16,7 +18,7 @@ const Banner = ({ bannerTexts }) => {
   };
 
   return (
-    <div className="banner bg-gradient-to-r from-black to-pink-500 pl-2 h-24 flex justify-center ">
+    <div className="banner bg-gradient-to-r from-pink-900 to-pink-500 pl-2 h-24 flex justify-center ">
       <div className="banner-content absolute top-24">
         <h1 className="banner-text text-white text-lg md:text-2xl lg:text-3xl font-bold">{bannerTexts[currentIndex]}</h1>
       </div>

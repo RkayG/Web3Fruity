@@ -1,4 +1,4 @@
-// ParentComponent.js
+// ParentBanner.js
 import Banner from './Banner';
 
 const ParentComponent = () => {
