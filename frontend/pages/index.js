@@ -1,7 +1,9 @@
-//import { useRouter } from 'next/router';
 
 // INTERNAL IMPORTS
-import { ParentBanner, FeaturedAirdrops, Airdrops } from "../Components";;
+import { ParentBanner, FeaturedAirdrops, Airdrops, Games, RewardForTask, CryptoInsights, TokenFarming } from "../Components";
+import dynamic from "next/dynamic";
+
+//const FeaturedAirdrops = dynamic(() => import("../Components/FeaturedAirdrops"), { ssr: false });
 
 const index = () => {
   return (
@@ -9,6 +11,10 @@ const index = () => {
       <ParentBanner />
       <FeaturedAirdrops />  
       <Airdrops />
+      <TokenFarming />
+      <Games />
+      <RewardForTask />
+      <CryptoInsights />
     </>
   );
 }

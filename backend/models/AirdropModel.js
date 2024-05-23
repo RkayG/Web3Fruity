@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+// Airdrop model for airdrop card
+// Required fields: logo, title, platformType, guideLink
+// Other/extra fields: description, rewardPool, rewardPercentFromSupply, endDate, chain
+
 const airdropSchema = new mongoose.Schema(
   {
     logo: {

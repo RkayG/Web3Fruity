@@ -1,7 +1,12 @@
+// pages/app.js
+
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link'; // Import Link component
 import { Logo, Menu } from '../Components/index';
 
 const NavBar = () => {
+ // const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -33,7 +38,8 @@ const NavBar = () => {
             <ul className='flex items-center hidden space-x-8 lg:flex'>
               {menuList.map((el, i) => (
                 <li key={i + 1}>
-                  <a href='/' className='font-medium
+                  <Link href={el.toLowerCase() === "home" ? "/" : `/${el.toLowerCase()}`}></Link>
+                  <a className='font-medium cursor-pointer
                    tracking text-black transition-colors duration-200 hover:text-teal-accent-400'>{el}</a>
                 </li>
               ))}
@@ -44,7 +50,7 @@ const NavBar = () => {
             <ul className='flex items-center hidden space-x-8 lg:flex'>
               <li>
                 <button onClick={() => connectWallet()} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md
-                bg-blue-500 hover:bg-blue-600' title='Sign up'>Sign Up</button>
+                bg-blue-500 hover:bg-blue-600 ' title='Sign up'>Subscribe</button>
               </li>
             </ul>
           )}
@@ -101,11 +107,12 @@ const NavBar = () => {
                       <li>
                         <a
                           href='/'
-                          className='inline-flex items-center justify-center w-full h-16 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600'
+                          className='inline-flex items-center justify-center w-full h-16 px-6 font-medium tracking-wide text-white 
+                          transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600'
                           aria-label='Sign up'
                           title='Sign up'
                         >
-                          Sign Up
+                          Subscribe
                         </a>
                       </li>
                     </ul>

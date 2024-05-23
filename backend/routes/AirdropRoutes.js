@@ -17,12 +17,18 @@ router.post('/airdrops', async (req, res) => {
 // Route to retrieve all airdrops
 router.get('/airdrops', async (req, res) => {
   try {
-    const airdrops = await Airdrop.find();
+    let limit = parseInt(req.query.limit); // Parse 'limit' query parameter
+    if (isNaN(limit)) {
+      limit = 12; // Set a default limit if 'limit' query parameter is not provided or invalid
+    }
+
+    const airdrops = await Airdrop.find().limit(limit); // Use the limit in the MongoDB query
     res.json(airdrops);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 // Route to retrieve a specific airdrop by ID
 router.get('/airdrops/:id', async (req, res) => {

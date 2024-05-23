@@ -1,5 +1,6 @@
+// pages/index.js
+
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import axios from 'axios';
 
 // Airdrops skeleton component
@@ -27,7 +28,11 @@ const Airdrops = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:1225/airdrops');
+        const response = await axios.get('http://localhost:1225/airdrops', {
+          params: {
+            limit: 12 // query parameter to limit the number of results to 12
+          }
+        });
         setAirdrops(response.data);
         setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
@@ -39,20 +44,22 @@ const Airdrops = () => {
   }, []);
 
   return (
-    <div className='my-20'>
-        <h2 className="text-lg md:text-xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-            Recent Airdrops
+    <div className='my-20 m-auto'>
+        <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
+        text-transparent bg-gradient-to-r from-blue-500 to-red-500">
+            Confirmed Airdrops
         </h2>
       {loading ? ( // Render loading skeleton if loading is true
         <AirdropsSkeleton />
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-8 lg:m-auto" >
           {airdrops.map((airdrop) => (
             <div
               key={airdrop._id}
-              className="bg-white hover:bg-gray-50 cursor-pointer rounded-md pb-8 shadow-md p-4 border-2 border-solid border-gray-200 relative"
-            >
-              <span className="absolute top-2 right-2 text-sm font-semibold text-white green bg-opacity-50 py-1 px-2 rounded-xl">
+              className="bg-white mx-4 lg:mx-0 hover:bg-gray-50 cursor-pointer rounded-md pb-8 
+              shadow-md p-4 border-2 border-solid border-gray-200 relative min-w-[340px]">
+              <span className="absolute top-2 right-2 text-xs font-semibold green 
+              py-1 px-2 rounded-xl text-white ">
                 {airdrop.platformType}
               </span>
               <div className="flex items-center justify-between mb-8">
@@ -77,13 +84,19 @@ const Airdrops = () => {
                 <span className='absolute top-28 right-6'>Chain</span>
                 <span className="font-semibold absolute bottom-4 right-3">{airdrop.chain || 'N/A'}</span>
               </p>
-              <span aria-label='view' title='view' className="absolute top-28 left-44">
-                 <img className='w-8 h-8' src='go-icon-13.jpg'></img>
+              <span aria-label='view' title='view' className="absolute top-28 text-center m-auto"
+              style={{left: "46%"}}>
+                 <img className='w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8' src='go-icon-13.jpg'></img>
               </span>
             </div>
           ))}
+
         </div>
       )}
+        <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
+         text-black active:bg-blue-100 rounded-xl shadow-md hover:ease-in-out' style={{border: "1px solid blue"}}>
+          More
+        </button>
     </div>
   );
 };

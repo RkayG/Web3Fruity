@@ -2,20 +2,31 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+require('dotenv').config();
+
+//import internal routes
 const featuredAirdropRouter = require('./routes/FeaturedAirdropRoutes');
-const airdropRouter = require('./routes/AirdropRoutes')
+const airdropRouter = require('./routes/AirdropRoutes');
+const gameRouter = require('./routes/GameRoutes');
+const rewardTaskRouter = require('./routes/RewardTaskRoutes')
+const cryptoInsightRouter = require('./routes/CryptoInsightsRoutes');
+const tokenFarmingRouter = require('./routes/TokenFarmingRoutes');
 
 // Use middleware if needed
 app.use(express.json());
 app.use(cors());
+
 // Mount router(s)
 app.use('/api', featuredAirdropRouter); // Mount router with a base path
 app.use('/', airdropRouter);
+app.use('/', gameRouter);
+app.use('/', rewardTaskRouter);
+app.use('/', cryptoInsightRouter);
+app.use('/', tokenFarmingRouter);
 
 const port = process.env.PORT || 1225;
 
-mongoose.connect(
-  'mongodb+srv://berry:rufus14@web3fruity.hlwft10.mongodb.net/?retryWrites=true&w=majority&appName=web3fruity')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('connected to Mongoose database');
 
@@ -25,4 +36,3 @@ mongoose.connect(
   }).catch((error) => {
     console.log(error);
 });
-
