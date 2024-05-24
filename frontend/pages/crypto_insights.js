@@ -27,8 +27,7 @@ const CryptoNews = () => {
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {news.map((item, index) => (
-            <Link href={`/news/${item.fields.slug}`} key={index}>
-              <a className="news-card block rounded-lg overflow-hidden shadow-md">
+            <Link href={item.fields.websiteUrl} key={index} className="news-card block rounded-lg overflow-hidden shadow-md">
                 <img
                   src={item.fields.newsThumbnailLink}
                   alt={item.fields.cryptoNewsTitle}
@@ -48,7 +47,6 @@ const CryptoNews = () => {
                     </p>
                   </div>
                 </div>
-              </a>
             </Link>
           ))}
         </div>

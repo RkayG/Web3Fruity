@@ -129,7 +129,7 @@ const Games = () => {
 
   //------------------------- Parent Container start
   return (
-    <div className="mb-20 max-w-[1920px]">
+    <div className="mb-20 max-w-[1920px] pt-12">
       <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
       text-transparent bg-gradient-to-r from-blue-500 to-red-500">Play to Earn</h1>
 
@@ -137,9 +137,9 @@ const Games = () => {
         <GameCard key={index} game={game} />
       ))}
       
-      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center border-2
-      text-blue-900  rounded-xl shadow-md hover:bg-blue-500 hover:text-white 
-     active:bg-blue-500  hover:transition-all hover:ease-in-out' style={{border: "1px solid blue"}}>
+      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center
+      text-black  rounded-xl hover:bg-blue-500 hover:text-white bg-gray-200
+     active:bg-blue-500  hover:transition-all hover:ease-in-out'>
        More
      </button>
 

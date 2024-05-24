@@ -94,7 +94,7 @@ const Airdrops = () => {
         </div>
       )}
         <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
-         text-black active:bg-blue-100 rounded-xl shadow-md hover:ease-in-out' style={{border: "1px solid blue"}}>
+         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:ease-in-out'>
           More
         </button>
     </div>
