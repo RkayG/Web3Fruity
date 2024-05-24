@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Footer = () => {
-  const productList = ["Airdrops", "Giveaways", "Play-to-earn games", ];
+  const productList = ["Airdrops", "Games", "Reward For Tasks", "Crypto Insights"];
   const contactList = ["support@web3fruity.com", "info@example.com", "Contact Us"];
   const usefulLink = ["Home", "About Us", "Blog"];
   return (
@@ -11,8 +11,7 @@ const Footer = () => {
           <div className=''>
             <h6 className='mb-4 flex items-center justify-center font-semibold uppercase
             md:justify-start'>Web3Fruity</h6>
-            <p>Here you can use rows and columns to organize your footer content.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            <p>We curate  the latest and most rewarding crypto airdrops, exclusive token giveaways, and lucrative blockchain projects
             </p>
           </div>
 

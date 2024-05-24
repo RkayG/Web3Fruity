@@ -1,16 +1,18 @@
-// pages/app.js
-
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link'; // Import Link component
 import { Logo, Menu } from '../Components/index';
 
 const NavBar = () => {
- // const router = useRouter();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
-  const menuList = ["Home", "Airdrops", "Games", "Apps", "Blog", "Crypto Insights"];
+  const menuList = [
+    { name: "Home", path: "/" },
+    { name: "Airdrops", path: "/airdrops" },
+    { name: "Games", path: "/games" },
+    { name: "Platforms", path: "/platforms" },
+    { name: "Crypto Insights", path: "/crypto_insights" }
+  ];
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -31,30 +33,31 @@ const NavBar = () => {
       <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
         <div className='relative flex items-center justify-between'>
           <div className='flex items-center'>
-            <a href='/' title='Web3Fruity' className='inline-flex items-center mr-8'>
-              <Logo color="text-black" />
-              <span className='ml-2 text-xl font-bold tracking-wide tai uppercase'>Web3Fruity</span>
-            </a>
+  
+              <a title='Web3Fruity' href='/' className='inline-flex items-center mr-8'>
+                <Logo color="text-black" />
+                <span className='ml-2 text-xl font-bold tracking-wide tai uppercase'>Web3Fruity</span>
+              </a>
+            
             <ul className='flex items-center hidden space-x-8 lg:flex'>
               {menuList.map((el, i) => (
                 <li key={i + 1}>
-                  <Link href={el.toLowerCase() === "home" ? "/" : `/${el.toLowerCase()}`}></Link>
-                  <a className='font-medium cursor-pointer
-                   tracking text-black transition-colors duration-200 hover:text-teal-accent-400'>{el}</a>
+                   <Link href={el.path} className='font-medium cursor-pointer tracking text-black transition-colors duration-200 hover:text-teal-accent-400'>
+                    {el.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
-
           {(
             <ul className='flex items-center hidden space-x-8 lg:flex'>
               <li>
-                <button onClick={() => connectWallet()} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md
-                bg-blue-500 hover:bg-blue-600 ' title='Sign up'>Subscribe</button>
+                <button onClick={() => connectWallet()} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600' title='Sign up'>
+                  Subscribe
+                </button>
               </li>
             </ul>
           )}
-
           <div className='lg:hidden z-40' ref={menuRef}>
             <button
               aria-label='Open Menu'
@@ -69,10 +72,12 @@ const NavBar = () => {
                 <div className='p-5 bg-white border rounded shadow-sm'>
                   <div className='flex items-center justify-between mb-4'>
                     <div>
-                      <a href='/' title='Web3Fruity' className='inline-flex items-center'>
-                        <Logo color="text-black" />
-                        <span className='ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase'>Web3Fruity</span>
-                      </a>
+                     
+                        <a title='Web3Fruity' href='/' className='inline-flex items-center'>
+                          <Logo color="text-black" />
+                          <span className='ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase'>Web3Fruity</span>
+                        </a>
+                    
                     </div>
                     <div>
                       <button
@@ -94,14 +99,9 @@ const NavBar = () => {
                     <ul className='space-y-4'>
                       {menuList.map((el, i) => (
                         <li key={i + 1}>
-                          <a
-                            href='/'
-                            aria-label='Our Product'
-                            title='Our product'
-                            className='font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400'
-                          >
-                            {el}
-                          </a>
+                          <Link href={el.path} className='font-medium cursor-pointer tracking text-black transition-colors duration-200 hover:text-teal-accent-400'>
+                            {el.name}
+                          </Link>
                         </li>
                       ))}
                       <li>
