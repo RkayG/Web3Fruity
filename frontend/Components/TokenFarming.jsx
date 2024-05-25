@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const TokenFarming = () => {
+  const router = useRouter(); // Initialize useRouter
+
   const [tokens, setTokens] = useState([]);
   const [filteredTokens, setFilteredTokens] = useState([]);
   const [blockchains, setBlockchains] = useState([]);
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
+
+   //====== Navigate to platforms page function
+  const handleNavigateToTokenFarming = () => {
+    router.push('/token-farming');
+  };
 
   useEffect(() => {
     // Fetch the tokens from your API endpoint
@@ -36,7 +44,7 @@ const TokenFarming = () => {
   };
 
   return (
-    <section className="py-12 md:py-24 lg:py-32">
+    <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
       <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
       text-transparent bg-gradient-to-r from-blue-500 to-red-500">Token Farming / Potential Airdrops</h2>
 
@@ -58,7 +66,7 @@ const TokenFarming = () => {
         ))}
       </div>
 
-      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-6">
+      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
         {filteredTokens.map((token, index) => (
           <div key={index} className="rounded-lg bg-gray-200 pb-6 flex flex-col items-center justify-between border">
              <h3 className="text-lg text-white font-medium bg-black text-center w-full h-24 rounded-t-lg pt-6
@@ -92,7 +100,7 @@ const TokenFarming = () => {
       </div>
 
       <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white
-         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:transition-all hover:ease-in-out'>
+         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:transition-all hover:ease-in-out' onClick={handleNavigateToTokenFarming}>
           More
         </button>
     </section> 

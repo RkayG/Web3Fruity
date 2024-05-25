@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe} from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const Games = () => {
+  const router = useRouter(); // Initialize useRouter
+
   const [games, setGames] = useState([]);
 
   //========== truncate function for game.description
@@ -31,6 +34,10 @@ const Games = () => {
     fetchGames();
   }, []); // ============= Fetch end
 
+  // function to navigate to games paeg
+ const handleNavigateToGames = () => {
+    router.push('/games');
+  };
 
   const GameCard = ({ game }) => (
 // ------------------------------------------CONTAINER START ------------------------------------------------- 
@@ -53,20 +60,20 @@ const Games = () => {
          {/*================= Social links start */}
           <div className="flex items-center mt-2">
 
-            <a href={game.website} className="mb-2 mr-3"><FaGlobe /></a>
+            <a href={game.website} className="mb-2 mr-3"><FaGlobe title={game.website} /></a>
 
             {game.socialLinks.map((link, index) => {
               let icon;
               if (link.includes("twitter.com")) {
-                icon = <FaTwitter />;
+                icon = <FaTwitter title={link} />;
               } else if (link.includes("facebook.com")) {
-                icon = <FaFacebook />; 
+                icon = <FaFacebook title={link} />; 
               } else if (link.includes("discord.com")) {
-                icon = <FaDiscord />
+                icon = <FaDiscord title={link} />
               } else if (link.includes("telegram.com") || link.includes("t.me")) {
-                icon = <FaTelegram />
+                icon = <FaTelegram title={link} />
               } else if (link.includes("reddit.com")) {
-                icon = <FaReddit />
+                icon = <FaReddit title={link} />
               }
 
               return (
@@ -129,7 +136,7 @@ const Games = () => {
 
   //------------------------- Parent Container start
   return (
-    <div className="mb-20 max-w-[1920px] pt-12">
+    <div className="mb-20 max-w-[1580px] pt-12 m-auto">
       <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
       text-transparent bg-gradient-to-r from-blue-500 to-red-500">Play to Earn</h1>
 
@@ -139,7 +146,7 @@ const Games = () => {
       
       <button className='py-2 px-4 m-auto mt-6 flex justify-self-center
       text-black  rounded-xl hover:bg-blue-500 hover:text-white bg-gray-200
-     active:bg-blue-500  hover:transition-all hover:ease-in-out'>
+     active:bg-blue-500  hover:transition-all hover:ease-in-out' onClick={handleNavigateToGames}>
        More
      </button>
 
