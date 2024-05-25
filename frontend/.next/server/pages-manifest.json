@@ -3,8 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/games": "pages/games.js",
-  "/platforms": "pages/platforms.js",
-  "/airdrops": "pages/airdrops.js",
-  "/crypto_insights": "pages/crypto_insights.js"
+  "/airdrops": "pages/airdrops.js"
 }

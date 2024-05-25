@@ -61,7 +61,7 @@ const FeaturedAirdrops = () => {
   };
 
   return (
-    <section className='featured-airdrops my-20'>
+    <section className='featured-airdrops my-20 m-auto max-w-[1580px]'>
       <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-5 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r 
       from-blue-500 to-red-500">
         Featured

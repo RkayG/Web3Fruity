@@ -1,12 +1,12 @@
 import React from 'react'
 
 const Footer = () => {
-  const productList = ["Airdrops", "Games", "Reward For Tasks", "Crypto Insights"];
+  const productList = ["Airdrops", "Token Farming", "Games", "Reward For Tasks"];
   const contactList = ["support@web3fruity.com", "info@example.com", "Contact Us"];
   const usefulLink = ["Home", "About Us", "Blog"];
   return (
-    <footer className='text-center text-white bg-black lg:text-left '>
-      <div className='mx-6 py-10 text-center md:text-left'>
+    <footer className='text-center  w-full flex justify-center text-white bg-black lg:text-left '>
+      <div className='container mx-6 py-10 text-center md:text-left'>
         <div className='grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
           <div className=''>
             <h6 className='mb-4 flex items-center justify-center font-semibold uppercase
@@ -44,13 +44,16 @@ const Footer = () => {
               </p>
             ))}
           </div>
+
+          
+        </div>
+        <div className='bg-black p-6 text-center'>
+          <span>2024 Copyright: </span>
+          <a href='https://tailwind-elements.com' className='font-semibold'>Web3Fruity</a>
         </div>
       </div>
 
-      <div className='bg-black p-6 text-center'>
-        <span>2024 Copyright: </span>
-        <a href='https://tailwind-elements.com' className='font-semibold'>Web3Fruity</a>
-      </div>
+     
     </footer>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 // Airdrops skeleton component
 const AirdropsSkeleton = () => {
@@ -22,8 +23,16 @@ const AirdropsSkeleton = () => {
 };
 
 const Airdrops = () => {
+  const router = useRouter(); // Initialize useRouter
+
   const [airdrops, setAirdrops] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //====== Navigate to airdrops page function
+  const handleNavigateToAirdrops = () => {
+    router.push('/airdrops');
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +53,7 @@ const Airdrops = () => {
   }, []);
 
   return (
-    <div className='my-20 m-auto'>
+    <div className='my-20 max-w-[1580px] m-auto'>
         <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
         text-transparent bg-gradient-to-r from-blue-500 to-red-500">
             Confirmed Airdrops
@@ -94,7 +103,7 @@ const Airdrops = () => {
         </div>
       )}
         <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
-         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:ease-in-out'>
+         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:ease-in-out' onClick={handleNavigateToAirdrops}>
           More
         </button>
     </div>

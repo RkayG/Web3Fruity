@@ -27,10 +27,10 @@ const CryptoInsights = () => {
   };
 
   return (
-    <section className="py-12 md:py-24 lg:py-32">
+    <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto w-full">
       <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
       text-transparent bg-gradient-to-r from-blue-500 to-red-500">Crypto Insights</h2>
-      <div className="mx-6">
+      <div className="mx-3">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {news.map((item, index) => (
             <a href={item.fields.websiteUrl}>
@@ -61,7 +61,7 @@ const CryptoInsights = () => {
           ))}
         </div>
       </div>
-      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s] hover:border-blue-500
+      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
          text-black active:bg-blue-100 rounded-xl hover:ease-in-out bg-gray-200' onClick={handleNavigateToCryptoInsights}>
           More
         </button>
