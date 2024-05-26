@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Link from 'next/link'; // Import Link for internal navigation
 
 // Airdrops skeleton component
 const AirdropsSkeleton = () => {
@@ -93,10 +94,13 @@ const Airdrops = () => {
                 <span className='absolute top-28 right-6'>Chain</span>
                 <span className="font-semibold absolute bottom-4 right-3">{airdrop.chain || 'N/A'}</span>
               </p>
-              <span aria-label='view' title='view' className="absolute top-28 text-center m-auto"
-              style={{left: "46%"}}>
-                 <img className='w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8' src='go-icon-13.jpg'></img>
-              </span>
+              
+              <Link href={`/airdrop-guide/${airdrop._id}`}>
+                <span aria-label='view' title='view' className="absolute top-28 text-center m-auto"
+                style={{left: "46%"}}>
+                  <img className='w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8' src='go-icon-13.jpg'></img>
+                </span>
+              </Link>
             </div>
           ))}
 

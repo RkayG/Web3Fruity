@@ -7,50 +7,18 @@ const mongoose = require('mongoose');
 
 const GameSchema = new mongoose.Schema(
   {
-    image: {
-      type: String,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      required: true
-    },
-    token: {
-    type: String
-   },
-   platform: {
-    type: Array,
-    required: true
-   },
-   genre: {
-    type: String,
-    required: true
-   },
-   free2play: {
-    type: String,
-    required: true
-   },
-   developer: {
-    type: String,
-    required: true
-   },
-   website: {
-    type: String,
-    required: true
-   },
-   socialLinks: {
-    type: Array,
-   },
-   chain: {
-    type: String
-   },
-    guideLink: {
-      type: String
-    }
+    image: {type: String, required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    token: { type: String },
+    platform: { type: Array, required: true },
+    genre: { type: String, required: true },
+    free2play: { type: String, required: true },
+    developer: { type: String, required: true },
+    website: { type: String, required: true },
+    socialLinks: { type: Array },
+    chain: { type: String },
+    guideLink: { type: String }
   },
   {
     timestamps: true
