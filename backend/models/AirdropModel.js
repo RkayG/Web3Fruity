@@ -17,7 +17,7 @@ const airdropSchema = new mongoose.Schema(
     chain: { type: String },
     participateButton: { type: String, default: "Participate" },
     website: { type: String },
-    guide: { type: Array }
+    guide: { type: Object }
   },
   
   {

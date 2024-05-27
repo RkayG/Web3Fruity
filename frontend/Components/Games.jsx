@@ -34,7 +34,7 @@ const Games = () => {
     fetchGames();
   }, []); // ============= Fetch end
 
-  // function to navigate to games paeg
+  // function to navigate to games page
  const handleNavigateToGames = () => {
     router.push('/games');
   };

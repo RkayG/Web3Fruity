@@ -28,6 +28,8 @@ const Airdrops = () => {
 
   const [airdrops, setAirdrops] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   //====== Navigate to airdrops page function
   const handleNavigateToAirdrops = () => {
@@ -40,18 +42,22 @@ const Airdrops = () => {
       try {
         const response = await axios.get('http://localhost:1225/airdrops', {
           params: {
-            limit: 12 // query parameter to limit the number of results to 12
-          }
+            limit: 12,
+            page: page,
+          },
         });
-        setAirdrops(response.data);
-        setLoading(false); // Set loading to false after data is fetched
+        setAirdrops(response.data.airdrops);
+        setTotalPages(response.data.totalPages);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching airdrops:', error);
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [page]);
+
 
   return (
     <div className='my-20 max-w-[1580px] m-auto'>
@@ -63,10 +69,10 @@ const Airdrops = () => {
         <AirdropsSkeleton />
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-8 lg:m-auto" >
-          {airdrops.map((airdrop) => (
+          {airdrops?.map((airdrop) => (
             <div
               key={airdrop._id}
-              className="bg-white mx-4 lg:mx-0 hover:bg-gray-50 cursor-pointer rounded-md pb-8 
+              className="bg-white mx-4 lg:mx-0 rounded-md pb-8 
               shadow-md p-4 border-2 border-solid border-gray-200 relative min-w-[340px]">
               <span className="absolute top-2 right-2 text-xs font-semibold green 
               py-1 px-2 rounded-xl text-white ">
@@ -76,7 +82,9 @@ const Airdrops = () => {
                 <div className="w-16 h-16 relative">
                     <img src={airdrop.logo} className=" w-16 h-16 rounded-full" />
                 </div>
-                <h2 className="text-lg font-bold absolute left-24 top-5">{airdrop.title}</h2>
+                <Link href={`/airdrop-guide/${airdrop._id}`}>
+                  <h2 className="text-lg font-bold absolute left-24 top-5 cursor-pointer ">{airdrop.title}</h2>
+                </Link>
               </div>
               <p className="text-sm text-gray-500 mb-2">
                 <span className='text-xs absolute top-20 left-24'>Total Airdrop Pool</span>
@@ -88,13 +96,13 @@ const Airdrops = () => {
               </p>
               <p className="text-xs text-gray-500">
                 <span className=''>End Date</span>
-                <span className="font-semibold absolute bottom-4 left-3 ">{new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}</span>
+                <span className="font-semibold absolute bottom-4 left-4 ">{new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}</span>
               </p>
               <p className="text-xs text-gray-500">
-                <span className='absolute top-28 right-6'>Chain</span>
-                <span className="font-semibold absolute bottom-4 right-3">{airdrop.chain || 'N/A'}</span>
+                <span className='absolute top-28 right-4'>Chain</span>
+                <span className="font-semibold absolute bottom-4 right-4">{airdrop.chain || 'N/A'}</span>
               </p>
-              
+            
               <Link href={`/airdrop-guide/${airdrop._id}`}>
                 <span aria-label='view' title='view' className="absolute top-28 text-center m-auto"
                 style={{left: "46%"}}>

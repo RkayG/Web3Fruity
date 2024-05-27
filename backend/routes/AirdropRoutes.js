@@ -18,13 +18,17 @@ router.post('/sync-airdrops', async (req, res) => {
 // Route to retrieve all airdrops
 router.get('/airdrops', async (req, res) => {
   try {
-    let limit = parseInt(req.query.limit); // Parse 'limit' query parameter
-    if (isNaN(limit)) {
-      limit = 12; // Set a default limit if 'limit' query parameter is not provided or invalid
-    }
+    let limit = parseInt(req.query.limit) || 12;
+    let page = parseInt(req.query.page) || 1;
 
-    const airdrops = await Airdrop.find().limit(limit); // Use the limit in the MongoDB query
-    res.json(airdrops);
+    const airdrops = await Airdrop.find()
+      .limit(limit)
+      .skip((page - 1) * limit);
+    
+    const totalAirdrops = await Airdrop.countDocuments();
+    const totalPages = Math.ceil(totalAirdrops / limit);
+
+    res.json({ airdrops, totalPages });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
+//================= fetch game token price and display in a tooltip
 const RewardTooltip = ({ reward }) => {
   const [tokenData, setTokenData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const RewardTooltip = ({ reward }) => {
     return Date.now() + 5 * 60 * 1000; // 5 minutes (or 10 * 60 * 1000 for 10 minutes)
   }, []);
 
-  //=========================================== fetch data function for token price
+
   useEffect(() => {
     const fetchTokenData = async () => {
       setLoading(true); // Set loading state to true before fetching
@@ -36,8 +37,9 @@ const RewardTooltip = ({ reward }) => {
     fetchTokenData();
   }, [reward.api_id, tokenData, cacheExpiryTime]);
 
-// ================================================================================= fetch end
+// ================= fetch end
 
+// ============ Tooltip display for game token data
   return (
     <div className="absolute bg-white p-4 rounded-md shadow-md border border-gray-300
              lg:right-56 ml-52 mt-8 " style={{width: "265px"}} >
@@ -68,7 +70,8 @@ const RewardTooltip = ({ reward }) => {
     </div>
   );
 };
- 
+ //================================================== Tooltip display end 
+
 const RewardForTask = () => {
   const router = useRouter(); // Initialize useRouter
 

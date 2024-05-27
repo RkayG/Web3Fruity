@@ -9,8 +9,6 @@ const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
 })
 
-console.log(process.env.CONTENTFUL_ACCESS_TOKEN);
-
 // Router to fetch Crypto News from Contentful CMS based on contentType
 router.get('/crypto-news', async (req, res) => {
     try {

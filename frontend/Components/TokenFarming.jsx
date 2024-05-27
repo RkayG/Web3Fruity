@@ -9,7 +9,7 @@ const TokenFarming = () => {
   const [blockchains, setBlockchains] = useState([]);
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
 
-   //====== Navigate to platforms page function
+   //====== Navigate to token-farming page function
   const handleNavigateToTokenFarming = () => {
     router.push('/token-farming');
   };

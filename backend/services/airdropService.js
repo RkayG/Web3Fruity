@@ -13,7 +13,7 @@ async function fetchAirdropsFromContentful() {
     const response = await client.getEntries({
       content_type: 'airdrops', // airdrop content type name
     });
-
+    
     return response.items.map((item) => item.fields); // Extract airdrop data from Contentful entries
   } catch (error) {
     console.error(error);
@@ -27,6 +27,7 @@ async function syncAirdropsWithDatabase() {
 
   for (const airdropData of contentfulAirdrops) {
     // Check if the airdrop already exists in MongoDB
+    console.log(airdropData);
     let existingAirdrop = await Airdrop.findOne({ title: airdropData.title });
 
     if (existingAirdrop) {
