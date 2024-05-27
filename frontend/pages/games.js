@@ -7,6 +7,8 @@ const Games = () => {
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const gamesPerPage = 12;
 
   //========== truncate function for game.description
   const truncateText = (text, maxLength) => {
@@ -42,12 +44,20 @@ const Games = () => {
   //============= handle genre filtering
   const handleGenreFilter = (genre) => {
     setSelectedGenre(genre);
+    setCurrentPage(1); // Reset to first page on filter change
     if (genre === "") {
       setFilteredGames(games);
     } else {
       setFilteredGames(games.filter(game => game.genre === genre));
     }
   };
+
+  // Pagination logic
+  const indexOfLastGame = currentPage * gamesPerPage;
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const GameCard = ({ game }) => (
     <div className="bg-white rounded-lg shadow-md overflow-hidden m-auto lg:p-8 mb-4 border-2 border-gray-200" style={{ width: "95%" }}>
@@ -145,15 +155,42 @@ const Games = () => {
         </div>
       ) : (
         <>
-          {filteredGames.map((game, index) => (
+          {currentGames.map((game, index) => (
             <GameCard key={index} game={game} />
           ))}
-          <button className='py-2 px-4 m-auto mt-6 flex justify-self-center border-2 text-blue-900 rounded-xl shadow-md hover:bg-blue-500 hover:text-white active:bg-blue-500 hover:transition-all hover:ease-in-out' style={{ border: "1px solid blue" }}>
-            More
-          </button>
+          <Pagination
+            gamesPerPage={gamesPerPage}
+            totalGames={filteredGames.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </>
       )}
     </div>
+  );
+};
+
+const Pagination = ({ gamesPerPage, totalGames, paginate, currentPage }) => {
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalGames / gamesPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <nav className="flex justify-center mt-4">
+      <ul className="flex pl-0 rounded list-none flex-wrap">
+        {pageNumbers.map(number => (
+          <li key={number} className="page-item">
+            <button
+              onClick={() => paginate(number)}
+              className={`px-4 py-2 mx-1 rounded-md ${currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200 text-blue-900'} hover:bg-blue-500 hover:text-white`}
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

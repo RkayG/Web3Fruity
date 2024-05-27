@@ -4,12 +4,23 @@
 const express = require('express');
 const router = express.Router();
 const Game = require('../models/GameModel');
+const { syncGamesWithDatabase } = require('../services/gameService');
+
+// Route to sync games with Contentful
+router.post('/sync-contentful-games', async (req, res) => {
+  try {
+    await syncGamesWithDatabase();
+    res.status(201).json({ message: 'Airdrops synced successfully' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 // Route to create a new game
 router.post('/games', async (req, res) => {
   try {
     const game = await Game.create(req.body);
-    console.log(game);
+    //console.log(game);
     res.status(201).json(game);
   } catch (error) {
     res.status(400).json({ message: error.message });
