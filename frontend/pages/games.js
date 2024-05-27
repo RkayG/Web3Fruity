@@ -6,6 +6,7 @@ const Games = () => {
   const [filteredGames, setFilteredGames] = useState([]);
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [loading, setLoading] = useState(true);
 
   //========== truncate function for game.description
   const truncateText = (text, maxLength) => {
@@ -28,8 +29,10 @@ const Games = () => {
         setFilteredGames(data);
         const uniqueGenres = [...new Set(data.map(game => game.genre))];
         setGenres(uniqueGenres);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching games:", error);
+        setLoading(false);
       }
     };
 
@@ -134,12 +137,22 @@ const Games = () => {
           </button>
         )}
       </div>
-      {filteredGames.map((game, index) => (
-        <GameCard key={index} game={game} />
-      ))}
-      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center border-2 text-blue-900 rounded-xl shadow-md hover:bg-blue-500 hover:text-white active:bg-blue-500 hover:transition-all hover:ease-in-out' style={{ border: "1px solid blue" }}>
-        More
-      </button>
+      {loading ? (
+        <div className="loading-dots m-auto my-28">
+          <span className="dot"></span>
+          <span className="dot"></span>
+          <span className="dot"></span>
+        </div>
+      ) : (
+        <>
+          {filteredGames.map((game, index) => (
+            <GameCard key={index} game={game} />
+          ))}
+          <button className='py-2 px-4 m-auto mt-6 flex justify-self-center border-2 text-blue-900 rounded-xl shadow-md hover:bg-blue-500 hover:text-white active:bg-blue-500 hover:transition-all hover:ease-in-out' style={{ border: "1px solid blue" }}>
+            More
+          </button>
+        </>
+      )}
     </div>
   );
 };
