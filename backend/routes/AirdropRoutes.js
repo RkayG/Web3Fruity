@@ -6,12 +6,23 @@ const syncAirdropsWithDatabase  = require('../services/airdropService'); // use 
 
 
 // Route to sync airdrops from Contentful
-router.post('/sync-airdrops', async (req, res) => {
+router.post('/sync-contentful-airdrops', async (req, res) => {
   try {
     await syncAirdropsWithDatabase();
     res.status(200).json({ message: 'Airdrops synced successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Route to create a new airdrop
+router.post('/airdrops', async (req, res) => {
+  try {
+    const airdrop = await Airdrop.create(req.body);
+    //console.log(airdrop);
+    res.status(201).json(airdrop);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
