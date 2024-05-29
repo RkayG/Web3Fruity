@@ -173,12 +173,12 @@ Web3Fruity.com is an application that provides users with the latest web3 earnin
 
 ## Example Usage
 
-### **Fetching airdrops**:
+ - **Fetching airdrops**:
     ```bash
     curl -X GET http://localhost:1225/airdrops
     ```
 
-### **Fetching games**:
+ - **Fetching games**:
     ```bash
     curl -X GET http://localhost:1225/games
     ```
