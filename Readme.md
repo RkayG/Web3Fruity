@@ -6,7 +6,7 @@ Web3Fruity.com is an application that provides users with the latest web3 earnin
 
 ## Features
 
-- **Airdrops**: SDiscover and participate in the exciting airdrops.
+- **Airdrops**: Discover and participate in exciting airdrops.
 - **Play to Earn Games**: Find the most rewarding and fun play to earn games.
 - **Cryptocurrency News**: Stay updated with the latest news and insights from the world of cryptocurrency.
 - **Rewards for Tasks**: Discover and participate in various tasks to earn cryptocurrency rewards.
@@ -16,7 +16,7 @@ Web3Fruity.com is an application that provides users with the latest web3 earnin
 
 - **Frontend**: React, Next.js, Tailwind CSS
 - **Backend**: Node.js, Express
-- **API**: RESTful API with endpoints for rewards, airdrops, and news
+- **API**: RESTful API with endpoints for rewards, games, airdrops, and news
 
 ## Installation
 
@@ -50,7 +50,7 @@ Web3Fruity.com is an application that provides users with the latest web3 earnin
 
 # API Documentation
 
-## Base URL:
+## **Base URL**:
     ```bash
     localhost:1225
     ```
@@ -173,12 +173,12 @@ Web3Fruity.com is an application that provides users with the latest web3 earnin
 
 ## Example Usage
 
-### Fetching airdrops
+### **Fetching airdrops**:
     ```bash
     curl -X GET http://localhost:1225/airdrops
     ```
 
-### Fetching games
+### **Fetching games**:
     ```bash
     curl -X GET http://localhost:1225/games
     ```
