@@ -11,6 +11,7 @@ const gameRouter = require('./routes/GameRoutes');
 const rewardTaskRouter = require('./routes/RewardTaskRoutes')
 const cryptoInsightRouter = require('./routes/CryptoInsightsRoutes');
 const tokenFarmingRouter = require('./routes/TokenFarmingRoutes');
+const subscribeRouter = require('./routes/SubscriberRoutes');
 
 // Use middleware if needed
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use('/', gameRouter);
 app.use('/', rewardTaskRouter);
 app.use('/', cryptoInsightRouter);
 app.use('/', tokenFarmingRouter);
+app.use('/', subscribeRouter);
 
 const port = process.env.PORT || 1225;
 

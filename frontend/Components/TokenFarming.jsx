@@ -2,30 +2,25 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const TokenFarming = () => {
-  const router = useRouter(); // Initialize useRouter
-
+  const router = useRouter();
   const [tokens, setTokens] = useState([]);
   const [filteredTokens, setFilteredTokens] = useState([]);
   const [blockchains, setBlockchains] = useState([]);
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
 
-   //====== Navigate to token-farming page function
   const handleNavigateToTokenFarming = () => {
     router.push('/token-farming');
   };
 
   useEffect(() => {
-    // Fetch the tokens from your API endpoint
     const fetchTokens = async () => {
       try {
         const response = await fetch('http://localhost:1225/farm-tokens'); // Update this to your actual API endpoint
         const data = await response.json();
         setTokens(data);
-
-        // Extract unique blockchains
         const uniqueBlockchains = [...new Set(data.map(token => token.blockchain))];
         setBlockchains(uniqueBlockchains);
-        setFilteredTokens(data);
+        setFilteredTokens(data.slice(0, 6)); // Limit to 6 tokens initially
       } catch (error) {
         console.error('Error fetching tokens:', error);
       }
@@ -37,9 +32,9 @@ const TokenFarming = () => {
   const handleFilterChange = (blockchain) => {
     setSelectedBlockchain(blockchain);
     if (blockchain) {
-      setFilteredTokens(tokens.filter(token => token.blockchain === blockchain));
+      setFilteredTokens(tokens.filter(token => token.blockchain === blockchain).slice(0, 6)); // Limit to 6 tokens per blockchain
     } else {
-      setFilteredTokens(tokens);
+      setFilteredTokens(tokens.slice(0, 6)); // Limit to 6 tokens for 'All'
     }
   };
 
@@ -69,11 +64,10 @@ const TokenFarming = () => {
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
         {filteredTokens.map((token, index) => (
           <div key={index} className="rounded-lg bg-gray-200 pb-6 flex flex-col items-center justify-between border">
-             <h3 className="text-lg text-white font-medium bg-black text-center w-full h-24 rounded-t-lg pt-6
-             ">{token.tokenName}</h3>
+             <h3 className="text-lg text-white font-medium bg-black text-center w-full h-24 rounded-t-lg pt-6">{token.tokenName}</h3>
              <div className="w-16 h-16 relative -top-8 ">
-                    <img src={token.logo} className=" w-16 h-16 rounded-full" />
-                </div>
+                <img src={token.logo} className="w-16 h-16 rounded-full" />
+             </div>
 
             <span className='flex flex-wrap pt-0 p-2 border-b border-b-gray-400 w-[90%] justify-between'>
                 <p className='text-red-900 text-sm '>Platform:</p>
@@ -86,10 +80,10 @@ const TokenFarming = () => {
             </span>
            
             <div className="flex-wrap flex w-[90%] justify-between mt-4 p-2">
-              <span className={`text-xl font-bold ${token.status === 'Ongoing' ? 'text-[green]' : 'text-red-500'}`}>
+              <span className={`text-lg font-bold ${token.status === 'Ongoing' ? 'text-[green]' : 'text-red-500'}`}>
                 {token.status}
               </span>
-              <a href={token.guideUrl} target="_blank" rel="noopener noreferrer" className=" bg-blue-500 text-white px-3 py-1 
+              <a href={token.guideUrl} target="_blank" rel="noopener noreferrer" className="bg-blue-500 text-white px-3 py-1 
                  rounded-md hover:bg-blue-600 font-semibold">
               Guide
              </a>
@@ -102,10 +96,9 @@ const TokenFarming = () => {
       <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white
          text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:transition-all hover:ease-in-out' onClick={handleNavigateToTokenFarming}>
           More
-        </button>
+      </button>
     </section> 
   );
 };
 
 export default TokenFarming;
-//Earn passive income by farming the latest crypto tokens.

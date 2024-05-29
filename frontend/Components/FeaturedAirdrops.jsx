@@ -38,7 +38,7 @@ const FeaturedAirdrops = () => {
 
   useEffect(() => {
     // Fetch airdrops from server
-    fetch('http://localhost:1225/api/featured-airdrops')
+    fetch('http://localhost:1225/api/featured')
       .then(response => response.json())
       .then(data => {
         setAirdrops(data);
@@ -89,12 +89,12 @@ const FeaturedAirdrops = () => {
             {airdrops.map((airdrop, index) => (
               <SwiperSlide key={index} className="swiper-slide">
                 <div className="bg-white shadow-md rounded-md p-4 mb-3">
-                  <img src={airdrop.image} alt={airdrop.title} className="w-full h-60 rounded-t-md" />
+                  <img src={airdrop.bannerImageUrl} alt={airdrop.bannerHeading} className="w-full h-56 rounded-t-md" />
                   <div className="p-4">
-                    <h2 className="text-lg font-semibold">{airdrop.title}</h2>
-                    <p className="text-sm text-gray-600 h-16">{airdrop.description}</p>
-                    <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md 
-                    hover:bg-blue-600">View Guide</button>
+                    <h2 className="text-lg font-sans font-semibold text-black">{airdrop.bannerHeading}</h2>
+                    <p className="text-sm font-sans text-gray-600 h-16">{airdrop.headingDescription}</p>
+                    {/* <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md 
+                    hover:bg-blue-600">View Guide</button> */}
                   </div>
                 </div>
               </SwiperSlide>

@@ -11,7 +11,7 @@ const client = createClient({
 async function fetchRewardTasksFromContentful() {
   try {
     const response = await client.getEntries({
-      content_type: 'rewardTasks', // rewardTasks content type name
+      content_type: 'rewardTask', // rewardTasks content type name
     });
     
     return response.items.map((item) => item.fields); // Extract reward tasks data from Contentful entries
@@ -38,7 +38,7 @@ async function syncRewardTasksWithDatabase() {
       await RewardTask.create(rewardTaskData);
     }
   }
-  console.log('function called successfully');
+  console.log('syncRewardTasksWithDatabase function call successful');
 } 
 
 module.exports = syncRewardTasksWithDatabase;

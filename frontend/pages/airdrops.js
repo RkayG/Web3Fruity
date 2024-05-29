@@ -2,22 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link'; // Import Link for internal navigation
 
-// Airdrops skeleton component
-const AirdropsSkeleton = () => {
-  return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {[1, 2, 3, 4].map((index) => (
-        <div key={index} className="bg-white rounded-md shadow-md p-4 border-2 border-solid border-gray-200 animate-pulse">
-          <div className="h-24 bg-gray-200 mb-4 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const Airdrops = () => {
   const [airdrops, setAirdrops] = useState([]);
@@ -65,7 +49,11 @@ const Airdrops = () => {
         Confirmed Airdrops
       </h2>
       {loading ? (
-        <AirdropsSkeleton />
+        <div className="loading-dots m-auto my-28">
+          <span className="dot"></span>
+          <span className="dot"></span>
+          <span className="dot"></span>
+        </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-8 lg:m-auto">
           {airdrops.map((airdrop) => (
