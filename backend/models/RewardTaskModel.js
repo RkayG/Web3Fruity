@@ -11,7 +11,7 @@ const rewardTaskSchema = new mongoose.Schema(
      logo: { type: String, required: true },
      title: { type: String, required: true },
      activities: { type: String, required: true },
-     token: { type: String, required: true },
+     token: { type: String},
      free: { type: String, required: true },
      active: { type: String, required: true },
      website: { type: String, required: true},

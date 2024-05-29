@@ -11,10 +11,10 @@ const client = createClient({
 async function fetchGamesFromContentful() {
   try {
     const response = await client.getEntries({
-      content_type: 'games', // airdrop content type name
+      content_type: 'games', // game content type name
     });
     
-    return response.items.map((item) => item.fields); // Extract airdrop data from Contentful entries
+    return response.items.map((item) => item.fields); // Extract game data from Contentful entries
   } catch (error) {
     console.error(error);
     throw new Error('Failed to fetch games from Contentful');
@@ -23,14 +23,14 @@ async function fetchGamesFromContentful() {
 
 // Sync games with database
 async function syncGamesWithDatabase() {
-  const contentfulGames = await fetchGanesFromContentful();
+  const contentfulGames = await fetchGamesFromContentful();
 
   for (const gameData of contentfulGames) {
     // Check if the game already exists in MongoDB
     console.log(gameData);
     let existingGame = await Game.findOne({ title: gameData.title });
 
-    if (existingGAme) {
+    if (existingGame) {
       // Update the existing game
       await Game.findByIdAndUpdate(existingGame._id, gameData);
     } else {
@@ -38,7 +38,7 @@ async function syncGamesWithDatabase() {
       await Game.create(gameData);
     }
   }
-  console.log('function called successfully');
+  console.log('syncGamesWithDatabase function call successful');
 } 
 
 module.exports = syncGamesWithDatabase;

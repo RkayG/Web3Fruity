@@ -5,29 +5,27 @@ import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 const RewardTooltip = ({ reward }) => {
   const [tokenData, setTokenData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Add state variable for error
+  const [error, setError] = useState(null);
 
-  // Calculate the expiry time for the cache
   const cacheExpiryTime = useMemo(() => {
-    return Date.now() + 5 * 60 * 1000; // 5 minutes (or 10 * 60 * 1000 for 10 minutes)
+    return Date.now() + 5 * 60 * 1000; // 5 minutes
   }, []);
 
   useEffect(() => {
     const fetchTokenData = async () => {
-      setLoading(true); // Set loading state to true before fetching
-      setError(null); // Clear any previous error
+      setLoading(true);
+      setError(null);
 
       try {
-        // Check if tokenData is null or the cache has expired
         if (!tokenData || Date.now() > cacheExpiryTime) {
           const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${reward.api_id}`);
           setTokenData(response.data);
         }
       } catch (error) {
         console.error("Error fetching token data:", error);
-        setError(error); // Set error state for rendering
+        setError(error);
       } finally {
-        setLoading(false); // Set loading state to false after fetching (or on error)
+        setLoading(false);
       }
     };
 
@@ -35,12 +33,11 @@ const RewardTooltip = ({ reward }) => {
   }, [reward.api_id, tokenData, cacheExpiryTime]);
 
   return (
-    <div className="absolute bg-white p-4 rounded-md shadow-md border border-gray-300
-             lg:right-56 ml-52 mt-8 " style={{width: "265px"}} >
+    <div className="absolute bg-white p-4 rounded-md shadow-md border border-gray-300 lg:right-56 ml-52 mt-8" style={{ width: "265px" }}>
       {loading ? (
         <p>Loading token data...</p>
       ) : error ? (
-        <p className="text-red-600">Error fetching token data</p> // Display error message
+        <p className="text-red-600">Error fetching token data</p>
       ) : (
         <>
           <span className="flex flex-wrap">
@@ -64,19 +61,17 @@ const RewardTooltip = ({ reward }) => {
     </div>
   );
 };
- 
+
 const RewardForTask = () => {
   const [rewards, setRewards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rewardsPerPage = 12;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:1225/reward-tasks", {
-          params: {
-            limit: 12
-          }
-        });
+        const response = await axios.get("http://localhost:1225/reward-tasks");
         setRewards(response.data);
         setLoading(false);
       } catch (error) {
@@ -87,27 +82,26 @@ const RewardForTask = () => {
     fetchData();
   }, []);
 
-  // variable for token price and marketcap when
-  // user hovers or clicks on token
-  const [tooltipData, setTooltipData] = useState(null); 
+  // Calculate current rewards based on current page
+  const indexOfLastReward = currentPage * rewardsPerPage;
+  const indexOfFirstReward = indexOfLastReward - rewardsPerPage;
+  const currentRewards = rewards.slice(indexOfFirstReward, indexOfLastReward);
 
-  // variable for toggling angle up and doen if user
-  // clicks reward token (only for mobile and tablet) only for mobile and tablet 
-  const [isTooltipOpen, setIsTooltipOpen] = useState([]); // Initialize with false for all rewards
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const [tooltipData, setTooltipData] = useState(null);
+  const [isTooltipOpen, setIsTooltipOpen] = useState([]);
 
   return (
     <div className="py-8 my-20 w-full h-auto max-w-[1920px]">
       {loading ? (
-         <div className="loading-dots m-auto my-28">
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-         </div>
+        <div className="loading-dots m-auto my-28">
+          <span className="dot"></span>
+          <span className="dot"></span>
+          <span className="dot"></span>
+        </div>
       ) : (
-        <div className=" mx-6 text-center relative mb-28 rounded-md shadow-sm">
-
-           {/*---------- table display for large devices only -----------------*/}
+        <div className="mx-6 text-center relative mb-28 rounded-md shadow-sm">
           <table className="hidden lg:block w-full border-collapse border border-gray-200">
             <thead>
               <tr>
@@ -119,103 +113,88 @@ const RewardForTask = () => {
               </tr>
             </thead>
             <tbody className="border-t-2 border-gray-50">
-              {rewards.map((reward, index) => (
-                <tr
-                  key={index}
-                  className="border-t-2 border-gray-50"
-                >
-                  <td className="p-3 flex flex-wrap text-blue-900 hover:text-red-700 cursor-pointer 
-                  w-64 relative " aria-label={reward.website}>
+              {currentRewards.map((reward, index) => (
+                <tr key={index} className="border-t-2 border-gray-50">
+                  <td className="p-3 flex flex-wrap text-blue-900 hover:text-red-700 cursor-pointer w-64 relative">
                     <img src={reward.logo} className="w-8 h-8 rounded-sm mx-3" alt={reward.token} />
                     {reward.title}
                   </td>
                   <td className="p-3 text-left lg:w-2/4">{reward.activities}</td>
-
                   <td className="mb-2 justify-center flex flex-wrap p-3 text-blue-900 cursor-pointer"
                     onMouseEnter={() => setTooltipData(reward)}
-                    onMouseLeave={() => setTooltipData(null)}
-                  > <p className="-mt-2 pr-1 font-semibold">
-                      {reward.token}
-                    </p>
-                    <p className="text-xs mt-0">
-                      <FaAngleDown />
-                    </p>
+                    onMouseLeave={() => setTooltipData(null)}>
+                    <p className="-mt-2 pr-1 font-semibold">{reward.token}</p>
+                    <p className="text-xs mt-0"><FaAngleDown /></p>
                     {tooltipData === reward && <RewardTooltip reward={reward} />}
                   </td>
-
                   <td className="p-3 text-green-700 font-semibold">{reward.free}</td>
                   <td className="p-3 text-green-700 font-semibold">{reward.active}</td>
                 </tr>
               ))}
             </tbody>
-          </table> {/*-------------- table display end ----------------*/}
+          </table>
 
-          {/* ---------- Responsive code for mobile and tablet ---------- */}
           <div className="mr-auto lg:hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-          {rewards.map((reward, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-md shadow-md p-4 border border-gray-300"
-            >
-              <span className="flex flex-wrap">
-                <img src={reward.logo} className="w-10 h-10 mx-3 rounded-lg mb-2" />
-                <h3 className="text-lg font-semibold mt-1 text-blue-700">{reward.title}</h3>
-              </span>
-          
-                <p className="text-sm w-auto text-left p-2 pl-3 h-20 ">
-                  {reward.activities}
-                </p>
-          
-              <span className="flex bg-gray-200 rounded-lg h-20 m-3 border border-gray-400 justify-center">
-                <span className="block p-3 m-auto">
-                  <p>Token</p>
-                  <p className="font-semibold text-blue-700 flex flex-wrap justify-center"
+            {currentRewards.map((reward, index) => (
+              <div key={index} className="bg-white rounded-md shadow-md p-4 border border-gray-300">
+                <span className="flex flex-wrap">
+                  <img src={reward.logo} className="w-10 h-10 mx-3 rounded-lg mb-2" />
+                  <h3 className="text-lg font-semibold mt-1 text-blue-700">{reward.title}</h3>
+                </span>
+                <p className="text-sm w-auto text-left p-2 pl-3 h-20">{reward.activities}</p>
+                <span className="flex bg-gray-200 rounded-lg h-20 m-3 border border-gray-400 justify-center">
+                  <span className="block p-3 m-auto">
+                    <p>Token</p>
+                    <p className="font-semibold text-blue-700 flex flex-wrap justify-center"
                       onClick={(event) => {
                         const newIsTooltipOpen = [...isTooltipOpen];
                         newIsTooltipOpen[index] = !newIsTooltipOpen[index];
                         setIsTooltipOpen(newIsTooltipOpen);
                         setTooltipData(reward);
-                        event.stopPropagation(); // Stop event from bubbling up
+                        event.stopPropagation();
                       }}
                       onMouseLeave={() => {
                         setTooltipData(null);
                         const newIsTooltipOpen = [...isTooltipOpen];
                         newIsTooltipOpen[index] = false;
                         setIsTooltipOpen(newIsTooltipOpen);
-                      }}
-                    >
-                    {reward.token}
-                    <p className="text-xs pl-1 mt-2">
-                      {isTooltipOpen[index] ? <FaAngleUp /> : <FaAngleDown />} 
+                      }}>
+                      {reward.token}
+                      <p className="text-xs pl-1 mt-2">
+                        {isTooltipOpen[index] ? <FaAngleUp /> : <FaAngleDown />}
+                      </p>
+                      {isTooltipOpen[index] && <RewardTooltip reward={reward} />}
                     </p>
-                    {isTooltipOpen[index] && <RewardTooltip reward={reward} />}
-                  </p>
+                  </span>
+                  <span className="block p-3 m-auto">
+                    <p>Free</p>
+                    <p className="font-semibold text-green-700">{reward.free}</p>
+                  </span>
+                  <span className="block p-3 m-auto">
+                    <p>Active</p>
+                    <p className="font-semibold text-green-700">{reward.active}</p>
+                  </span>
                 </span>
+                <button className="py-2 px-10 m-auto mt-6 flex bg-blue-700 text-white active:bg-black checked:bg-black rounded-3xl shadow-md">
+                  Visit
+                </button>
+              </div>
+            ))}
+          </div>
 
-                <span className="block p-3 m-auto">
-                  <p>Free</p>
-                  <p className="font-semibold text-green-700">{reward.free}</p>
-                </span>
-
-                <span className="block p-3 m-auto">
-                  <p>Active</p>
-                  <p className="font-semibold text-green-700">{reward.active}</p>
-                </span>
-              </span>
-
-              <button className='py-2 px-10 m-auto mt-6 flex bg-blue-700
-              text-white active:bg-black checked:bg-black rounded-3xl shadow-md'
-                
+          {/* Pagination controls */}
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: Math.ceil(rewards.length / rewardsPerPage) }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => paginate(index + 1)}
+                className={`px-4 py-2 mx-1 rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-blue-900'} hover:bg-blue-500 hover:text-white`}
               >
-                Visit
+                {index + 1}
               </button>
-            </div>
-          ))}
-             
-
-          </div>{/*--------- end of mobile and tablet display --------- */}
+            ))}
+          </div>
         </div>
-
       )}
     </div>
   );

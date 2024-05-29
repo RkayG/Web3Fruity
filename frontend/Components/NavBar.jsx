@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Logo, Menu } from '../Components/index';
 import { FaAngleDown } from 'react-icons/fa';
+import Subscribe from './Subscribe';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   const menuRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -60,7 +62,10 @@ const NavBar = () => {
                   ref={el.dropdown ? dropdownRef : null}
                 >
                   {el.dropdown ? (
-                    <>
+                    <div 
+                      onMouseEnter={() => setIsDropdownOpen(true)}
+                      onMouseLeave={() => setIsDropdownOpen(false)}
+                    >
                       <button
                         className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-teal-accent-400 flex items-center'
                       >
@@ -68,17 +73,17 @@ const NavBar = () => {
                         <FaAngleDown className='ml-1 mt-1' />
                       </button>
                       {isDropdownOpen && (
-                        <ul className='absolute left-0 w-48 mt-2 bg-white border rounded shadow-lg'>
+                        <ul className='absolute left-0 w-48 mt-2 bg-white border rounded shadow-lg z-[500] py-2'>
                           {el.dropdown.map((subEl, j) => (
-                            <li key={j + 1} className='px-4 py-2'>
-                              <Link href={subEl.path} className='block text-black hover:bg-gray-200'>
+                            <li key={j + 1} className='px-4'>
+                              <Link href={subEl.path} className='block px-2 py-2 rounded-md text-black hover:bg-gray-200'>
                                 {subEl.name}
                               </Link>
                             </li>
                           ))}
                         </ul>
                       )}
-                    </>
+                    </div>
                   ) : (
                     <Link href={el.path} className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-teal-accent-400'>
                       {el.name}
@@ -90,7 +95,7 @@ const NavBar = () => {
           </div>
           <ul className='flex items-center hidden space-x-8 lg:flex'>
             <li>
-              <button onClick={() => connectWallet()} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600' title='Sign up'>
+              <button onClick={() => setIsSubscribeOpen(true)} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600' title='Subscribe'>
                 Subscribe
               </button>
             </li>
@@ -177,6 +182,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+      {isSubscribeOpen && <Subscribe onClose={() => setIsSubscribeOpen(false)} />}
     </div>
   );
 };

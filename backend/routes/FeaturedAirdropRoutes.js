@@ -1,81 +1,76 @@
 const express = require('express');
 const router = express.Router();
-const Airdrop = require('../models/FeaturedAirdropModel'); 
+const Featured = require('../models/FeaturedModel');
+const syncFeaturedWithDatabase = require('../services/featuredService');
 
-// Route for fetching all airdrops
-router.get('/featured-airdrops', async (req, res) => {
+// Route to sync featured banners from Contentful
+router.post('/sync-contentful-featured', async (req, res) => {
   try {
-    const airdrops = await Airdrop.find();
-    console.log(airdrops);
-    res.json(airdrops);
+    await syncFeaturedWithDatabase();
+    res.status(200).json({ message: 'Featured banners synced successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Route for adding a new airdrop
-router.post('/featured-airdrops', async (req, res) => {
-  const airdrop = new Airdrop({
-    image: req.body.image,
-    title: req.body.title,
-    description: req.body.description,
-    guideLink: req.body.guideLink
-  });
-
+// Route for fetching all featured banners
+router.get('/featured', async (req, res) => {
   try {
-    const newAirdrop = await airdrop.save();
-    res.status(201).json(newAirdrop);
-    res.send(newAirdrop);
+    const featured = await Featured.find();
+    console.log(featured);
+    res.json(featured);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
-// Route for retrieving a specific airdrop
-router.get('/featured-airdrops/:id', getAirdrop, (req, res) => {
-  res.json(res.airdrop);
+// Route for adding a new featured banner
+router.post('/featured', async (req, res) => {
+  try {
+    const featured = await Featured.create(req.body)
+    res.status(201).json(featured);
+} catch (error) {
+  res.status(400).json({ message: error.message });
+}
 });
 
-// Middleware function to retrieve a specific airdrop by ID
-async function getAirdrop(req, res, next) {
+// Route for retrieving a specific featured banner
+router.get('/featured/:id', getFeatured, (req, res) => {
+  res.json(res.featured);
+});
+
+// Middleware function to retrieve a specific featured banner
+async function getFeatured(req, res, next) {
   try {
-    const airdrop = await Airdrop.findById(req.params.id);
-    if (airdrop == null) {
-      return res.status(404).json({ message: 'Airdrop not found' });
+    const featured = await Featured.findById(req.params.id);
+    if (featured == null) {
+      return res.status(404).json({ message: 'Featured banner not found' });
     }
-    res.airdrop = airdrop;
+    res.featured = featured;
     next();
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 }
 
-// Route for updating an existing airdrop
-router.patch('/featured-airdrops/:id', getAirdrop, async (req, res) => {
-  if (req.body.image != null) {
-    res.airdrop.image = req.body.image;
-  }
-  if (req.body.details != null) {
-    res.airdrop.details = req.body.details;
-  }
-  if (req.body.startDate != null) {
-    res.airdrop.startDate = req.body.startDate;
-  }
-
+// Route for updating an existing featured banner
+router.patch('/featured/:id', getFeatured, async (req, res) => {
   try {
-    const updatedAirdrop = await res.airdrop.save();
-    res.json(updatedAirdrop);
-    res.send(updatedAirdrop);
+    const featured = await Featured.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!featured) {
+      return res.status(404).json({ message: 'Featured banner not found' });
+    }
+    res.json(featured);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// Route for deleting an existing airdrop
-router.delete('/featured-airdrops/:id', getAirdrop, async (req, res) => {
+// Route for deleting an existing featured banner
+router.delete('/featured/:id', getFeatured, async (req, res) => {
   try {
-    await res.airdrop.remove();
-    res.json({ message: 'Airdrop deleted' });
+    await res.featured.remove();
+    res.json({ message: 'Featured banner deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

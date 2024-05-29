@@ -18,7 +18,8 @@ const GameSchema = new mongoose.Schema(
     website: { type: String, required: true },
     socialLinks: { type: Array },
     chain: { type: String },
-    guideLink: { type: String }
+    trailer: {type: String },
+    guide: { type: Object}
   },
   {
     timestamps: true

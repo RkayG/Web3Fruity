@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const RewardTask = require('../models/RewardTaskModel')
-const { syncRewardTasksWithDatabase } = require('../services/rewardTaskService');
+const syncRewardTasksWithDatabase = require('../services/rewardTaskService');
 
 // Route to sync reward task with Contentful
 router.post('/sync-contentful-reward-tasks', async (req, res) => {
