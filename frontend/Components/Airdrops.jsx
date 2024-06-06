@@ -6,15 +6,21 @@ import Link from 'next/link'; // Import Link for internal navigation
 // Airdrops skeleton component
 const AirdropsSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {[1, 2, 3, 4].map((index) => (
-        <div key={index} className="bg-white rounded-md shadow-md p-4 border-2 border-solid border-gray-200 animate-pulse">
-          <div className="h-24 bg-gray-200 mb-4 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-          <div className="h-4 bg-gray-200 mb-2 rounded"></div>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:ml-4">
+      {[...Array(12)].map((_, index) => (
+        <div key={index} className="bg-white mx-4 lg:mx-0 rounded-md pb-8 animate-pulse shadow-md p-4 border-2 border-solid border-gray-200 relative min-w-[340px]">
+          <div className='h-16 w-16 bg-gray-200 rounded-full mb-4'></div>
+          <div className=" absolute top-7 left-24 w-32  bg-gray-200 rounded h-4"></div>
+          <div className="h-5 bg-gray-200 mb-2 rounded-xl absolute top-2 right-2 w-20"></div>
+          <div className="h-4 bg-gray-200 mb-2 rounded absolute top-14 left-24 w-20"></div>
+          <div className="h-4 bg-gray-200 mb-2 rounded absolute top-20 left-24 w-20"></div>
+          <div className="h-4 bg-gray-200 mb-2 rounded absolute top-14 left-56 w-20"></div>
+          <div className="h-4 bg-gray-200 rounded absolute top-20 left-56 w-20 mb-3"></div>
+          <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute top-28 right-4"></div>
+          <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute bottom-4 right-4"></div>
+          <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute top-28 left-4"></div>
+          <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute bottom-4 left-4"></div>
+          <div className="h-8 w-8 bg-gray-200 relative top-3 mt-3 mb-1 rounded-full flex justify-center m-auto"></div>
         </div>
       ))}
     </div>
@@ -62,8 +68,8 @@ const Airdrops = () => {
       {loading ? (
         <AirdropsSkeleton />
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-8 lg:m-auto">
-          {airdrops.map((airdrop) => (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:px-8 lg:m-auto">
+          {airdrops?.map((airdrop) => (
             <div
               key={airdrop._id}
               className="bg-white mx-4 lg:mx-0 rounded-md pb-8 shadow-md p-4 border-2 border-solid border-gray-200 relative min-w-[340px]"
@@ -100,7 +106,7 @@ const Airdrops = () => {
                 <span className="font-semibold absolute bottom-4 right-4">{airdrop.chain || 'N/A'}</span>
               </p>
 
-              <Link href={`/airdrop-guide/${airdrop._id}`}>
+              <Link href={`/airdrops/${airdrop._id}`}>
                 <span
                   aria-label="view"
                   title="view"

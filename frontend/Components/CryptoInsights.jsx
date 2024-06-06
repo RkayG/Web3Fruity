@@ -32,7 +32,6 @@ const CryptoInsights = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching crypto news:', error);
-        setLoading(false);
       }
     };
 

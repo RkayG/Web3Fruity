@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { EffectCoverflow, Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-// import swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-coverflow';
 
-// Skeleton component for FeaturedAirdrops
 const FeaturedAirdropsSkeleton = () => {
   return (
-    <section className="featured-airdrops ">
-      
+    <section className="featured-airdrops">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[1, 2, 3].map((index) => (
           <div key={index} className="bg-white shadow-md rounded-md p-4 animate-pulse">
@@ -31,20 +28,33 @@ const FeaturedAirdropsSkeleton = () => {
   );
 };
 
+const isNewAirdrop = (dateString) => {
+  const postDate = new Date(dateString);
+  const currentDate = new Date();
+  const differenceInTime = currentDate - postDate;
+  const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+  return differenceInDays <= 3; // 3 days period
+};
+
 const FeaturedAirdrops = () => {
   const [airdrops, setAirdrops] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    // Fetch airdrops from server
     fetch('http://localhost:1225/api/featured')
       .then(response => response.json())
       .then(data => {
-        setAirdrops(data);
-        setLoading(false); // Set loading to false once data is fetched
+        if (Array.isArray(data)) {
+          setAirdrops(data);
+        } else {
+          console.error('Error: Data is not an array', data);
+        }
+        setLoading(false);
       })
-      .catch(error => console.error('Error fetching airdrops:', error));
+      .catch(error => {
+        console.error('Error fetching airdrops:', error);
+        setLoading(false);
+      });
   }, []);
 
   const breakpoints = {
@@ -53,21 +63,11 @@ const FeaturedAirdrops = () => {
     1024: { slidesPerView: 3 },
   };
 
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index, className) {
-      return '<span class="' + className + '">' + (index + 1) + '</span>';
-    },
-  };
-
   return (
     <section className='featured-airdrops my-20 m-auto max-w-[1580px]'>
-      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-5 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r 
-      from-blue-500 to-red-500">
+      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-5 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
         Featured
       </h2>
-
-      {/* Conditionally render the Swiper component or the skeleton loading component */}
       {loading ? (
         <FeaturedAirdropsSkeleton />
       ) : (
@@ -88,13 +88,17 @@ const FeaturedAirdrops = () => {
           >
             {airdrops.map((airdrop, index) => (
               <SwiperSlide key={index} className="swiper-slide">
-                <div className="bg-white shadow-md rounded-md p-4 mb-3">
+                <div className="bg-white shadow-md rounded-md p-4 mb-3 relative">
+                 
                   <img src={airdrop.bannerImageUrl} alt={airdrop.bannerHeading} className="w-full h-56 rounded-t-md" />
                   <div className="p-4">
-                    <h2 className="text-lg font-sans font-semibold text-black">{airdrop.bannerHeading}</h2>
-                    <p className="text-sm font-sans text-gray-600 h-16">{airdrop.headingDescription}</p>
-                    {/* <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md 
-                    hover:bg-blue-600">View Guide</button> */}
+                    {isNewAirdrop(airdrop.postDate) && (
+                      <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                        NEW
+                      </span>
+                    )}
+                    <h2 className="text-lg font-sans font-semibold text-black text-center">{airdrop.bannerHeading}</h2>
+                    <p className="text-sm font-sans mt-2 text-gray-600 h-16 text-center">{airdrop.headingDescription} It's time to join the most awaited airdrop of the year by the BInance Exchange in NewYourk</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -107,7 +111,6 @@ const FeaturedAirdrops = () => {
             <div className="swiper-button-next slider-arrow">
               <span className='text-20'><FaArrowRight /></span>
             </div>
-              {/* Custom pagination bullets */}
             <div className="swiper-pagination"></div>
           </div>
         </div>

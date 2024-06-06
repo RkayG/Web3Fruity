@@ -16,7 +16,7 @@ const tokenFarmingSchema = new mongoose.Schema(
     tokenName: { type: String, required: true },
     blockchain: { type: String, required: true },
     status: { type: String, required: true },
-    guideUrl: { type: String, required: true }
+    guide: { type: Object, required: true }
   },
 
   {

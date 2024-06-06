@@ -59,6 +59,8 @@ const RewardTooltip = ({ reward }) => {
                 <p className="pr-4">Market Cap:</p>
                 <p className="text-right">{tokenData.market_data.market_cap.usd.toLocaleString()} USD</p>
               </div>
+
+              <p className="text-[green] text-left text-sm mt-2">Coingecko</p>
             </>
           )}
         </>
@@ -99,11 +101,8 @@ const RewardForTask = () => {
 
   return (
     <div className="py-8 my-20 w-full h-auto max-w-[1580px] m-auto">
-      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
-      text-transparent bg-gradient-to-r from-blue-500 to-red-500">Reward for Tasks</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
+      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">Reward for Tasks</h2>
+      {loading ? ( <p>Loading...</p> ) : (
         <div className="mx-3 text-center relative mb-28 rounded-md shadow-sm m-auto">
           <table className="hidden lg:block w-full border-collapse border border-gray-200">
             <thead>
@@ -214,7 +213,7 @@ const RewardForTask = () => {
           </div>
         </div>
       )}
-      <button className='py-2 px-4 m-auto mt-[-88px] flex justify-self-center border-2 text-black rounded-xl bg-gray-200
+      <button className='py-2 px-4 m-auto mt-[-88px] flex justify-self-center text-black rounded-xl bg-gray-200
          hover:bg-blue-500 hover:text-white active:bg-blue-500  hover:transition-all hover:ease-in-out' onClick={handleNavigateToPlatforms}>
         More
       </button>

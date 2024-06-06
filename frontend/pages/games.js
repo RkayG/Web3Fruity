@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Games = () => {
   const [games, setGames] = useState([]);
@@ -127,12 +128,29 @@ const Games = () => {
   );
 
   return (
-    <div className="mb-20 max-w-[1920px] pt-12">
-      <div className="flex justify-center mb-6">
+    
+    <div className="mb-20 max-w-[1920px]">
+       <section className="relative w-full h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/gameplay.jpg')]">
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.7)] to-[rgba(0,0,0,0.62)]" />
+      <div className="relative z-10 text-center text-white max-w-2xl px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-pulse">Earn While You Play</h1>
+        <p className="text-lg sm:text-xl md:text-2xl mb-8">
+          Discover top play-to-earn games and start earning rewards for your gameplay.
+        </p>
+        <Link
+          href="#"
+          className="inline-flex items-center justify-center px-6 py-3 bg-[#ffd700] text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
+          prefetch={false}
+        >
+          Learn More About Play-To-Earn Games
+        </Link>
+      </div>
+    </section>
+      <div className="flex justify-center mb-6 border bg-gray-300 py-6">
         {genres.map((genre, index) => (
           <button
             key={index}
-            className={`mx-2 px-4 py-2 rounded-md ${selectedGenre === genre ? 'bg-blue-500 text-white' : 'bg-gray-200 text-blue-900'} hover:bg-blue-500 hover:text-white`}
+            className={`mx-2 px-4 py-2 rounded-md ${selectedGenre === genre ? 'bg-blue-500 text-white' : 'bg-white text-blue-900'} hover:bg-blue-500 hover:text-white`}
             onClick={() => handleGenreFilter(genre)}
           >
             {genre}

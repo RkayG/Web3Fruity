@@ -22,7 +22,9 @@ const NavBar = () => {
     },
     { name: "Games", path: "/games" },
     { name: "Platforms", path: "/platforms" },
-    { name: "Crypto Insights", path: "/crypto_insights" }
+    { name: "Blog", path: "/blog" },
+    { name: "Crypto Insights", path: "/crypto_insights" },
+    { name: "About", path: "/about" },
   ];
 
   useEffect(() => {
@@ -67,16 +69,16 @@ const NavBar = () => {
                       onMouseLeave={() => setIsDropdownOpen(false)}
                     >
                       <button
-                        className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-teal-accent-400 flex items-center'
+                        className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-orange-800 flex items-center'
                       >
                         {el.name}
                         <FaAngleDown className='ml-1 mt-1' />
                       </button>
                       {isDropdownOpen && (
-                        <ul className='absolute left-0 w-48 mt-2 bg-white border rounded shadow-lg z-[500] py-2'>
+                        <ul className='absolute left-0 w-48 mt-2 bg-white border-t-2 border-t-orange-800 border rounded shadow-lg z-[500] py-2'>
                           {el.dropdown.map((subEl, j) => (
                             <li key={j + 1} className='px-4'>
-                              <Link href={subEl.path} className='block px-2 py-2 rounded-md text-black hover:bg-gray-200'>
+                              <Link href={subEl.path} className='block px-2 py-2 rounded-md text-black hover:bg-gray-100 hover:border-l-2 hover:border-l-orange-800'>
                                 {subEl.name}
                               </Link>
                             </li>
@@ -85,7 +87,7 @@ const NavBar = () => {
                       )}
                     </div>
                   ) : (
-                    <Link href={el.path} className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-teal-accent-400'>
+                    <Link href={el.path} className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-orange-800'>
                       {el.name}
                     </Link>
                   )}
