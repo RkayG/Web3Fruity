@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Link from 'next/link';
 
 const Footer = () => {
   const productList = ["Airdrops", "Token Farming", "Games", "Reward For Tasks"];
@@ -37,10 +38,10 @@ const Footer = () => {
 
           <div className=''>
           <h6 className='mb-4 flex items-center justify-center font-semibold uppercase
-            md:justify-start'>Contact</h6>
+            md:justify-start cursor-pointer'>Contact</h6>
             { contactList.map((el, i) => (
               <p className='mb-4' key={i + 1}>
-                <a href='/'>{el}</a>
+                <Link href='/contact'>{el}</Link>
               </p>
             ))}
           </div>

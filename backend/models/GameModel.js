@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // Game model for play to earn games (for Homepage)
 // Required fields: image, title, description, platform, free2play( Ans: Yes/no), developer, website
-// Other fields: token, guideLink, socialLinks, chain, guideLink
+// Other fields: token, token_api_id(from coingecko), guideLink, socialLinks, chain, guideLink
 
 const GameSchema = new mongoose.Schema(
   {
@@ -11,6 +11,7 @@ const GameSchema = new mongoose.Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     token: { type: String },
+    token_api_id: {type: String },
     platform: { type: Array, required: true },
     genre: { type: String, required: true },
     free2play: { type: String, required: true },

@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/crypto_insights": "pages/crypto_insights.js",
   "/platforms": "pages/platforms.js",
-  "/games": "pages/games.js"
+  "/": "pages/index.js"
 }

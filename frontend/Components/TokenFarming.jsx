@@ -7,6 +7,7 @@ const TokenFarming = () => {
   const [filteredTokens, setFilteredTokens] = useState([]);
   const [blockchains, setBlockchains] = useState([]);
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const handleNavigateToTokenFarming = () => {
     router.push('/token-farming');
@@ -23,6 +24,8 @@ const TokenFarming = () => {
         setFilteredTokens(data.slice(0, 6)); // Limit to 6 tokens initially
       } catch (error) {
         console.error('Error fetching tokens:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -37,6 +40,27 @@ const TokenFarming = () => {
       setFilteredTokens(tokens.slice(0, 6)); // Limit to 6 tokens for 'All'
     }
   };
+
+  if (loading) {
+    return (
+      <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
+        <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
+        text-transparent bg-gradient-to-r from-blue-500 to-red-500">Loading...</h2>
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="rounded-lg bg-gray-300 animate-pulse pb-6 flex flex-col items-center justify-between border">
+              <div className="bg-gray-400 w-full h-24 rounded-t-lg"></div>
+              <div className="bg-gray-400 w-16 h-16 rounded-full relative -top-8"></div>
+              <div className="w-[90%] h-6 bg-gray-400 mt-4 mb-2"></div>
+              <div className="w-[90%] h-6 bg-gray-400 mb-2"></div>
+              <div className="w-[90%] h-6 bg-gray-400 mb-2"></div>
+              <div className="w-[90%] h-6 bg-gray-400 mb-2"></div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
