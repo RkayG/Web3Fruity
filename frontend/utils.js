@@ -8,11 +8,11 @@ export const getTimeDifference = (timestamp) => {
   const newsDate = new Date(timestamp);
 
   // Calculate the difference between the two dates in milliseconds
-  const diffInMs = now - newsDate;
-
+  const diffInMs = now.getTime() - newsDate.getTime();
+  
   // Convert the milliseconds to minutes by dividing by the number of milliseconds in a minute (60 seconds * 1000 milliseconds)
   // and round down the result using Math.floor
-  const diffInMinutes = Math.floor(diffInMs / 6000);
+  const diffInMinutes = Math.floor(diffInMs / 60000);
 
   // Convert the minutes to hours by dividing by the number of minutes in an hour (60 minutes)
   // and round down the result using Math.floor

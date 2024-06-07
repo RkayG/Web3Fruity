@@ -11,6 +11,7 @@ import 'swiper/css/effect-coverflow';
 const FeaturedAirdropsSkeleton = () => {
   return (
     <section className="featured-airdrops">
+      <div className="mb-5 ml-5 bg-gray-200 h-7 w-32 pl-8 inline-block "></div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[1, 2, 3].map((index) => (
           <div key={index} className="bg-white shadow-md rounded-md p-4 animate-pulse">
@@ -58,60 +59,63 @@ const FeaturedAirdrops = () => {
   }, []);
 
   const breakpoints = {
-    640: { slidesPerView: 1 },
+    640: { slidesPerView: 2 },
     768: { slidesPerView: 2 },
     1024: { slidesPerView: 3 },
   };
 
   return (
     <section className='featured-airdrops my-20 m-auto max-w-[1580px]'>
-      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-5 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-        Featured
-      </h2>
+     
       {loading ? (
         <FeaturedAirdropsSkeleton />
       ) : (
-        <div className="swiper-container">
-          <Swiper
-            modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}
-            effect={'coverflow'}
-            spaceBetween={70}
-            grabCursor={true}
-            breakpoints={breakpoints}
-            centeredSlides={true}
-            loop={true}
-            pagination={{ el: '.swiper-pagination', clickable: true }}
-            navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true }}
-            autoplay={{ delay: 2500 }}
-            coverflowEffect={{ rotate: 0, stretch: 0, depth: 50, modifier: 1, slideShadows: false }}
-            className="swiper"
-          >
-            {airdrops.map((airdrop, index) => (
-              <SwiperSlide key={index} className="swiper-slide">
-                <div className="bg-white shadow-md rounded-md p-4 mb-3 relative">
-                 
-                  <img src={airdrop.bannerImageUrl} alt={airdrop.bannerHeading} className="w-full h-56 rounded-t-md" />
-                  <div className="p-4">
-                    {isNewAirdrop(airdrop.postDate) && (
-                      <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                        NEW
-                      </span>
-                    )}
-                    <h2 className="text-lg font-sans font-semibold text-black text-center">{airdrop.bannerHeading}</h2>
-                    <p className="text-sm font-sans mt-2 text-gray-600 h-16 text-center">{airdrop.headingDescription} It's time to join the most awaited airdrop of the year by the BInance Exchange in NewYourk</p>
+        <div>
+          <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-5 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
+            Featured
+          </h2>
+          <div className="swiper-container">
+            <Swiper
+              modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}
+              effect={'coverflow'}
+              spaceBetween={70}
+              grabCursor={true}
+              breakpoints={breakpoints}
+              centeredSlides={true}
+              loop={true}
+              pagination={{ el: '.swiper-pagination', clickable: true }}
+              navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true }}
+              autoplay={{ delay: 2500 }}
+              coverflowEffect={{ rotate: 0, stretch: 0, depth: 50, modifier: 1, slideShadows: false }}
+              className="swiper"
+            >
+              {airdrops.map((airdrop, index) => (
+                <SwiperSlide key={index} className="swiper-slide">
+                  <div className="bg-white shadow-md rounded-md p-4 mb-3 relative">
+                  
+                    <img src={airdrop.bannerImageUrl} alt={airdrop.bannerHeading} className="w-full h-56 rounded-t-md" />
+                    <div className="p-4">
+                      {isNewAirdrop(airdrop.postDate) && (
+                        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                          NEW
+                        </span>
+                      )}
+                      <h2 className="text-lg font-sans font-semibold text-black text-center">{airdrop.bannerHeading}</h2>
+                      <p className="text-sm font-sans mt-2 text-gray-600 h-16 text-center">{airdrop.headingDescription} It's time to join the most awaited airdrop of the year by the BInance Exchange in NewYourk</p>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="slider-controler mt-16">
-            <div className="swiper-button-prev slider-arrow active:shadow-xl">
-              <span className='text-20'><FaArrowLeft /></span>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="slider-controler mt-16">
+              <div className="swiper-button-prev slider-arrow active:shadow-xl">
+                <span className='text-20'><FaArrowLeft /></span>
+              </div>
+              <div className="swiper-button-next slider-arrow">
+                <span className='text-20'><FaArrowRight /></span>
+              </div>
+              <div className="swiper-pagination"></div>
             </div>
-            <div className="swiper-button-next slider-arrow">
-              <span className='text-20'><FaArrowRight /></span>
-            </div>
-            <div className="swiper-pagination"></div>
           </div>
         </div>
       )}
