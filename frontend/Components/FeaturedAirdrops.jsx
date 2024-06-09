@@ -58,8 +58,8 @@ const FeaturedAirdrops = () => {
       });
   }, []);
 
-  const breakpoints = {
-    640: { slidesPerView: 2 },
+  const breakpoints = { 
+    640: { slidesPerView: 1.3 },
     768: { slidesPerView: 2 },
     1024: { slidesPerView: 3 },
   };
@@ -71,7 +71,7 @@ const FeaturedAirdrops = () => {
         <FeaturedAirdropsSkeleton />
       ) : (
         <div>
-          <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-5 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
+          <h2 className="text-2xl  md:text-3xl lg:text-3xl font-bold mb-2 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
             Featured
           </h2>
           <div className="swiper-container">

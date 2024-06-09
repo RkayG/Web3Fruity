@@ -51,7 +51,7 @@ const NavBar = () => {
           <div className='flex items-center'>
             <a title='Web3Fruity' href='/' className='inline-flex items-center mr-8'>
               <Logo color="text-black" />
-              <span className='ml-2 text-xl font-bold tracking-wide text-black uppercase'>Web3Fruity</span>
+              <span className='ml-2 text-xl font-bold tracking-wide text-blue-800 uppercase'>Web3Fruity</span>
             </a>
             <ul className='flex items-center hidden space-x-8 lg:flex'>
               {menuList.map((el, i) => (
@@ -117,7 +117,7 @@ const NavBar = () => {
                   <div className='flex items-center justify-between mb-4'>
                     <a title='Web3Fruity' href='/' className='inline-flex items-center'>
                       <Logo color="text-black" />
-                      <span className='ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase'>Web3Fruity</span>
+                      <span className='ml-2 text-xl font-bold tracking-wide text-blue-800 uppercase'>Web3Fruity</span>
                     </a>
                     <button
                       aria-label='Close Menu'

@@ -105,7 +105,7 @@ const AirdropGuide = () => {
   const truncatedDescription = description?.length > 200 ? description?.substring(0, 200) + '...' : description;
 
   return (
-    <div>
+    <div className='max-w-[1580px] m-auto'>
       <Navigation title={title} />
     
       <div className="max-w-3xl mx-auto p-4 mt-12">
@@ -126,7 +126,7 @@ const AirdropGuide = () => {
         {guide ? (
           <div>
             <h2 className="text-2xl font-bold mb-4">Steps To Join Airdrop</h2>
-            <div>{documentToReactComponents(guide, renderOptions)}</div>
+            <div className='border-t-2 border-t-orange-800 p-6 lg:px-12 rounded-lg bg-gray-100'>{documentToReactComponents(guide, renderOptions)}</div>
           </div>
         ) : (
           <p className="text-center text-gray-500">No guide available for this airdrop.</p>
@@ -134,9 +134,9 @@ const AirdropGuide = () => {
       </div>
 
       {/* Display additional airdrops */}
-      <div className="p-8  mx-4 mt-12 mb-20 border rounded-md bg-gray-50">
-        <h2 className="text-2xl font-bold mb-6 ">You might also like </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="py-8 px-3 mt-12 mb-20 border rounded-md bg-gray-50">
+        <h2 className="text-2xl font-bold mb-6 px-6 ">You might also like </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {additionalAirdrops.map((airdrop) => (
               <div
               key={airdrop._id}
@@ -183,7 +183,7 @@ const AirdropGuide = () => {
                 >
                   <img
                     className="w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8"
-                    url="../airdrops/go-icon-13.jpg"
+                    url="/images/go-icon-13.jpg"
                   ></img>
                 </span>
               </Link>

@@ -62,7 +62,7 @@ const Airdrops = () => {
   };
 
   return (
-    <div className='mb-20 m-auto'>
+    <div className='mb-20 m-auto max-w-[1580px]'>
       {loading ? (
         <div className="loading-dots m-auto my-28">
           <span className="dot"></span>
