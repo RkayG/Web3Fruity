@@ -46,7 +46,7 @@ const Subscribe = ({ onClose }) => {
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border-2 border-orange-600 m-4 rounded-md  p-3 w-[80%] flex mx-auto"
+          className="border-2 border-orange-800 m-4 rounded-md  p-3 w-[80%] flex mx-auto"
         />
         {isSubscribed ? (
           <div className="flex justify-center items-center text-green-500 mb-4">
@@ -55,7 +55,7 @@ const Subscribe = ({ onClose }) => {
         ) : (
           <button
             onClick={handleSubscribe}
-            className="bg-red-600 hover:bg-orange-700 text-white p-3 rounded w-56 flex justify-center items-center mx-auto m-4"
+            className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded w-56 flex justify-center items-center mx-auto m-4"
           >
             Subscribe
           </button>
