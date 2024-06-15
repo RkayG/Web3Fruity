@@ -1,46 +1,44 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/kMxQCw6px3C
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import Link from "next/link"
+import { BottomSubscribe } from "../Components";
+import { FaTwitter, FaTelegram } from "react-icons/fa";
 
 export default function Component() {
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <div className="flex flex-col min-h-[100dvh] ">
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 animate-slideUp">
           <div className="container m-auto px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-2xl font-bold tracking-tighter sm:text-5xl">
-                    The Gateway to Crypto Earning
+                  <h1 className="text-2xl font-bold tracking-tighter text-blue-800 sm:text-5xl">
+                    Your Gateway to Crypto Earning
                   </h1>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Discover a world of crypto earning opportunities, from airdrops and farmable tokens to play-to-earn
-                    games and task-based rewards.
+                  <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:xl/relaxed xl:text-xl/relaxed mt-3">
+                  <span className="text-blue-800 font-bold text-xl">Web3</span><span className="text-orange-800 text-xl font-bold">Fruity</span> brings you a universe of crypto rewards. We bring you the freshest Web3 earning opportunities,
+                  from airdrops and farmable tokens, to play to earn games and task-based rewards. 
+                  Dive into the dynamic world of decentralized finance and discover how you can maximize your earnings today.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link
                     href="#"
-                    className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                    className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 "
                     prefetch={false}
                   >
                     Explore Earnings
                   </Link>
                   <Link
                     href="#"
-                    className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
+                    className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-200 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50  focus-visible:ring-gray-300"
                     prefetch={false}
                   >
-                    Learn More
+                    Blog
                   </Link>
                 </div>
               </div>
               <img
-                src="/images/about-games.jpg"
+                src="/images/logo1.png"
                 width="550"
                 height="550"
                 alt="Hero"
@@ -55,7 +53,7 @@ export default function Component() {
               <div className="space-y-2">
                 <div className="inline-block text-white rounded-lg bg-gradient-to-r from-red-400 to-[rgba(0,0,0,0.62)] px-3 py-1 text-sm">Airdrops</div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Free Crypto Tokens</h2>
-                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Discover and claim free cryptocurrency tokens through airdrops. Stay up-to-date with the latest
                   airdrop opportunities.
                 </p>
@@ -68,7 +66,7 @@ export default function Component() {
                     <DropletIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Airdrop Alerts</h3>
-                      <p className="text-gray-500">
+                      <p className="text-gray-600">
                         Stay informed about the latest airdrop opportunities.
                       </p>
                     </div>
@@ -77,19 +75,27 @@ export default function Component() {
                     <CheckIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Easy Guide</h3>
-                      <p className="text-gray-500 ">Simple steps to claim your free crypto tokens.</p>
+                      <p className="text-gray-600 ">Simple steps to claim your free crypto tokens.</p>
                     </div>
                   </li>
                   <li className="flex items-center gap-4">
                     <WalletIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Grow Your Portfolio</h3>
-                      <p className="text-gray-500">
+                      <p className="text-gray-600">
                           Expand your crypto holdings with free token airdrops.
                       </p>
                     </div>
                   </li>
+                  
                 </ul>
+                  <Link
+                      href="/airdrops"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      prefetch={false}
+                    >
+                      Start Earning
+                  </Link>
               </div>
               <img
                 src="/images/gameplay.jpg"
@@ -109,7 +115,7 @@ export default function Component() {
                   Token Farming
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Earn by Farming Crypto</h2>
-                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Discover decentralized finance (DeFi) protocols that allow you to earn rewards by providing liquidity
                   or staking your crypto assets.
                 </p>
@@ -129,7 +135,7 @@ export default function Component() {
                     <CurrencyIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Liquidity Farming</h3>
-                      <p className="text-gray-500 ">
+                      <p className="text-gray-600 ">
                         Earn rewards by providing liquidity to DeFi protocols.
                       </p>
                     </div>
@@ -138,7 +144,7 @@ export default function Component() {
                     <StickerIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Token Staking</h3>
-                      <p className="text-gray-500">
+                      <p className="text-gray-600">
                         Earn passive income by staking your crypto assets.
                       </p>
                     </div>
@@ -147,12 +153,19 @@ export default function Component() {
                     <CropIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">High Yields</h3>
-                      <p className="text-gray-500 ">
+                      <p className="text-gray-600 ">
                         Enjoy attractive APYs on your crypto farming activities.
                       </p>
                     </div>
                   </li>
                 </ul>
+                <Link
+                      href="/token-farming"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      prefetch={false}
+                    >
+                      Start Farming
+                  </Link>
               </div>
             </div>
           </div>
@@ -165,7 +178,7 @@ export default function Component() {
                   Play-to-Earn
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Earn While You Play</h2>
-                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Unlock a new realm of crypto earnings with captivating, blockchain-driven games.
                 </p>
               </div>
@@ -177,7 +190,7 @@ export default function Component() {
                     <GamepadIcon className="h-10 w-10 text-gray-500" />
                     <div>
                       <h3 className="text-xl font-bold">Engaging Games</h3>
-                      <p className="text-gray-500">
+                      <p className="text-gray-600">
                         Explore a variety of fun and rewarding play-to-earn games.
                       </p>
                     </div>
@@ -186,7 +199,7 @@ export default function Component() {
                     <BadgeIcon className="h-10 w-10 text-gray-500" />
                     <div>
                       <h3 className="text-xl font-bold">Earn Crypto</h3>
-                      <p className="text-gray-500">
+                      <p className="text-gray-600">
                         Earn real cryptocurrency by playing and completing in-game tasks.
                       </p>
                     </div>
@@ -195,7 +208,7 @@ export default function Component() {
                     <CopyrightIcon className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Ownership</h3>
-                      <p className="text-gray-500 ">
+                      <p className="text-gray-600 ">
                         Own in-game assets and items that can be traded or sold.
                       </p>
                     </div>
@@ -204,12 +217,19 @@ export default function Component() {
                     <TrophyIcon  className="h-10 w-10 text-gray-500 " />
                     <div>
                       <h3 className="text-xl font-bold">Compete and Win</h3>
-                      <p className="text-gray-500 ">
+                      <p className="text-gray-600 ">
                          Compete in tournaments and challenges to earn even more rewards.
                       </p>
                     </div>
                   </li>
                 </ul>
+                  <Link
+                      href="/games"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      prefetch={false}
+                    >
+                      Start Playing
+                  </Link>
               </div>
               <img
                 src="/images/about-games.jpg"
@@ -229,7 +249,7 @@ export default function Component() {
                 Task-Based Rewards
               </div>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Earn Crypto for Completing Tasks</h2>
-              <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Earn cryptocurrency by completing simple online tasks, such as watching videos, participating in
                 surveys, or engaging with social media.
               </p>
@@ -241,44 +261,177 @@ export default function Component() {
                   <li className="flex items-center gap-4">
                     <VideoIcon className="h-10 w-10 text-gray-500 " />
                     <div>
-                      <h3 className="text-xl font-bold">Engaging Games</h3>
-                      <p className="text-gray-500 ">
-                        Explore a variety of fun and rewarding play-to-earn games.
+                      <h3 className="text-xl font-bold">Explore Platforms</h3>
+                      <p className="text-gray-600 ">
+                         Select and visit task-based platforms.
                       </p>
                     </div>
                   </li>
                   <li className="flex items-center gap-4">
                     <BadgeIcon className="h-10 w-10 text-gray-500 dark:text-gray-400" />
                     <div>
-                      <h3 className="text-xl font-bold">Earn Crypto</h3>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Earn real cryptocurrency by playing and completing in-game tasks.
+                      <h3 className="text-xl font-bold">Micro Tasks</h3>
+                      <p className="text-gray-600">
+                          Complete quick and easy tasks to boost your earnings
                       </p>
                     </div>
                   </li>
-                  <li className="flex items-center gap-4">
-                    <CopyrightIcon className="h-10 w-10 text-gray-500 dark:text-gray-400" />
-                    <div>
-                      <h3 className="text-xl font-bold">Ownership</h3>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Own in-game assets and items that can be traded or sold.
-                      </p>
-                    </div>
-                  </li>
+                 
                 </ul>
+                  <Link
+                      href="/platforms"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      prefetch={false}
+                    >
+                      Start Earning
+                  </Link>
               </div>
               <img
                 src="/images/task1.jpg"
                 width="550"
                 height="310"
-                alt="Play-to-Earn"
+                alt="Task-Based-Rewards"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
               />
             </div>
           </div>
         </section>
-       
+        <section id="crypto-education" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
+          <div className="container m-auto px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <div className="inline-block rounded-lg text-white bg-gradient-to-r from-red-400 to-[rgba(0,0,0,0.62)] px-3 py-1 text-sm">
+                Academy
+              </div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Crypto Education</h2>
+              <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Expand your crypto knowledge with our comprehensive educational resources, covering everything from blockchain basics to advanced topics
+              </p>
+             </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-4">
+                <ul className="grid gap-4">
+                  <li className="flex items-center gap-4">
+                    <BookIcon className="h-10 w-10 text-gray-500 " />
+                    <div>
+                      <h3 className="text-xl font-bold">Crypto Basics</h3>
+                      <p className="text-gray-600 ">
+                        Learn the fundamentals of cryptocurrencies and blockchain technology.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-center gap-4">
+                    <BadgeIcon className="h-10 w-10 text-gray-500 dark:text-gray-400" />
+                    <div>
+                      <h3 className="text-xl font-bold">Industry Insights</h3>
+                      <p className="text-gray-600">
+                          Stay informed about the latest developments in the crypto space.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-center gap-4">
+                    <WalletIcon className="h-10 w-10 text-gray-500 dark:text-gray-400" />
+                    <div>
+                      <h3 className="text-xl font-bold">Wallet Management</h3>
+                      <p className="text-gray-600">
+                         Learn how to securely store, manage, and protect your crypto assets.
+                      </p>
+                    </div>
+                  </li>
+                 
+                </ul>
+                  <Link
+                      href="/blog"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      prefetch={false}
+                    >
+                      Start Learning
+                  </Link>
+              </div>
+              <img
+                src="/images/task1.jpg"
+                width="550"
+                height="310"
+                alt="Crypto-Education"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+              />
+            </div>
+          </div>
+        </section>
+        <section id="crypto-news" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container m-auto px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <div className="inline-block rounded-lg text-white bg-gradient-to-r from-red-400 to-[rgba(0,0,0,0.62)] px-3 py-1 text-sm">
+                Cryto News
+              </div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Crypto News</h2>
+              <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                 Stay up-to-date with the latest news, trends, and developments in the crypto world.
+              </p>
+             </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-4">
+                <ul className="grid gap-4">
+                  <li className="flex items-center gap-4">
+                    <NewspaperIcon className="h-10 w-10 text-gray-500 " />
+                    <div>
+                      <h3 className="text-xl font-bold">Industry updates</h3>
+                      <p className="text-gray-600 ">
+                        Stay informed about the latest developments in the crypto industry.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-center gap-4">
+                    <TimerIcon className="h-10 w-10 text-gray-500 dark:text-gray-400" />
+                    <div>
+                      <h3 className="text-xl font-bold">Market Trends</h3>
+                      <p className="text-gray-600">
+                        Analyze the latest market trends and their impact on crypto investments.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-center gap-4">
+                    <RulerIcon className="h-10 w-10 text-gray-500 dark:text-gray-400" />
+                    <div>
+                      <h3 className="text-xl font-bold">Regulatory Updates</h3>
+                      <p className="text-gray-600">
+                          Stay informed about the evolving regulatory landscape in the crypto space.
+                      </p>
+                    </div>
+                  </li>
+                 
+                </ul>
+                  <Link
+                      href="/crypto-insights"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      prefetch={false}
+                    >
+                      Start Reading
+                  </Link>
+              </div>
+              <img
+                src="/images/task1.jpg"
+                width="550"
+                height="310"
+                alt="Cryto-News"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+              />
+            </div>
+          </div>
+        </section>
+
+        <div className="join-our-community text-center text-3xl">
+          <p className="text-blue-900 text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">Join our community</p>
+          <div className="flex flex-wrap justify-center mt-6 mb-32">
+            <FaTwitter className="mr-6"/>
+            <FaTelegram className=""/>
+          </div>
+        </div>
       </main>
+      <BottomSubscribe />
     </div>
   )
 }
@@ -410,50 +563,6 @@ function CropIcon(props) {
 }
 
 
-function CurrencyIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="8" />
-      <line x1="3" x2="6" y1="3" y2="6" />
-      <line x1="21" x2="18" y1="3" y2="6" />
-      <line x1="3" x2="6" y1="21" y2="18" />
-      <line x1="21" x2="18" y1="21" y2="18" />
-    </svg>
-  )
-}
-
-
-function DropletIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
-    </svg>
-  )
-}
-
-
 function GamepadIcon(props) {
   return (
     <svg
@@ -539,6 +648,181 @@ function WalletIcon(props) {
     >
       <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
       <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+    </svg>
+  )
+}
+
+function BarChartIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="12" x2="12" y1="20" y2="10" />
+      <line x1="18" x2="18" y1="20" y2="4" />
+      <line x1="6" x2="6" y1="20" y2="16" />
+    </svg>
+  )
+}
+
+
+function BookIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+    </svg>
+  )
+}
+
+
+function CreditCardIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="14" x="2" y="5" rx="2" />
+      <line x1="2" x2="22" y1="10" y2="10" />
+    </svg>
+  )
+}
+
+
+function CurrencyIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="8" />
+      <line x1="3" x2="6" y1="3" y2="6" />
+      <line x1="21" x2="18" y1="3" y2="6" />
+      <line x1="3" x2="6" y1="21" y2="18" />
+      <line x1="21" x2="18" y1="21" y2="18" />
+    </svg>
+  )
+}
+
+
+function DropletIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
+    </svg>
+  )
+}
+
+
+function NewspaperIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+      <path d="M18 14h-8" />
+      <path d="M15 18h-5" />
+      <path d="M10 6h8v4h-8V6Z" />
+    </svg>
+  )
+}
+
+
+function RulerIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z" />
+      <path d="m14.5 12.5 2-2" />
+      <path d="m11.5 9.5 2-2" />
+      <path d="m8.5 6.5 2-2" />
+      <path d="m17.5 15.5 2-2" />
+    </svg>
+  )
+}
+
+
+function TimerIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="10" x2="14" y1="2" y2="2" />
+      <line x1="12" x2="15" y1="14" y2="11" />
+      <circle cx="12" cy="14" r="8" />
     </svg>
   )
 }

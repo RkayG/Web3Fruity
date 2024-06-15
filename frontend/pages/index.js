@@ -1,6 +1,6 @@
 
 // INTERNAL IMPORTS
-import { ParentBanner, FeaturedAirdrops, Airdrops, Games, RewardForTask, CryptoInsights, TokenFarming } from "../Components";
+import { ParentBanner, FeaturedAirdrops, Airdrops, Games, RewardForTask, CryptoInsights, TokenFarming, BottomSubscribe } from "../Components";
 import dynamic from "next/dynamic";
 
 //const FeaturedAirdrops = dynamic(() => import("../Components/FeaturedAirdrops"), { ssr: false });
@@ -15,6 +15,7 @@ const index = () => {
       <Games />
       <RewardForTask />
       <CryptoInsights />
+      <BottomSubscribe />
     </>
   );
 }

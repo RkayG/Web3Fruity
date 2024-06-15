@@ -107,7 +107,7 @@ const Airdrops = () => {
                   <div className="w-16 h-16 relative">
                       <img src={airdrop.logo} className=" w-16 h-16 rounded-full" />
                   </div>
-                  <Link href={`/airdrop-guide/${airdrop._id}`}>
+                  <Link href={`/airdrops/${airdrop._id}`}>
                     <h2 className="text-lg font-bold absolute left-24 top-5 cursor-pointer ">{airdrop.title}</h2>
                   </Link>
                 </div>

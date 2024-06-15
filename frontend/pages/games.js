@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe } from 'react-icons/fa';
 import Link from 'next/link';
+import GameCard from "../Components/GameCard";
 
 const Games = () => {
   const [games, setGames] = useState([]);
@@ -11,14 +12,7 @@ const Games = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 12;
 
-  //========== truncate function for game.description
-  const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...';
-    }
-    return text;
-  }; // ========== end
-
+  
   //============= fetch games from backend
   useEffect(() => {
     const fetchGames = async () => {
@@ -60,73 +54,6 @@ const Games = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const GameCard = ({ game }) => (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden m-auto lg:p-8 mb-4 border-2 border-gray-200" style={{ width: "95%" }}>
-      <div className="flex">
-        <img className="w-24 h-24 lg:w-40 lg:h-auto rounded-2xl m-4 lg:m-0 lg:rounded-md lg:mr-6" src={game.image} alt={game.title} />
-        <div className="ml-4 flex-1">
-          <div className="title-and-view-button-container flex">
-            <h2 className="text-sm w-48 mt-4 lg:mt-0 lg:text-lg font-semibold font cursor-pointer lg:w-60">{game.title}</h2>
-            <span className="hidden font-semibold lg:block lg:static lg:ml-20 text-sm text-blue-900 rounded-2xl px-4 cursor-pointer hover:bg-blue-50 active:bg-ble-100" style={{ border: "1px solid blue", left: "11%" }}>
-              View
-            </span>
-          </div>
-          <div className="flex items-center mt-2">
-            <a href={game.website} className="mb-2 mr-3"><FaGlobe /></a>
-            {game.socialLinks.map((link, index) => {
-              let icon;
-              if (link.includes("twitter.com")) {
-                icon = <FaTwitter />;
-              } else if (link.includes("facebook.com")) {
-                icon = <FaFacebook />;
-              } else if (link.includes("discord.com")) {
-                icon = <FaDiscord />;
-              } else if (link.includes("telegram.com") || link.includes("t.me")) {
-                icon = <FaTelegram />;
-              } else if (link.includes("reddit.com")) {
-                icon = <FaReddit />;
-              }
-              return (
-                <a key={index} href={link} className="mr-3 mb-2">
-                  {icon}
-                </a>
-              );
-            })}
-          </div>
-          <p className="text-sm text-blue-900 font-semibold">Developer: {game.developer}</p>
-          <p className="mt-2 w-auto pr-3 text-xs md:text-sm lg:text-sm lg:w-2/4 h-20">{truncateText(game.description, 160)}</p>
-        </div>
-      </div>
-      <span className="lg:hidden font-semibold relative text-sm ml-6 py-1 -top-8 text-blue-900 rounded-2xl px-6 cursor-pointer hover:bg-blue-50 active:bg-blue-100" style={{ border: "1px solid blue" }}>
-        View
-      </span>
-      <div className="overflow-x-auto w-auto pt-6 pl-6 rounded-t-none rounded-b-md lg:rounded-md shadow-md bg-gray-200">
-        <div className="lg:flex lg:flex-wrap lg:justify-center scrollbar-track-gray-200 scrollbar-thin inline-flex scrollbar-thumb-red-900" style={{ maxHeight: "150px", overflowY: "auto" }}>
-          <div className="bg-white text-blue-900 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-            <p className="text-sm font-semibold text-center">Genre</p>
-            <p className="text-center font-semibold text-xs">{game.genre}</p>
-          </div>
-          <div className="bg-white text-green-800 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-            <p className="text-sm font-semibold text-center">Platform</p>
-            <p className="text-center font-semibold text-xs">{game.platform.length > 1 ? game.platform.join(', ') : game.platform}</p>
-          </div>
-          <div className="bg-white text-red-900 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-            <p className="text-sm font-semibold text-center">Token</p>
-            <p className="text-center font-semibold text-xs">{game.token}</p>
-          </div>
-          <div className="bg-white text-blue-900 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-            <p className="text-sm font-semibold text-center">Free-to-Play</p>
-            <p className="text-center font-semibold text-xs">{game.free2play ? "Yes" : "No"}</p>
-          </div>
-          <div className="bg-white text-green-800 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-            <p className="text-sm font-semibold text-center">Chain</p>
-            <p className="text-center font-semibold text-xs">{game.chain || 'N/A'}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     
     <div className="mb-20 max-w-[1920px] m-auto">
@@ -139,7 +66,7 @@ const Games = () => {
         </p>
         <Link
           href="#"
-          className="inline-flex items-center justify-center px-6 py-3 bg-[#ffd700] text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
+          className="inline-flex items-center justify-center px-6 py-3 bg-orange-300 text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
           prefetch={false}
         >
           Learn More About Play-To-Earn Games

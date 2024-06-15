@@ -54,7 +54,7 @@ const FeaturedAirdrops = () => {
       })
       .catch(error => {
         console.error('Error fetching airdrops:', error);
-        setLoading(false);
+        
       });
   }, []);
 

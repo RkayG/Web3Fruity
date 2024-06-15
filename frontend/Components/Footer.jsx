@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Footer = () => {
   const productList = ["Airdrops", "Token Farming", "Games", "Reward For Tasks"];
   const contactList = ["support@web3fruity.com", "info@example.com", "Contact Us"];
-  const usefulLink = ["Home", "About Us", "Blog"];
+  const usefulLink = ["Home", "About Us", "Academy"];
   return (
     <footer className='text-center  w-full flex justify-center text-white bg-black lg:text-left '>
       <div className='container mx-6 py-10 text-center md:text-left'>
