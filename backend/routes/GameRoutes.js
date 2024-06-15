@@ -37,16 +37,19 @@ router.get('/games', async (req, res) => {
   }
 });
 
-// Route to retrieve a specific game by ID
-router.get('/games/:id', async (req, res) => {
+// Route to retrieve a specific game by slug
+router.get('/games/:slug', async (req, res) => {
+  const { slug } = req.params;
   try {
-    const game = await Game.findById(req.params.id);
-    if (!game) {
-      return res.status(404).json({ message: 'Game not found' });
+    const game = await Game.findOne({ slug: slug });
+    if (game) {
+      res.json(game);
+    } else {
+      res.status(404).send('Game not found');
     }
-    res.json(game);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error fetching game by slug:', error);
+    res.status(500).send('Internal server error');
   }
 });
 

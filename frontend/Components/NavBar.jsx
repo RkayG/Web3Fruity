@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Logo, Menu } from '../Components/index';
 import { FaAngleDown } from 'react-icons/fa';
 import Subscribe from './Subscribe';
@@ -8,8 +9,10 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
+  const [activePage, setActivePage] = useState('Home');
   const menuRef = useRef(null);
   const dropdownRef = useRef(null);
+  const router = useRouter();
 
   const menuList = [
     { name: "Home", path: "/" },
@@ -22,10 +25,19 @@ const NavBar = () => {
     },
     { name: "Games", path: "/games" },
     { name: "Platforms", path: "/platforms" },
-    { name: "Blog", path: "/blog" },
+    { name: "Academy", path: "/academy" },
     { name: "Crypto Insights", path: "/crypto_insights" },
     { name: "About", path: "/about" },
   ];
+
+  useEffect(() => {
+    // Set the active page based on the current pathname
+    const currentPath = router.pathname;
+    const currentPage = menuList.find(menu => menu.path === currentPath || (menu.dropdown && menu.dropdown.some(subMenu => subMenu.path === currentPath)));
+    if (currentPage) {
+      setActivePage(currentPage.name);
+    }
+  }, [router.pathname]);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -61,7 +73,7 @@ const NavBar = () => {
                   onMouseEnter={() => el.dropdown && setIsDropdownOpen(true)}
                   onMouseLeave={() => el.dropdown && setIsDropdownOpen(false)}
                   onClick={() => el.dropdown && setIsDropdownOpen(!isDropdownOpen)}
-                  ref={el.dropdown ? dropdownRef : null}
+                  /* ref={el.dropdown ? dropdownRef : null} */
                 >
                   {el.dropdown ? (
                     <div 
@@ -69,7 +81,10 @@ const NavBar = () => {
                       onMouseLeave={() => setIsDropdownOpen(false)}
                     >
                       <button
-                        className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-orange-800 flex items-center'
+                        className={`font-medium cursor-pointer disabled:pointer-events-none focus-visible:outline-none active:outline-none checked:outline-none focus:ring-0 transition-colors duration-200 flex items-center ${
+                          activePage === el.name ? 'text-orange-800 checked:ring-0' : 'text-black hover:text-orange-800'
+                        }`}
+                        onClick={() => setActivePage(el.name)}
                       >
                         {el.name}
                         <FaAngleDown className='ml-1 mt-1' />
@@ -87,8 +102,15 @@ const NavBar = () => {
                       )}
                     </div>
                   ) : (
-                    <Link href={el.path} className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-orange-800'>
-                      {el.name}
+                    <Link href={el.path}>
+                      <button
+                        className={`font-medium cursor-pointer transition-colors duration-200 ${
+                          activePage === el.name ? 'text-orange-800' : 'text-black hover:text-orange-800'
+                        }`}
+                        onClick={() => setActivePage(el.name)}
+                      >
+                        {el.name}
+                      </button>
                     </Link>
                   )}
                 </li>
@@ -159,8 +181,15 @@ const NavBar = () => {
                               )}
                             </div>
                           ) : (
-                            <Link href={el.path} className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-teal-accent-400'>
-                              {el.name}
+                            <Link href={el.path}>
+                              <button
+                                className={`font-medium cursor-pointer transition-colors duration-200 ${
+                                  activePage === el.name ? 'text-orange-800' : 'text-black hover:text-orange-800'
+                                }`}
+                                onClick={() => { setActivePage(el.name); setIsMenuOpen(false)}}
+                              >
+                                {el.name}
+                              </button>
                             </Link>
                           )}
                         </li>

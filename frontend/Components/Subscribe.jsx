@@ -18,6 +18,7 @@ const Subscribe = ({ onClose }) => {
       const response = await axios.post('http://localhost:1225/subscribe', { email });
       setMessage('Subscription successful!');
       setMessageType('success'); // Set message type to success
+      console.log(email);
       setIsSubscribed(true);
     } catch (error) {
       if (error.response && error.response.status === 409) {
