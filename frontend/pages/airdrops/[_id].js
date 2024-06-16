@@ -44,7 +44,7 @@ const AirdropGuide = () => {
       try {
         const response = await axios.get('http://localhost:1225/airdrops', {
           params: {
-            limit: 3,
+            limit: 6,
             page: page,
           },
         });

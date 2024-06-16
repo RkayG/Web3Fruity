@@ -6,14 +6,18 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Link from 'next/link';
 import ReactPlayer from 'react-player/youtube';
-import { EffectCoverflow, Autoplay, Pagination, A11y } from 'swiper/modules';
+import Glide from '@glidejs/glide';
+import '@glidejs/glide/dist/css/glide.core.min.css';
+import '@glidejs/glide/dist/css/glide.theme.min.css';
+/* import { EffectCoverflow, Autoplay, Pagination, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-coverflow';
-
+ */
 
 const YouTubePlayer = ({ url }) => {
   return (
@@ -61,11 +65,11 @@ const GameDetails = () => {
         try {
           const response = await fetch(`http://localhost:1225/games/${_slug}`);
           const gameData = await response.json();
-          console.log(gameData);
+          // console.log(gameData);
           setGame(gameData);
           setLoading(false);
         } catch (error) {
-          console.log('Failed to load Game info:', error);
+          console.error('Failed to load Game info:', error);
           setError('Failed to load game info');
         }
       };
@@ -74,12 +78,13 @@ const GameDetails = () => {
         try {
           const response = await axios.get('http://localhost:1225/games', {
             params: {
-              limit: 3,
-              page: page,
+              limit: 4,
             },
           });
-          const games = await response.data.games;
-          setAdditionalGames(response.data.games);
+         // console.log(response);
+          const games = await response.data;
+         // console.log(games);
+          setAdditionalGames(games);
         } catch (error) {
           console.error('Failed to load additional games:', error);
         }
@@ -109,6 +114,59 @@ const GameDetails = () => {
       }
 
     const { title, description, logo, guide, gallery } = game;
+
+    const GlideCarousel = ({ gallery }) => {
+      useEffect(() => {
+        if (gallery && gallery.length > 0) {
+          const glide = new Glide('.glide', {
+            type: 'carousel',
+            startAt: 0,
+            perView: 3,
+            gap: 50,
+            autoplay: 2500,
+            animationDuration: 500,
+            breakpoints: {
+              1024: { perView: 2 },
+              768: { perView: 2 },
+              640: { perView: 1 }
+            }
+          });
+    
+          glide.mount();
+    
+          return () => glide.destroy();
+        }
+      }, [gallery]);
+    
+      if (!gallery || gallery.length === 0) {
+        return <p className="text-center text-gray-500">No gallery available.</p>;
+      }
+    
+      return (
+        <div className="glide">
+          <div className="glide__track" data-glide-el="track">
+            <ul className="glide__slides">
+              {gallery.map((image, index) => (
+                <li key={index} className="glide__slide">
+                  <div className="bg-white shadow-md rounded-md p-1 mb-3 relative">
+                    <img src={image} alt={`Gallery image ${index + 1}`} className="w-full h-56 rounded-md" />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="glide__arrows" data-glide-el="controls">
+            <button className="glide__arrow glide__arrow--left" data-glide-dir="<">&lt;</button>
+            <button className="glide__arrow glide__arrow--right" data-glide-dir=">">&gt;</button>
+          </div>
+          <div className="glide__bullets" data-glide-el="controls[nav]">
+            {gallery.map((_, index) => (
+              <button key={index} className="glide__bullet" data-glide-dir={`=${index}`}></button>
+            ))}
+          </div>
+        </div>
+      );
+  };
 
     // Define custom render options
     const renderOptions = {
@@ -167,7 +225,7 @@ const GameDetails = () => {
               })}
             </div>
             <p className="text-sm text-blue-900 font-semibold">Developer: {game?.developer}</p>
-            <p className="mt-2 w-auto pr-3 text-xs md:text-sm lg:text-sm  h-20">{game?.description}</p>
+            <p className="mt-2 w-auto pr-3 text-sm  h-20">{game?.description}</p>
           </div>
         </div>
   
@@ -202,94 +260,81 @@ const GameDetails = () => {
   };
     
   return (
-    <main>
+    <main className='max-w-[1928px] m-auto'>
       <Navigation title={title}  />
       <GameCard game={game} className='mt-12' />
-      <div class="grid-cols-2 grid gap-8 md:grid-cols-3 lg:grid-cols-4 mt-8 pad mx-[2.5%]">
-        <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
+      <div class="additonal-game-info grid-cols-2 grid gap-8 md:grid-cols-3 lg:grid-cols-4 mt-8 pad mx-[2.5%]">
+          <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
+          ">
+              <i class="fas fa-cube text-xl text-white mt-6 mb-2"></i>
+              <p class="text-center text-xs text-blue-900">${game.token} Price</p>
+              <p id="totalBlock" class="text-white text-center"></p>
+          </div>
+  
+          <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
         ">
-            <i class="fas fa-cube text-xl text-white mt-6 mb-2"></i>
-            <p class="text-center text-xs text-blue-900">${game.token} Price</p>
-            <p id="totalBlock" class="text-white text-center"></p>
-        </div>
- 
-        <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-       ">
-            <i class="fas fa-clock text-xl text-white mt-6 mb-2"></i>
-            <p class="text-center text-xs text-blue-900">Marketcap</p>
-            <p id="averageBlockTime" class="text-white text-center"></p>
-        </div>
+              <i class="fas fa-clock text-xl text-white mt-6 mb-2"></i>
+              <p class="text-center text-xs text-blue-900">Marketcap</p>
+              <p id="averageBlockTime" class="text-white text-center"></p>
+          </div>
 
-        <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-         ">
-            <i class="fas fas fas fa-globe text-xl text-white mt-6 mb-2"></i>
-            <p class="text-center text-xs text-blue-900">Initial/Required Investment</p>
-             <p id="ethMarketcap" class="text-orange-900 text-center"> $1,999,9999</p>
-        </div>
+          <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
+          ">
+              <i class="fas fas fas fa-globe text-xl text-white mt-6 mb-2"></i>
+              <p class="text-center text-xs text-blue-900">Initial/Required Investment</p>
+              <p id="ethMarketcap" class="text-orange-900 text-center"> $1,999,9999</p>
+          </div>
 
-        <div class="h-28  bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-      ">
-            <i class="fas fas fa-compress-arrows-alt text-xl text-white mt-6 mb-2"></i>
-            <p class="text-center text-xs text-blue-900">Avg Earning / Day</p>
-             <p id="totalTransactions" class="text-white text-center"></p>       
-        </div>
-    </div>
-      <div className="mx-auto my-12 px-6">
-        
+          <div class="h-28  bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
+          ">
+              <i class="fas fas fa-compress-arrows-alt text-xl text-white mt-6 mb-2"></i>
+              <p class="text-center text-xs text-blue-900">Avg Earning / Day</p>
+              <p id="totalTransactions" class="text-white text-center"></p>       
+          </div>
+    </div> {/*---------------------  additional-game-info-end ----------------- */}
+
+    <div className="gameplay-trailer-and-gallery mx-auto my-12 ">
         <h1 className="border-t border-t-gray-200 pt-10 text-2xl text-center font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">{game.title} Gameplay</h1>
         
-        <div className='gameplay-container border-b border-b-gray-200 pb-12 w-full'>
+        
+        <div className='gameplay-container rounded-md border-b px-6 bg-[#b8b8c4]/10 border-b-gray-200 py-12 w-full'>
           <span className="">
             <YouTubePlayer url={game.trailer} />
           </span>
           
           <div className="swiper-container mt-96">
-              <Swiper
-                modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}
-                effect={'coverflow'}
-                spaceBetween={50}
-                grabCursor={true}
-                breakpoints={breakpoints}
-                centeredSlides={true}
-                pagination={{ el: '.swiper-pagination', clickable: true }}
-                loop={true}
-                autoplay={{ delay: 2500 }}
-                coverflowEffect={{ rotate: 0, stretch: 0, depth: 50, slideShadows: false }}
-                className="swiper"
-              >
-                {gallery.map((image, index) => (
-                  <SwiperSlide key={index} className="swiper-slide">
-                    <div className="bg-white shadow-md rounded-xl p-4 mb-3 relative">
-                      <img src={image} alt={`Gallery image ${index + 1}`} className="w-full h-44 rounded-xl" />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-          </div>
-        </div>
-        {guide ? (
+             <GlideCarousel gallery={game.gallery} />
+
+            </div>
+         </div>
+      </div> {/* ---------------- gameplay-trailer-and-gallery-end ------------------*/}
+
+      {guide ? (
           <div>
-            {/* <h2 className="text-2xl font-bold mb-4">Steps To Join Airdrop</h2> */}
+            
             <div className='border-t-2 border-t-orange-800 p-6 lg:px-12 rounded-lg bg-gray-100'>{documentToReactComponents(guide, renderOptions)}</div>
           </div>
         ) : (
           <p className="text-center text-gray-500">No guide available for this game.</p>
-        )}
+        )} {/*--------------- guide end ------------- */}
       
-      {/*   <img src={game.image} alt={game.title} className="w-full h-auto rounded-lg mb-8" /> */}
-        {/* <p className="text-lg leading-relaxed">{game.description}</p>*/}
-        <div className="mt-6 ">
-          <h2 className="text-2xl font-semibold mb-4">Game Details</h2>
-          <ul className="list-disc pl-6">
-            <li><strong>Developer:</strong> {game.developer}</li>
-            <li><strong>Genre:</strong> {game.genre}</li>
-            <li><strong>Platform:</strong> {game.platform.length > 1 ? game.platform.join(', ') : game.platform}</li>
-            <li><strong>Token:</strong> {game.token}</li>
-            <li><strong>Free-to-Play:</strong> {game.free2play ? 'Yes' : 'No'}</li>
-            <li><strong>Chain:</strong> {game.chain}</li>
-          </ul>
-        </div> 
-      </div>
+      <div className="py-8 px-3 mt-12 mb-20 border rounded-md bg-gray-50">
+        <h2 className="text-2xl font-bold mb-6 px-6 ">More Games </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {additionalGames.map((game) => (
+              <div
+              key={game._id}
+              className="bg-white mx-4 lg:mx-0 rounded-md pb-8 shadow-md p-1 border-2 border-solid border-gray-200 relative "
+            >
+              <img className="rounded-lg h-[204px] w-full " src={game.image} /> 
+              <h2 className="text-lg mt-4 font-semibold text-blue-900 cursor-pointer text-center">{game.title}</h2>
+              <p className='text-center text-gray-500'>{game.genre}</p>
+              <p className='text-center text-sm font-semibold text-orange-800'>{game?.platform.length > 1 ? game?.platform.join(', ') : game?.platform}</p>
+            </div>
+        ))};
+            
+         </div>
+      </div> 
     </main>
   );
 };
