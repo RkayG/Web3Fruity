@@ -69,7 +69,7 @@ const Games = () => {
           className="inline-flex items-center justify-center px-6 py-3 bg-orange-300 text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
           prefetch={false}
         >
-          Learn More About Play-To-Earn Games
+          Learn More
         </Link>
       </div>
     </section>

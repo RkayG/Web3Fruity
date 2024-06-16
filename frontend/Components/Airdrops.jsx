@@ -68,7 +68,7 @@ const Airdrops = () => {
       {loading ? (
         <AirdropsSkeleton />
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:px-8 lg:m-auto">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3  lg:px-8 lg:m-auto">
           {airdrops?.map((airdrop) => (
             <div
               key={airdrop._id}

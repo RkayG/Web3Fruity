@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 import { BottomSubscribe } from "../Components";
 import { FaTwitter, FaTelegram } from "react-icons/fa";
 
