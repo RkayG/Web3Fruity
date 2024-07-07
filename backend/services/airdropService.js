@@ -38,7 +38,7 @@ async function syncAirdropsWithDatabase() {
       await Airdrop.create(airdropData);
     }
   }
-  console.log('syncAirdropsWithDatabase called successfully');
+  //console.log('syncAirdropsWithDatabase called successfully');
 } 
 
 module.exports = syncAirdropsWithDatabase;

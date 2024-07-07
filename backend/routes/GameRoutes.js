@@ -30,7 +30,8 @@ router.post('/games', async (req, res) => {
 // Route to retrieve all games
 router.get('/games', async (req, res) => {
   try {
-    const games = await Game.find();
+    let limit = parseInt(req.query.limit) || 12;
+    const games = await Game.find().limit(limit);
     res.json(games);
   } catch (error) {
     res.status(500).json({ message: error.message });

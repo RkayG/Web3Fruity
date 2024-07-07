@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe } from 'react-icons/fa';
 import Link from 'next/link';
-import GameCard from "../Components/GameCard";
+import GameCard from "../../Components/GameCard";
 
 const Games = () => {
   const [games, setGames] = useState([]);

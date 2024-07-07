@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from "next/link";
+import { FaVideo } from "react-icons/fa";
 
 //================= fetch game token price and display in a tooltip
 const RewardTooltip = ({ reward }) => {
@@ -101,10 +102,13 @@ const RewardForTask = () => {
 
   return (
     <div className="py-8 my-20 w-full h-auto max-w-[1580px] m-auto">
-      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">Reward for Tasks</h2>
+      <span className="flex flex-wrap md:px-4 lg:px-8 px-4">
+      <FaVideo className="text-2xl md:text-3xl lg:text-3xl text-blue-500 lg:ml-5 mr-4 mt-1" />
+      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">Reward for Tasks</h2>
+      </span>
       {loading ? ( <p>Loading...</p> ) : (
         <div className="mx-3 text-center relative mb-28 rounded-md shadow-sm m-auto">
-          <table className="hidden lg:block w-full border-collapse border border-gray-200">
+          <table className="hidden  w-full border-collapse border border-gray-200">
             <thead>
               <tr>
                 <th className="p-4 pl-10 text-left">Platform</th>
@@ -151,7 +155,7 @@ const RewardForTask = () => {
             </tbody>
           </table>
 
-          <div className="mr-auto lg:hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          <div className="mr-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
             {rewards.map((reward, index) => (
               <div
                 key={index}

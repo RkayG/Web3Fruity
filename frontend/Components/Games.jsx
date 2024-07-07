@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactDOM from 'react-dom';
-import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe, FaAngleUp, FaAngleDown } from 'react-icons/fa';
+import { FaGamepad } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import axios from "axios";
 import Link from "next/link";
@@ -120,7 +120,10 @@ const Games = () => {
 
   return (
     <div className="mb-20 max-w-[1580px] pt-12 m-auto">
-      <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">Play to Earn</h1>
+      <span className="flex flex-wrap md:px-4 lg:px-8 px-4">
+        <FaGamepad className="text-2xl md:text-3xl lg:text-3xl text-blue-500 lg:ml-5 mr-3 mt-2 "/>
+        <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6  inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">Play to Earn</h1>
+      </span>
       {games.map((game, index) => (
         <GameCard key={index} game={game} />
       ))}

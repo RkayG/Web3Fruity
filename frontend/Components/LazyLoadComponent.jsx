@@ -29,7 +29,7 @@ const LazyLoadComponent = ({ children }) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="h-64 bg-gray-200 flex items-center justify-center">
+    <div ref={containerRef} className="h-64 bg-white flex items-center justify-center">
       {isVisible ? children : 'Loading...'}
     </div>
   );

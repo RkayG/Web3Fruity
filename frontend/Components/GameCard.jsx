@@ -26,7 +26,7 @@ const GameCard = ({ game }) => {
             <div className="title-and-view-button-container flex">
               <h2 className="text-sm w-48 mt-4 lg:mt-0 lg:text-lg font-semibold cursor-pointer lg:w-60">{game.title}</h2>
               <Link href={`/games/${game.slug}`}>
-                <span className="hidden font-semibold lg:block lg:static lg:ml-20 text-sm text-blue-900 rounded-2xl px-4 cursor-pointer hover:bg-blue-50 active:bg-ble-100" style={{ border: "1px solid blue", left: "11%" }}>
+                <span className="hidden font-semibold py-1 lg:block lg:static lg:ml-20 text-sm text-blue-900 rounded-2xl px-4 cursor-pointer hover:bg-blue-50 active:bg-ble-100" style={{ border: "1px solid blue", left: "11%" }}>
                   View
                 </span>
               </Link>

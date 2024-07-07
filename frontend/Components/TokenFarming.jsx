@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { FaPlaystation, FaTractor, FaTree} from 'react-icons/fa';
 
 const TokenFarming = () => {
   const router = useRouter();
@@ -16,16 +17,15 @@ const TokenFarming = () => {
   useEffect(() => {
     const fetchTokens = async () => {
       try {
-        const response = await fetch('http://localhost:1225/farm-tokens'); // Update this to your actual API endpoint
+        const response = await fetch('http://localhost:1225/farm-tokens'); 
         const data = await response.json();
         setTokens(data);
         const uniqueBlockchains = [...new Set(data.map(token => token.blockchain))];
         setBlockchains(uniqueBlockchains);
         setFilteredTokens(data.slice(0, 6)); // Limit to 6 tokens initially
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching tokens:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -44,8 +44,7 @@ const TokenFarming = () => {
   if (loading) {
     return (
       <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
-        <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
-        text-transparent bg-gradient-to-r from-blue-500 to-red-500">Loading...</h2>
+        <div className="mb-6 pl-8 w-56 animate-pulse h-8 bg-gray-400 ml-10 rounded-md"></div>
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
           {[...Array(6)].map((_, index) => (
             <div key={index} className="rounded-lg bg-gray-300 animate-pulse pb-6 flex flex-col items-center justify-between border">
@@ -64,9 +63,11 @@ const TokenFarming = () => {
 
   return (
     <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
-      <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
-      text-transparent bg-gradient-to-r from-blue-500 to-red-500">Token Farming / Potential Airdrops</h2>
-
+      <span className="flex flex-wrap md:px-4 lg:px-8 px-4">
+        <FaTractor className="text-2xl md:text-3xl lg:text-3xl text-blue-500 lg:ml-5 mr-3 mt-2 "/>
+        <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 inline-block bg-clip-text 
+        text-transparent bg-gradient-to-r from-blue-500 to-red-500">Token Farming / Potential Airdrops</h2>
+      </span>
       <div className="flex flex-wrap gap-4 mb-6 pl-8">
         <button
           className={`px-4 py-2 rounded-lg ${selectedBlockchain === '' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}

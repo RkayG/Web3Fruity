@@ -9,8 +9,9 @@ const featuredAirdropRouter = require('./routes/FeaturedAirdropRoutes');
 const airdropRouter = require('./routes/AirdropRoutes');
 const gameRouter = require('./routes/GameRoutes');
 const rewardTaskRouter = require('./routes/RewardTaskRoutes')
-const cryptoInsightRouter = require('./routes/CryptoInsightsRoutes');
+const cryptoNewsRouter = require('./routes/CryptoNewsRoutes');
 const tokenFarmingRouter = require('./routes/TokenFarmingRoutes');
+const academyRouter = require('./routes/AcademyPostRoutes');
 const subscribeRouter = require('./routes/SubscriberRoutes');
 
 // Use middleware if needed
@@ -22,8 +23,9 @@ app.use('/api', featuredAirdropRouter); // Mount router with a base path
 app.use('/', airdropRouter);
 app.use('/', gameRouter);
 app.use('/', rewardTaskRouter);
-app.use('/', cryptoInsightRouter);
+app.use('/', cryptoNewsRouter);
 app.use('/', tokenFarmingRouter);
+app.use('/', academyRouter);
 app.use('/', subscribeRouter);
 
 const port = process.env.PORT || 1225;

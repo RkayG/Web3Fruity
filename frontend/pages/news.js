@@ -48,23 +48,23 @@ const CryptoNews = () => {
              </h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {currentNews.map((item, index) => (
-                <Link href={item.fields.websiteUrl} key={index} className="news-card block rounded-lg overflow-hidden shadow-md">
+                <Link href={'/crypto-news'} key={index} className="news-card block rounded-lg overflow-hidden shadow-md">
                   <img
-                    src={item.fields.newsThumbnailLink}
-                    alt={item.fields.cryptoNewsTitle}
+                    src={item.imageLink}
+                    alt={item.newsHeading}
                     className="w-full h-48 object-cover object-center"
                   />
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2 hover:text-blue-500 transition duration-300 ease-in-out">
-                      {item.fields.cryptoNewsTitle}
+                      {item.newsHeading}
                     </h3>
-                    <p className="text-gray-700 mb-4">{item.fields.cryptoNewsDescription}</p>
+                    <p className="text-gray-700 mb-4">{item.cryptoNewsDescription}</p>
                     <div className="flex items-center justify-between text-sm">
                       <p className="text-gray-500">
-                        {getTimeDifference(item.fields.timestamp)}
+                        {getTimeDifference(item.timestamp)}
                       </p>
                       <p className="text-gray-500 font-semibold">
-                        {item.fields.cryptoNewsSiteName}
+                        {item.author}
                       </p>
                     </div>
                   </div>

@@ -73,15 +73,17 @@ const Airdrops = () => {
         <>
     
        <section className="relative w-full h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/airdrops.jpg')]">
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.7)] to-[rgba(0,0,0,0.6)]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.9)] to-[rgba(0,0,0,0.7)]" />
       <div className="relative z-10 text-center text-white max-w-3xl px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">Discover Airdrop pools</h1>
-        <p className="text-lg sm:text-xl md:text-2xl mb-8">
-          Earn free tokens by participating in our airdrop pool selections
-        </p>
+        <div className="">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 shadow-3xl">Discover Airdrop pools</h1>
+          <p className="text-lg sm:text-xl md:text-2xl mb-8 shadow-3xl">
+            Earn free tokens by participating in our airdrop pool selections
+          </p>
+        </div>
         <Link
           href="#"
-          className="inline-flex items-center justify-center px-6 py-3 bg-[#ffd700] text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
+          className="inline-flex items-center mt-4 justify-center px-6 py-3 bg-[#ffd700] text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
           prefetch={false}
         >
           Learn More About Airdrops
@@ -91,50 +93,66 @@ const Airdrops = () => {
 
           <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
           text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-            Confirmed Airdrops
+            
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:px-8 lg:m-auto">
-            {airdrops.map((airdrop) => (
+          {airdrops?.map((airdrop) => (
+            <div>
+              <p className='flex justify-center m-auto py-3 px-16 font-bold text-lg text-white rounded-3xl w-fit bg-gradient-to-r from-blue-900 to-blue-500
+              '>{airdrop.title}</p>
               <div
                 key={airdrop._id}
-                className="bg-white mx-4 lg:mx-0 rounded-md pb-8 
-                shadow-md p-4 border-2 border-solid border-gray-200 relative min-w-[340px]">
-                <span className="absolute top-2 right-2 text-xs font-semibold green 
-                py-1 px-2 rounded-xl text-white ">
+                className="bg-white mx-4 lg:mx-0 rounded-md pb-8 shadow-md p-4 border border-solid border-blue-900  rounded-t-2xl 
+                 relative min-w-[340px]"
+              >
+                <span className="absolute top-0 right-0 text-xs font-semibold green py-2 px-3 rounded-tr-2xl text-white">
                   {airdrop.platformType}
                 </span>
                 <div className="flex items-center justify-between mb-8">
                   <div className="w-16 h-16 relative">
-                      <img src={airdrop.logo} className=" w-16 h-16 rounded-full" />
+                    <img src={airdrop.logo} className="w-16 h-16 rounded-full" />
                   </div>
-                  <Link href={`/airdrops/${airdrop._id}`}>
-                    <h2 className="text-lg font-bold absolute left-24 top-5 cursor-pointer ">{airdrop.title}</h2>
+                  <Link href={`/airdrop-guide/${airdrop._id}`}>
+                    <h2 className="text-lg font-bold absolute left-24 top-5 cursor-pointer">
+                      {airdrop.title}
+                    </h2>
                   </Link>
                 </div>
                 <p className="text-sm text-gray-500 mb-2">
-                  <span className='text-xs absolute top-20 left-24'>Total Airdrop Pool</span>
+                  <span className="text-xs absolute top-20 left-24">Total Airdrop Pool</span>
                   <span className="font-semibold absolute top-14 left-24">{airdrop.rewardPool || 'N/A'}</span>
                 </p>
                 <p className="text-sm text-gray-500 mb-2">
-                  <span className='text-xs absolute top-20 left-56'>% of Total Supply</span>
+                  <span className="text-xs absolute top-20 left-56">% of Total Supply</span>
                   <span className="font-semibold absolute top-14 left-56">{airdrop.rewardPercentFromSupply || 'N/A'}</span>
                 </p>
                 <p className="text-xs text-gray-500">
-                  <span className=''>End Date</span>
-                  <span className="font-semibold absolute bottom-4 left-4">{new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}</span>
+                  <span>End Date</span>
+                  <span className="font-semibold absolute bottom-4 left-4">
+                    {new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}
+                  </span>
                 </p>
                 <p className="text-xs text-gray-500">
-                  <span className='absolute top-28 right-4'>Chain</span>
+                  <span className="absolute top-28 right-4">Chain</span>
                   <span className="font-semibold absolute bottom-4 right-4">{airdrop.chain || 'N/A'}</span>
                 </p>
+
                 <Link href={`/airdrops/${airdrop._id}`}>
-                  <span aria-label='view' title='view' className="absolute top-28 text-center m-auto"
-                  style={{left: "46%"}}>
-                    <img className='w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8' src='go-icon-13.jpg'></img>
+                  <span
+                    aria-label="view"
+                    title="view"
+                    className="absolute top-28 text-center m-auto"
+                    style={{ left: '46%' }}
+                  >
+                    <img
+                      className="w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8"
+                      src="go-icon-13.jpg"
+                    ></img>
                   </span>
                 </Link>
               </div>
-            ))}
+            </div>
+          ))}
           </div>
           <div className="flex justify-center mt-6">
             {renderPagination()}
