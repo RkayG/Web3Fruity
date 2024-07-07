@@ -11,8 +11,9 @@ import Airdrops from "./Airdrops";
 import TokenFarming from "./TokenFarming"
 import Games from "./Games";
 import RewardForTask from "./RewardForTask";
-import CryptoInsights from "./CryptoInsights";
+import CryptoNews from "./CryptoNews";
 import BottomSubscribe from "./BottomSubscribe";
+import BottomNavigationPanel from "./BottomNavigationPanel";
 
 export { NavBar, Footer, ParentBanner, Logo, Menu, ICON, Close, Arrow, FeaturedAirdrops, Airdrops, TokenFarming,
-    Games, RewardForTask, CryptoInsights, BottomSubscribe };
+    Games, RewardForTask, CryptoNews, BottomSubscribe, BottomNavigationPanel };

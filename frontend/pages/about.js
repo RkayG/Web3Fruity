@@ -11,7 +11,7 @@ export default function Component() {
             <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-2xl font-bold tracking-tighter text-blue-800 sm:text-5xl">
+                  <h1 className="text-2xl font-bold tracking-tighter text-blue-800 sm:text-5xl lg:mb-6">
                     Your Gateway to Crypto Earning
                   </h1>
                   <p className="max-w-[600px] text-gray-600 md:text-xl/relaxed lg:xl/relaxed xl:text-xl/relaxed mt-3">
@@ -29,11 +29,11 @@ export default function Component() {
                     Explore Earnings
                   </Link>
                   <Link
-                    href="#"
+                    href="/academy"
                     className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-200 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50  focus-visible:ring-gray-300"
                     prefetch={false}
                   >
-                    Blog
+                    Academy
                   </Link>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export default function Component() {
                   </Link>
               </div>
               <img
-                src="/images/gameplay.jpg"
+                src="/images/airdrops.jpg"
                 width="550"
                 height="310"
                 alt="Airdrops"

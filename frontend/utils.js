@@ -39,3 +39,14 @@ export const getTimeDifference = (timestamp) => {
     return 'just now';
   }
 };
+
+
+// Helper function to format the timestamp
+export const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};

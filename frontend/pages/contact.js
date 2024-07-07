@@ -35,20 +35,20 @@ const Contact = () => {
 
   return (
     <div className="w-full max-w-[1580px] m-auto">
-      <section className="w-full bg-gray-200 py-12 md:py-24 lg:py-32 dark:bg-gray-100">
+      <section className="w-full bg-gradient-to-tr from-blue-300 to-orange-200 py-12 md:py-24 lg:py-32 ">
         <div className=" px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="space-y-4">
-              <h1 className="text-3xl font-bold  sm:text-3xl md:text-4xl px-2">Get in Touch</h1>
-              <p className="text-gray-900 md:text-xl dark:text-gray-700 px-2">
-                Would you like to reach out to us? Fill out the form and our team will get back to you.
+              <h1 className="text-3xl font-bold text-blue-900 sm:text-3xl md:text-4xl px-2">Get in Touch</h1>
+              <p className="text-gray-900 md:text-xl px-2">
+                Would you like to reach out to us? Fill out the form and we will get back to you.
                 
               </p>
-              <p className="text-gray-500 md:text-xl dark:text-gray-700 px-2">
-                info@web3fruity.com
+              <p className="text-gray-500 md:text-xl  px-2">
+                Email: support@web3fruity.com
               </p>
             </div>
-            <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-950">
+            <div className="rounded-lg bg-white p-6 shadow-lg ">
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>

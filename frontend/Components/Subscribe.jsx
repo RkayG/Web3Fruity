@@ -34,12 +34,12 @@ const Subscribe = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50">
       
-      <div className="bg-white py-8 rounded shadow-lg w-[400px] lg:w-[600px] md:w-[500px]">
-      <button onClick={onClose} className=" relative float-right top-[-30px] p-2 mx-4 rounded w-6 ">
+      <div className="bg-white py-8 rounded-md shadow-lg w-[400px] lg:w-[600px] md:w-[500px]">
+      <button onClick={onClose} className=" relative float-right top-[-32px] p-2 bg-gray-200 hover:bg-gray-300 rounded-tr-md">
           <Close />
         </button>
-        <h2 className="text-2xl font-bold text-center text-[blue-900]">Subscribe to our newsletter</h2>
-        <p className="text-gray-500 dark:text-gray-400 text-center mb-7">
+        <h2 className="text-2xl ml-6 font-bold text-center text-[blue-900]">Subscribe to our newsletter</h2>
+        <p className="text-blue-900/80 text-center mb-7 ml-6">
           Get the latest updates and insights delivered to your inbox.
         </p>
         <input
@@ -47,7 +47,7 @@ const Subscribe = ({ onClose }) => {
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border-2 border-orange-800 m-4 rounded-md  p-3 w-[80%] flex mx-auto"
+          className="border border-gray-500 m-4 rounded-md  p-3 w-[80%] flex mx-auto"
         />
         {isSubscribed ? (
           <div className="flex justify-center items-center text-green-500 mb-4">
@@ -56,7 +56,7 @@ const Subscribe = ({ onClose }) => {
         ) : (
           <button
             onClick={handleSubscribe}
-            className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded w-56 flex justify-center items-center mx-auto m-4"
+            className="bg-blue-500 hover:bg-blue-600  text-white p-3 rounded-md w-56 flex justify-center items-center mx-auto m-4"
           >
             Subscribe
           </button>

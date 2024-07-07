@@ -26,7 +26,7 @@ const NavBar = () => {
     { name: "Games", path: "/games" },
     { name: "Platforms", path: "/platforms" },
     { name: "Academy", path: "/academy" },
-    { name: "Crypto Insights", path: "/crypto_insights" },
+    { name: "Crypto News", path: "/crypto-news" },
     { name: "About", path: "/about" },
   ];
 
@@ -58,7 +58,7 @@ const NavBar = () => {
 
   return (
     <div className='bg-white shadow-lg'>
-      <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-[1580px] md:px-24 lg:px-8'>
+      <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-[1580px] md:px-4 lg:px-8'>
         <div className='relative flex items-center justify-between'>
           <div className='flex items-center'>
             <a title='Web3Fruity' href='/' className='inline-flex items-center mr-8'>
@@ -70,31 +70,34 @@ const NavBar = () => {
                 <li 
                   key={i + 1} 
                   className='relative' 
-                  onMouseEnter={() => el.dropdown && setIsDropdownOpen(true)}
-                  onMouseLeave={() => el.dropdown && setIsDropdownOpen(false)}
-                  onClick={() => el.dropdown && setIsDropdownOpen(!isDropdownOpen)}
-                  /* ref={el.dropdown ? dropdownRef : null} */
+                  
+                  onClick={() => el.dropdown && setIsDropdownOpen(!isDropdownOpen)}                  
                 >
                   {el.dropdown ? (
                     <div 
-                      onMouseEnter={() => setIsDropdownOpen(true)}
-                      onMouseLeave={() => setIsDropdownOpen(false)}
+                      onClick={() => el.dropdown && setIsDropdownOpen(true)}
+                    
                     >
                       <button
                         className={`font-medium cursor-pointer disabled:pointer-events-none focus-visible:outline-none active:outline-none checked:outline-none focus:ring-0 transition-colors duration-200 flex items-center ${
                           activePage === el.name ? 'text-orange-800 checked:ring-0' : 'text-black hover:text-orange-800'
                         }`}
                         onClick={() => setActivePage(el.name)}
+                        
                       >
                         {el.name}
                         <FaAngleDown className='ml-1 mt-1' />
                       </button>
-                      {isDropdownOpen && (
-                        <ul className='absolute left-0 w-48 mt-2 bg-white border-t-2 border-t-orange-800 border rounded shadow-lg z-[500] py-2'>
+                      {isDropdownOpen && (    
+                        <ul className='absolute left-0 w-48 mt-2 bg-white border-t-2 border-t-orange-800 border rounded shadow-lg z-[500] py-2'
+                            onMouseEnter={() => el.dropdown && setIsDropdownOpen(true)}
+                            onMouseLeave={() => el.dropdown && setIsDropdownOpen(!isDropdownOpen)}
+                        >
                           {el.dropdown.map((subEl, j) => (
                             <li key={j + 1} className='px-4'>
-                              <Link href={subEl.path} className='block px-2 py-2 rounded-md text-black hover:bg-gray-100 hover:border-l-2 hover:border-l-orange-800'>
+                              <Link href={subEl.path} className='block px-2 py-2 rounded-md text-black hover:bg-gray-100 hover:border-l-2 hover:border-l-orange-800' onClick={() => setActivePage(el.name)}>
                                 {subEl.name}
+                                
                               </Link>
                             </li>
                           ))}
@@ -119,7 +122,7 @@ const NavBar = () => {
           </div>
           <ul className='flex items-center hidden space-x-8 lg:flex'>
             <li>
-              <button onClick={() => setIsSubscribeOpen(true)} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600' title='Subscribe'>
+              <button onClick={() => setIsSubscribeOpen(true)} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-600 hover:bg-blue-600/90' title='Subscribe'>
                 Subscribe
               </button>
             </li>
@@ -163,16 +166,17 @@ const NavBar = () => {
                             <div>
                               <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                onMouseOut={() => setIsDropdownOpen(!isDropdownOpen)}
                                 className='font-medium cursor-pointer text-black transition-colors duration-200 hover:text-teal-accent-400 flex items-center'
                               >
                                 {el.name}
                                 <FaAngleDown className='ml-1 mt-1' />
                               </button>
                               {isDropdownOpen && (
-                                <ul className='mt-2 bg-white border rounded shadow-lg'>
+                                <ul className='mt-2 bg-white border border-t-orange-800  rounded-md shadow-lg'>
                                   {el.dropdown.map((subEl, j) => (
-                                    <li key={j + 1} className='px-4 py-2'>
-                                      <Link href={subEl.path} className='block text-black hover:bg-gray-200'>
+                                    <li key={j + 1} className='px-4 py-2' onClick={() => setIsMenuOpen(false)}>
+                                      <Link href={subEl.path} className='block px-2 py-1 text-black rounded-md hover:bg-gray-200 focus:border-l-2 focus:border-l-orange-800' >
                                         {subEl.name}
                                       </Link>
                                     </li>
@@ -196,9 +200,9 @@ const NavBar = () => {
                       ))}
                       <li>
                         <a
-                          href='/'
+                         onClick={() => setIsSubscribeOpen(true)} 
                           className='inline-flex items-center justify-center w-full h-16 px-6 font-medium tracking-wide text-white 
-                          transition duration-200 rounded shadow-md bg-blue-500 hover:bg-blue-600'
+                          transition duration-200 rounded shadow-md bg-blue-600 hover:bg-blue-600/90'
                           aria-label='Sign up'
                           title='Sign up'
                         >

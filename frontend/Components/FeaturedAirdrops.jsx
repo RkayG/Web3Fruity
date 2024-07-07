@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EffectCoverflow, Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaFire } from 'react-icons/fa';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -71,9 +71,12 @@ const FeaturedAirdrops = () => {
         <FeaturedAirdropsSkeleton />
       ) : (
         <div>
-          <h2 className="text-2xl  md:text-3xl lg:text-3xl font-bold mb-2 pl-8 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-            Featured
-          </h2>
+          <span className='flex flex-wrap mb-2 md:px-4 lg:px-8 px-4'>
+            <FaFire className='mt-1 mr-3  text-2xl  md:text-3xl lg:text-3xl text-blue-500' />
+            <h2 className="text-2xl  md:text-3xl lg:text-3xl font-bold  inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
+              Featured
+            </h2>
+          </span>
           <div className="swiper-container">
             <Swiper
               modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}

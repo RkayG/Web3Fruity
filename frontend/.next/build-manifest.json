@@ -22,15 +22,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/games": [
+    "/academy": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/games.js"
-    ],
-    "/games/[slug]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/games/[slug].js"
+      "static/chunks/pages/academy.js"
     ]
   },
   "ampFirstPages": []

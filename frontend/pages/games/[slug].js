@@ -7,6 +7,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Link from 'next/link';
 import ReactPlayer from 'react-player/youtube';
 import Glide from '@glidejs/glide';
+import Modal from 'react-modal';
 import '@glidejs/glide/dist/css/glide.core.min.css';
 import '@glidejs/glide/dist/css/glide.theme.min.css';
 /* import { EffectCoverflow, Autoplay, Pagination, A11y } from 'swiper/modules';
@@ -116,15 +117,20 @@ const GameDetails = () => {
     const { title, description, logo, guide, gallery } = game;
 
     const GlideCarousel = ({ gallery }) => {
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [selectedImage, setSelectedImage] = useState(null);
+    
       useEffect(() => {
         if (gallery && gallery.length > 0) {
           const glide = new Glide('.glide', {
-            type: 'carousel',
+            type: 'slider',
             startAt: 0,
             perView: 3,
-            gap: 50,
-            autoplay: 2500,
-            animationDuration: 500,
+            gap: 20,
+            keyboard: true,
+            rewind: false,
+            bound: true,
+           
             breakpoints: {
               1024: { perView: 2 },
               768: { perView: 2 },
@@ -138,35 +144,95 @@ const GameDetails = () => {
         }
       }, [gallery]);
     
+      const openModal = (image) => {
+        setSelectedImage(image);
+        setIsModalOpen(true);
+      };
+    
+      const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedImage(null);
+      };
+    
       if (!gallery || gallery.length === 0) {
         return <p className="text-center text-gray-500">No gallery available.</p>;
       }
     
       return (
-        <div className="glide">
-          <div className="glide__track" data-glide-el="track">
-            <ul className="glide__slides">
-              {gallery.map((image, index) => (
-                <li key={index} className="glide__slide">
-                  <div className="bg-white shadow-md rounded-md p-1 mb-3 relative">
-                    <img src={image} alt={`Gallery image ${index + 1}`} className="w-full h-56 rounded-md" />
-                  </div>
-                </li>
+        <>
+          <div className="glide">
+            <div className="glide__track" data-glide-el="track">
+              <ul className="glide__slides">
+                {gallery.map((image, index) => (
+                  <li key={index} className="glide__slide">
+                    <div className="bg-white shadow-md rounded-md p-1 mb-3 relative">
+                      <img
+                        src={image}
+                        alt={`Gallery image ${index + 1}`}
+                        className="w-full h-56 rounded-md cursor-pointer"
+                        onClick={() => openModal(image)}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="glide__arrows" data-glide-el="controls">
+              <button className="glide__arrow glide__arrow--left" data-glide-dir="<">&lt;</button>
+              <button className="glide__arrow glide__arrow--right" data-glide-dir=">">&gt;</button>
+            </div>
+            <div className="glide__bullets" data-glide-el="controls[nav]">
+              {gallery.map((_, index) => (
+                <button key={index} className="glide__bullet" data-glide-dir={`=${index}`}></button>
               ))}
-            </ul>
+            </div>
           </div>
-          <div className="glide__arrows" data-glide-el="controls">
-            <button className="glide__arrow glide__arrow--left" data-glide-dir="<">&lt;</button>
-            <button className="glide__arrow glide__arrow--right" data-glide-dir=">">&gt;</button>
-          </div>
-          <div className="glide__bullets" data-glide-el="controls[nav]">
-            {gallery.map((_, index) => (
-              <button key={index} className="glide__bullet" data-glide-dir={`=${index}`}></button>
-            ))}
-          </div>
-        </div>
+    
+          {selectedImage && (
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={closeModal}
+              contentLabel="Selected Image"
+              style={{
+                overlay: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                },
+                content: {
+                  top: '50%',
+                  left: '50%',
+                  right: 'auto',
+                  bottom: 'auto',
+                  marginRight: '-50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '70%',
+                  maxWidth: '800px',
+                  height: '70%',
+                  maxHeight: '80%',
+                  overflow: 'hidden',
+                  borderRadius: '10px',
+                  padding: '0',
+                }
+              }}
+            >
+              <div className="relative w-full h-full">
+                <button
+                  onClick={closeModal}
+                  className="absolute top-2 right-2 bg-white rounded-full p-2 text-black shadow-lg"
+                >
+                  &times;
+                </button>
+                <img
+                  src={selectedImage}
+                  alt="Selected"
+                  className="w-full h-full object-cover rounded-md"
+                />
+              </div>
+            </Modal>
+          )}
+        </>
       );
-  };
+    };
+    
 
     // Define custom render options
     const renderOptions = {
@@ -180,7 +246,7 @@ const GameDetails = () => {
             </div>
           );
         },
-        [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-4">{children}</p>,
+        [BLOCKS.PARAGRAPH]: (node, children) => <p className=" text-xl font-sans max-w-[690px] mb-4">{children}</p>,
         [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-3xl font-bold mb-4">{children}</h1>,
         [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-2xl font-bold mb-4">{children}</h2>,
         [INLINES.HYPERLINK]: (node, children) => (
