@@ -5,29 +5,60 @@ import { Logo, Menu } from '../Components/index';
 import { FaAngleDown } from 'react-icons/fa';
 import Subscribe from './Subscribe';
 
+
+//================== Tooltip to show coming soon. To be removed late ====================
+export const TooltipLink = ({ href, className, children, tooltipText }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 2000); // Hide tooltip after 2 seconds
+  };
+
+  return (
+    <div className="relative inline-block">
+      <a
+        href={href}
+        className={className}
+        onClick={handleClick}
+        aria-label={tooltipText}
+      >
+        {children}
+      </a>
+      {showTooltip && (
+        <div className="absolute ml-16 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded shadow whitespace-nowrap">
+          {tooltipText}
+        </div>
+      )}
+    </div>
+  );
+};
+//======================= Tooltip end =====================
+
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
-  const [activePage, setActivePage] = useState('Home');
+  const [activePage, setActivePage] = useState('About');
   const menuRef = useRef(null);
   const dropdownRef = useRef(null);
   const router = useRouter();
 
   const menuList = [
-    { name: "Home", path: "/" },
+    { name: "Discover", path: "" },
     { 
       name: "Airdrops", 
       dropdown: [
-        { name: "Confirmed Airdrops", path: "/airdrops" },
-        { name: "Token Farming", path: "/token-farming" }
+        { name: "Confirmed Airdrops", path: "" },
+        { name: "Token Farming", path: "" }
       ] 
     },
-    { name: "Games", path: "/games" },
-    { name: "Platforms", path: "/platforms" },
-    { name: "Academy", path: "/academy" },
-    { name: "Crypto News", path: "/crypto-news" },
-    { name: "About", path: "/about" },
+    { name: "Games", path: "" },
+    { name: "Platforms", path: "" },
+    { name: "Academy", path: "" },
+    { name: "Crypto News", path: "" },
+    { name: "About", path: "/" },
   ];
 
   useEffect(() => {
@@ -63,7 +94,7 @@ const NavBar = () => {
           <div className='flex items-center'>
             <a title='Web3Fruity' href='/' className='inline-flex items-center mr-8'>
               <Logo color="text-black" />
-              <span className='ml-2 text-xl font-bold tracking-wide text-blue-800 uppercase'>Web3Fruity</span>
+              <span className='ml-2 text-xl font-bold tracking-wide text-blue-800 uppercase'>Web<spam className='font-serif'>3</spam><span className="text-orange-800 text-xl font-bold">Fruity</span></span>
             </a>
             <ul className='flex items-center hidden space-x-8 lg:flex'>
               {menuList.map((el, i) => (
@@ -95,7 +126,7 @@ const NavBar = () => {
                         >
                           {el.dropdown.map((subEl, j) => (
                             <li key={j + 1} className='px-4'>
-                              <Link href={subEl.path} className='block px-2 py-2 rounded-md text-black hover:bg-gray-100 hover:border-l-2 hover:border-l-orange-800' onClick={() => setActivePage(el.name)}>
+                              <Link href={subEl.path} className='block px-2 py-2 rounded-md w-full text-black hover:bg-gray-100 hover:border-l-2 hover:border-l-orange-800' onClick={() => setActivePage(el.name)}>
                                 {subEl.name}
                                 
                               </Link>
@@ -115,11 +146,13 @@ const NavBar = () => {
                         {el.name}
                       </button>
                     </Link>
+                    
                   )}
                 </li>
               ))}
             </ul>
           </div>
+          
           <ul className='flex items-center hidden space-x-8 lg:flex'>
             <li>
               <button onClick={() => setIsSubscribeOpen(true)} className='inline-flex items-center justify-center h-9 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-600 hover:bg-blue-600/90' title='Subscribe'>
@@ -127,6 +160,8 @@ const NavBar = () => {
               </button>
             </li>
           </ul>
+
+          {/* ============ MOBILE and TABLET start ================================== */}
           <div className='lg:hidden z-40' ref={menuRef}>
             <button
               aria-label='Open Menu'
@@ -140,9 +175,9 @@ const NavBar = () => {
               <div className='absolute top-0 left-0 w-full'>
                 <div className='p-5 bg-white border rounded shadow-sm'>
                   <div className='flex items-center justify-between mb-4'>
-                    <a title='Web3Fruity' href='/' className='inline-flex items-center'>
+                    <a title='Web3Fruity' href='/about' className='inline-flex items-center'>
                       <Logo color="text-black" />
-                      <span className='ml-2 text-xl font-bold tracking-wide text-blue-800 uppercase'>Web3Fruity</span>
+                      <span className='ml-2 text-xl font-bold tracking-wide text-blue-800 uppercase'>Web<spam className='font-serif'>3</spam><span className="text-orange-800 text-xl font-bold">Fruity</span></span>
                     </a>
                     <button
                       aria-label='Close Menu'
@@ -163,6 +198,7 @@ const NavBar = () => {
                       {menuList.map((el, i) => (
                         <li key={i + 1} className='relative'>
                           {el.dropdown ? (
+                            /* ------------------- airdrops mobile dropdown start ---------------- */
                             <div>
                               <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -175,8 +211,8 @@ const NavBar = () => {
                               {isDropdownOpen && (
                                 <ul className='mt-2 bg-white border border-t-orange-800  rounded-md shadow-lg'>
                                   {el.dropdown.map((subEl, j) => (
-                                    <li key={j + 1} className='px-4 py-2' onClick={() => setIsMenuOpen(false)}>
-                                      <Link href={subEl.path} className='block px-2 py-1 text-black rounded-md hover:bg-gray-200 focus:border-l-2 focus:border-l-orange-800' >
+                                    <li key={j + 1} className='px-4 py-2'  onClick={() => setIsMenuOpen(false)} >
+                                      <Link href={subEl.path}  className='block px-2 py-1 text-black rounded-md hover:bg-gray-200 focus/hover:border-l-2 focus/hover:border-l-orange-800' >
                                         {subEl.name}
                                       </Link>
                                     </li>
@@ -184,6 +220,7 @@ const NavBar = () => {
                                 </ul>
                               )}
                             </div>
+                            /*------------ airdrops mobile dropdown end --------------------*/
                           ) : (
                             <Link href={el.path}>
                               <button

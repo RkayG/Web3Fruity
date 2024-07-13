@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Menu } from '@headlessui/react';
 import { Fragment } from 'react';
 import { FaHome, FaParachuteBox, FaGamepad, FaVideo, FaBookReader } from 'react-icons/fa';
+import { TooltipLink } from '../pages';
 
 const BottomNavigationPanel = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -36,7 +37,7 @@ const BottomNavigationPanel = () => {
       <div className="flex justify-between items-center p-4">
         <span className='block'>
           <FaHome className='text-center flex m-auto text-red-800' />
-          <Link href="/" className="text-blue-700 font-semibold text-sm">Home</Link>
+          <TooltipLink href="/" className="text-blue-700 font-semibold text-sm" tooltipText="Coming soon">Discover</TooltipLink>
         </span>
         
         <span>
@@ -46,12 +47,12 @@ const BottomNavigationPanel = () => {
             <Menu.Items className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-40 bg-white shadow-lg rounded-md">
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <Link href="/airdrops" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Airdrop</Link>
+                  <TooltipLink href="/airdrops" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Airdrop</TooltipLink>
                 )}
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <Link href="/token-farming" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Farming</Link>
+                  <TooltipLink href="/token-farming" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Farming</TooltipLink>
                 )}
               </Menu.Item>
             </Menu.Items>
@@ -60,12 +61,12 @@ const BottomNavigationPanel = () => {
         
         <span className='block'>
           <FaGamepad className='text-center flex m-auto text-red-800' />
-          <Link href="/games" className="text-blue-700 font-semibold text-sm">Games</Link>
+          <TooltipLink href="/games" tooltipText="Coming soon" className="text-blue-700 font-semibold text-sm">Games</TooltipLink>
         </span>
         
         <span className='block'>
           <FaVideo className='text-center flex m-auto text-red-800' />
-          <Link href="/platforms" className="text-blue-700 font-semibold text-sm">Platforms</Link>
+          <TooltipLink href="/platforms" tooltipText="Coming soon" className="text-blue-700 font-semibold text-sm">Platforms</TooltipLink>
         </span>
 
         <span className='block'>
@@ -75,17 +76,17 @@ const BottomNavigationPanel = () => {
             <Menu.Items className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-40 bg-white shadow-lg rounded-md">
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <Link href="/academy" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Academy</Link>
+                  <TooltipLink href="/academy" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Academy</TooltipLink>
                 )}
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <Link href="/crypto-news" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>News</Link>
+                  <TooltipLink href="/crypto-news" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>News</TooltipLink>
                 )}
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <Link href="/about" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>About</Link>
+                  <Link href="/" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>About</Link>
                 )}
               </Menu.Item>
             </Menu.Items>

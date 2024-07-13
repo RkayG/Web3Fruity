@@ -96,7 +96,7 @@ const RewardForTask = () => {
   const [isTooltipOpen, setIsTooltipOpen] = useState([]);
 
   return (
-    <div className="pb-8 mb-20 w-full h-auto max-w-[1920px] m-auto">
+    <div className="pb-8 mb-20 w-full h-auto max-w-[1920px] m-auto ">
       {loading ? (
         <div className="loading-dots m-auto my-28">
           <span className="dot"></span>
