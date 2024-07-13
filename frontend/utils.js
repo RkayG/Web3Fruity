@@ -50,3 +50,24 @@ export const formatTimestamp = (timestamp) => {
     day: 'numeric',
   });
 };
+
+//========= HANDLE SHARE LINKS ================
+const url = typeof window !== 'undefined' ? window.location.href : '';
+
+export const handleCopyLink = (url) => {
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copied to clipboard!');
+    }).catch((error) => {
+      console.error('Failed to copy the link:', error);
+    });
+  };
+
+ export const handleShareToFacebook = (url) => {
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    window.open(facebookShareUrl, '_blank');
+  };
+
+ export const handleShareToTwitter = (url, heading) => {
+    const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(heading)}`;
+    window.open(twitterShareUrl, '_blank');
+  };

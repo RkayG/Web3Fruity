@@ -29,13 +29,19 @@ async function syncAcademyPostsWithDatabase() {
     for (const academyPostData  of contentfulAcademyPosts) {
       // Generate slug from postHeading
       const slug = slugify(academyPostData.postHeading, { lower: true, strict: true });
+     // console.log(academyPostData.tags);
   
       // Check if the post already exists in MongoDB
       let existingAcademyPost = await AcademyPost.findOne({ slug: slug });
   
       if (existingAcademyPost) {
         // Update the existing academy post
-        await AcademyPost.findByIdAndUpdate(existingAcademyPost._id, existingAcademyPost);
+        try {
+          await AcademyPost.findByIdAndUpdate(existingAcademyPost._id, academyPostData);
+        } catch (error) {
+          console.log(error);
+        }
+        
       } else {
         // Create a new academy post
         await AcademyPost.create(academyPostData);

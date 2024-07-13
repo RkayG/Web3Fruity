@@ -1,6 +1,6 @@
-// pages/contact.js
-import { useState } from 'react';
 
+import { useState } from 'react';
+const apiKey = process.env.NEXT_PUBLIC_WEB3FORMS_API_KEY
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -10,28 +10,60 @@ const Contact = () => {
         website: '',
         message: ''
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitMessage, setSubmitMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
-        ...formData,
-        [name]: value
+            ...formData,
+            [name]: value
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
-        console.log('Form submitted:', formData);
-        // Reset form
-        setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        website: '',
-        message: ''
-        });
+        setIsSubmitting(true);
+        setSubmitMessage('');
+
+        //const apiKey = '205beb6c-d872-4b87-876f-5ab9dc3e6429'; // Replace with your actual Web3Forms API key
+        alert(apiKey);
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    access_key: apiKey,
+                    ...formData
+                })
+            });
+
+            const result = await response.json();
+            if (response.status === 200) {
+                setSubmitMessage('Form submitted successfully!');
+                // Reset form
+                setFormData({
+                    name: '',
+                    email: '',
+                    subject: '',
+                    website: '',
+                    message: ''
+                });
+            } else {
+                setSubmitMessage('There was an error submitting the form. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setSubmitMessage('There was an error submitting the form. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
 
   return (
     <div className="w-full max-w-[1580px] m-auto">
@@ -44,9 +76,9 @@ const Contact = () => {
                 Would you like to reach out to us? Fill out the form and we will get back to you.
                 
               </p>
-              <p className="text-gray-500 md:text-xl  px-2">
+             {/*  <p className="text-gray-500 md:text-xl  px-2">
                 Email: support@web3fruity.com
-              </p>
+              </p> */}
             </div>
             <div className="rounded-lg bg-white p-6 shadow-lg ">
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -118,13 +150,20 @@ const Contact = () => {
                 />
                 </div>
                 <button
-                    type="submit"
-                    className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                    Submit
+                  type="submit"
+                  className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
-            </form>
+</form>
+            {submitMessage && (
+                  <p className={`mt-4 text-center font-semibold ${submitMessage.includes('error') ? 'text-red-700' : 'text-green-700'}`}>
+                      {submitMessage}
+                  </p>
+              )}
             </div>
+            
           </div>
         </div>
       </section>

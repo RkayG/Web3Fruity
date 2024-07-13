@@ -14,6 +14,7 @@ import RewardForTask from "./RewardForTask";
 import CryptoNews from "./CryptoNews";
 import BottomSubscribe from "./BottomSubscribe";
 import BottomNavigationPanel from "./BottomNavigationPanel";
+import Disclaimer from "./Disclaimer";
 
 export { NavBar, Footer, ParentBanner, Logo, Menu, ICON, Close, Arrow, FeaturedAirdrops, Airdrops, TokenFarming,
-    Games, RewardForTask, CryptoNews, BottomSubscribe, BottomNavigationPanel };
+    Games, RewardForTask, CryptoNews, BottomSubscribe, BottomNavigationPanel, Disclaimer };
