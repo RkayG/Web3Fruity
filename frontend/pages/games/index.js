@@ -57,8 +57,8 @@ const Games = () => {
   return (
     
     <div className="mb-20 max-w-[1920px] m-auto">
-       <section className="relative w-full max-h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/gameplay.jpg')]">
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.7)] to-[rgba(0,0,0,0.62)]" />
+       <section className="relative w-full max-h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/games1.jpg')]">
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.5)] to-[rgba(0,0,0,0.5)]" />
       <div className="relative z-10 text-center text-white max-w-2xl px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-pulse">Earn While You Play</h1>
         <p className="text-lg sm:text-xl md:text-2xl mb-8">
