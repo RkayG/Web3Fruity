@@ -8,6 +8,7 @@ const CryptoNews = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState('');
   const newsPerPage = 2;
   const loader = useRef(null);
 
@@ -16,17 +17,21 @@ const CryptoNews = () => {
     try {
       const response = await fetch(`http://localhost:1225/crypto-news?page=${pageNumber}&limit=${newsPerPage}`);
       const data = await response.json();
-      if (data.length < newsPerPage) {
-        setHasMore(false);
+      if (data) {
+        if (data.length < newsPerPage) {
+          setHasMore(false);
+        }
+        setNews((prevNews) => {
+          const newNews = data.filter(
+            (newItem) => !prevNews.some((prevItem) => prevItem._id === newItem._id)
+          );
+          return [...prevNews, ...newNews];
+        });
       }
-      setNews((prevNews) => {
-        const newNews = data.filter(
-          (newItem) => !prevNews.some((prevItem) => prevItem._id === newItem._id)
-        );
-        return [...prevNews, ...newNews];
-      });
+   
     } catch (error) {
       console.error('Error fetching crypto news:', error);
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -64,7 +69,14 @@ const CryptoNews = () => {
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="mx-auto px-4">
-        {loading && news.length === 0 ? (
+          <h2 className="lg:text-[57px] text-2xl font-bold text-center py-10  mb-20 -mt-3 bg-gradient-to-r from-orange-600 to-blue-800 bg-clip-text text-transparent">
+            Latest Cryptocurrency News & Insights
+          </h2>
+        {error && 
+            <p className='text-center font-semibold '>{error}</p>
+          }
+        
+        {loading ? (
           <div className="loading-dots m-auto my-28">
             <span className="dot"></span>
             <span className="dot"></span>
@@ -72,9 +84,7 @@ const CryptoNews = () => {
           </div>
         ) : (
           <>
-            <h2 className="lg:text-[67px] text-2xl font-bold text-center py-10  mb-20 -mt-3 bg-gradient-to-r from-orange-600 to-blue-800 bg-clip-text text-transparent">
-              Latest Cryptocurrency News & Insights
-            </h2>
+           
             <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
               {news.map((item, index) => {
                 if (index === 0 || index % 4 === 0) {
