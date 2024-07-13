@@ -1,0 +1,22 @@
+{
+    "name": "Web3Fruity",
+    "short_name": "Web3Fruity",
+    "description": "Curating a dynamic list of airdrops, blockchain games, rewards for tasks, crypto news, and a crypto education page.",
+    "icons": [
+      {
+        "src": "/icons/icon-192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/icons/icon-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "display": "standalone"
+  }
+  

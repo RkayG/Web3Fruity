@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const webpack = require('webpack');
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
 
 const nextConfig = {
   reactStrictMode: true,
@@ -9,12 +12,12 @@ const nextConfig = {
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
-        'window.jQuery': 'jquery'
+        'window.jQuery': 'jquery',
       })
     );
 
     return config;
-  }
+  },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);
