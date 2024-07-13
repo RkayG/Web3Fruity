@@ -62,10 +62,10 @@ router.get('/academy/:slug', async (req, res) => {
 router.patch('/academy/:id', async (req, res) => {
   try {
     const academyPost = await AcademyPost.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!cryptoNews) {
+    if (!academyPost) {
       return res.status(404).json({ message: 'Article not found' });
     }
-    res.json(cryptoNews);
+    res.json(academyPost);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
