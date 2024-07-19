@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import "../styles/globals.css";
+
+
+
+//INTERNAL IMPORTS
 import { NavBar, Footer, BottomNavigationPanel } from "../Components";
+
 
 export default function App({ Component, pageProps }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);

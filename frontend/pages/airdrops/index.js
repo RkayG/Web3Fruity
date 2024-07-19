@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-
+import { FaLink, FaCoins, FaPercentage, FaCalendarAlt, FaChain } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const Airdrops = () => {
   const [airdrops, setAirdrops] = useState([]);
@@ -13,10 +14,7 @@ const Airdrops = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:1225/airdrops', {
-          params: {
-            limit: 12,
-            page: page,
-          },
+          params: { limit: 6, page: page },
         });
         setAirdrops(response.data.airdrops);
         setTotalPages(response.data.totalPages);
@@ -30,138 +28,143 @@ const Airdrops = () => {
     fetchData();
   }, [page]);
 
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
     }
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
-  const handlePageClick = (pageNumber) => {
-    setPage(pageNumber);
-  };
-
-  const renderPagination = () => {
-    let pages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(
-        <button
-          key={i}
-          onClick={() => handlePageClick(i)}
-          className={`py-2 px-4 mx-1 rounded ${page === i ? 'bg-blue-500 text-white' : 'bg-gray-200 text-blue-900 hover:bg-blue-500 hover:text-white'}`}
-        >
-          {i}
-        </button>
-      );
-    }
-    return pages;
   };
 
   return (
-    <div className='mb-20 m-auto max-w-[1580px]'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className='mb-20 m-auto max-w-[1580px]'
+    >
+      <section className="relative w-full h-[60vh] min-h-[400px] mb-12 flex items-center justify-center bg-cover bg-center bg-[url('/images/airdrops1.jpg')]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.7)] to-[rgba(0,0,0,0.4)]" />
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="relative z-10 text-center text-white max-w-3xl px-4 sm:px-6 lg:px-8"
+        >
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 shadow-text">Discover Airdrop Pools</h1>
+          <p className="text-xl sm:text-2xl md:text-3xl mb-10 shadow-text">
+            Earn free tokens by participating in our curated airdrop selections
+          </p>
+          <Link
+            href="#"
+            className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-900 text-lg font-bold rounded-full hover:from-yellow-500 hover:to-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition-all duration-300"
+            prefetch={false}
+          >
+            Learn More About Airdrops
+          </Link>
+        </motion.div>
+      </section>
+
       {loading ? (
-        <div className="loading-dots m-auto my-28">
-          <span className="dot"></span>
-          <span className="dot"></span>
-          <span className="dot"></span>
+        <div className="flex justify-center items-center h-64">
+          <div className="loader"></div>
         </div>
       ) : (
         <>
-    
-       <section className="relative w-full h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/airdrops.jpg')]">
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.9)] to-[rgba(0,0,0,0.7)]" />
-      <div className="relative z-10 text-center text-white max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 shadow-3xl">Discover Airdrop pools</h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-8 shadow-3xl">
-            Earn free tokens by participating in our airdrop pool selections
-          </p>
-        </div>
-        <Link
-          href="#"
-          className="inline-flex items-center mt-4 justify-center px-6 py-3 bg-[#ffd700] text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
-          prefetch={false}
-        >
-          Learn More About Airdrops
-        </Link>
-        </div>
-        </section>
-
-          <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 pl-8 inline-block bg-clip-text 
-          text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-            
-          </h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:px-8 lg:m-auto">
-          {airdrops?.map((airdrop) => (
-            <div>
-              <p className='flex justify-center m-auto py-3 px-16 font-bold text-lg text-white rounded-3xl w-fit bg-gradient-to-r from-blue-900 to-blue-500
-              '>{airdrop.title}</p>
-              <div
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-8"
+          >
+            {airdrops?.map((airdrop, index) => (
+              <motion.div
                 key={airdrop._id}
-                className="bg-white mx-4 lg:mx-0 rounded-md pb-8 shadow-md p-4 border border-solid border-blue-900  rounded-t-2xl 
-                 relative min-w-[340px]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="  transition-all duration-300 hover:-translate-y-2"
               >
-                <span className="absolute top-0 right-0 text-xs font-semibold green py-2 px-3 rounded-tr-2xl text-white">
-                  {airdrop.platformType}
-                </span>
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-16 h-16 relative">
-                    <img src={airdrop.logo} className="w-16 h-16 rounded-full" />
+                 <div key={airdrop._id} className="group bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="bg-white h-full rounded-2xl p-6 transition-all duration-300 group-hover:bg-gray-100">
+                <div className="relative mb-6">
+                  <img src={airdrop.logo} className="w-20 h-20 rounded-full mx-auto shadow-md" alt={airdrop.title} />
+                  <div className="absolute top-0 right-0 bg-orange-800 text-gray-200 text-xs font-semibold py-1 px-3 rounded-full">
+                    {airdrop.platformType}
                   </div>
-                  <Link href={`/airdrops/${airdrop._id}`}>
-                    <h2 className="text-lg font-bold absolute left-24 top-5 cursor-pointer">
-                      {airdrop.title}
-                    </h2>
-                  </Link>
                 </div>
-                <p className="text-sm text-gray-500 mb-2">
-                  <span className="text-xs absolute top-20 left-24">Total Airdrop Pool</span>
-                  <span className="font-semibold absolute top-14 left-24">{airdrop.rewardPool || 'N/A'}</span>
-                </p>
-                <p className="text-sm text-gray-500 mb-2">
-                  <span className="text-xs absolute top-20 left-56">% of Total Supply</span>
-                  <span className="font-semibold absolute top-14 left-56">{airdrop.rewardPercentFromSupply || 'N/A'}</span>
-                </p>
-                <p className="text-xs text-gray-500">
-                  <span>End Date</span>
-                  <span className="font-semibold absolute bottom-4 left-4">
-                    {new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}
-                  </span>
-                </p>
-                <p className="text-xs text-gray-500">
-                  <span className="absolute top-28 right-4">Chain</span>
-                  <span className="font-semibold absolute bottom-4 right-4">{airdrop.chain || 'N/A'}</span>
-                </p>
-
-                <Link href={`/airdrops/${airdrop._id}`}>
-                  <span
-                    aria-label="view"
-                    title="view"
-                    className="absolute top-28 text-center m-auto"
-                    style={{ left: '46%' }}
-                  >
-                    <img
-                      className="w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8"
-                      src="go-icon-13.jpg"
-                    ></img>
-                  </span>
-                </Link>
+                <h3 className="text-2xl font-bold text-center mb-2 text-blue-800">{airdrop.title}</h3>
+                <p className="text-sm text-center text-gray-600 mb-4">{airdrop.chain}</p>
+                <div className="space-y-3 text-sm">
+                  <p className="flex items-center justify-between">
+                    <span className="flex items-center text-gray-600"><FaCoins className="mr-2 text-orange-800" /> Total Pool:</span>
+                    <span className="font-semibold text-blue-800">{airdrop.rewardPool || 'N/A'}</span>
+                  </p>
+                  <p className="flex items-center justify-between">
+                    <span className="flex items-center text-gray-600"><FaPercentage className="mr-2 text-orange-800" /> % of Supply:</span>
+                    <span className="font-semibold text-blue-800">{airdrop.rewardPercentFromSupply || 'N/A'}</span>
+                  </p>
+                  <p className="flex items-center justify-between">
+                    <span className="flex items-center text-gray-600"><FaCalendarAlt className="mr-2 text-orange-800" /> End Date:</span>
+                    <span className="font-semibold text-blue-800">{new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}</span>
+                  </p>
+                </div>
               </div>
+              <Link href={`/airdrops/${airdrop._id}`}>
+                <div className="bg-gradient-to-r from-gray-900 to-orange-800 text-gray-200 p-4 rounded-b-2xl flex justify-between items-center cursor-pointer hover:from-orange-800 hover:to-blue-800 transition-all duration-300">
+                  <span className="font-semibold">View Details</span>
+                  <FaLink />
+                </div>
+              </Link>
             </div>
-          ))}
-          </div>
-          <div className="flex justify-center mt-6">
-            {renderPagination()}
+              </motion.div>
+            ))}
+          </motion.div>
+          <div className="flex justify-center mt-12">
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };
+
+const InfoItem = ({ icon, label, value }) => (
+  <div className="flex items-center">
+    <div className="text-blue-500 mr-2">{icon}</div>
+    <div>
+      <p className="text-xs text-gray-500">{label}</p>
+      <p className="font-semibold text-gray-800">{value}</p>
+    </div>
+  </div>
+);
+
+const Pagination = ({ currentPage, totalPages, onPageChange }) => (
+  <div className="flex space-x-2">
+    <button
+      onClick={() => onPageChange(currentPage - 1)}
+      disabled={currentPage === 1}
+      className="px-4 py-2 rounded-md bg-blue-500 text-white disabled:opacity-50"
+    >
+      Previous
+    </button>
+    {[...Array(totalPages)].map((_, i) => (
+      <button
+        key={i}
+        onClick={() => onPageChange(i + 1)}
+        className={`px-4 py-2 rounded-md ${
+          currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+        }`}
+      >
+        {i + 1}
+      </button>
+    ))}
+    <button
+      onClick={() => onPageChange(currentPage + 1)}
+      disabled={currentPage === totalPages}
+      className="px-4 py-2 rounded-md bg-blue-500 text-white disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
+);
 
 export default Airdrops;

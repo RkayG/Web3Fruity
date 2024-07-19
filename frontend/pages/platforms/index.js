@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import Link from 'next/link';
+import { motion } from "framer-motion";
 
 const RewardTooltip = ({ reward }) => {
   const [tokenData, setTokenData] = useState(null);
@@ -96,7 +97,13 @@ const RewardForTask = () => {
   const [isTooltipOpen, setIsTooltipOpen] = useState([]);
 
   return (
-    <div className="pb-8 mb-20 w-full h-auto max-w-[1920px] m-auto ">
+
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="pb-8 mb-20 w-full h-auto max-w-[1920px] m-auto"
+    >
       {loading ? (
         <div className="loading-dots m-auto my-28">
           <span className="dot"></span>
@@ -105,7 +112,12 @@ const RewardForTask = () => {
         </div>
       ) : (
         <div>
-          <section className="relative w-full h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/academy.jpg')]">
+          <motion.section 
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative w-full h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/academy.jpg')]"
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.7)] to-[rgba(0,0,0,0.63)]" />
             <div className="relative z-10 text-center text-white max-w-3xl px-4 sm:px-6 lg:px-8">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-pulse">Complete Tasks, Earn Rewards</h1>
@@ -114,15 +126,27 @@ const RewardForTask = () => {
               </p>
              
             </div>
-          </section>
+          </motion.section>
 
-          <div className="bg-red-50 p-6 border border-black rounded-md m-6 mb-20">
-            <p>Several platforms offer rewards for completing various tasks, including taking surveys, watching videos, playing games, testing apps, participating in online studies, and more.
-            However, finding the legitimate and rewarding ones can be challenging. That's why we've curated a comprehensive list of the most reliable rewards-for-tasks platforms available.
-            For many of these reward-for-tasks platforms, the basic requirements include having a wallet address for receiving rewards and social accounts, such as Twitter, Telegram, Discord, and the likes.
-             <br /><br />Explore our curated list below to start earning rewards today
-            </p> 
-          </div>
+          <motion.div 
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-gradient-to-r from-red-100 to-blue-100 p-8 rounded-lg shadow-lg m-6 mb-20"
+          >
+          {/* <div className="bg-red-50 p-6 border border-black rounded-md m-6 mb-20"> */}
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Explore Reward Opportunities</h2>
+              <p className="text-gray-700 leading-relaxed">
+                Several platforms offer rewards for completing various tasks, including taking surveys, watching videos, playing games, testing apps, participating in online studies, and more.
+                However, finding the legitimate and rewarding ones can be challenging. That's why we've curated a comprehensive list of the most reliable rewards-for-tasks platforms available.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-4">
+                For many of these reward-for-tasks platforms, the basic requirements include having a wallet address for receiving rewards and social accounts, such as Twitter, Telegram, Discord, and the likes.
+              </p>
+              <p className="text-gray-800 font-semibold mt-6">
+                Explore our curated list below to start earning rewards today!
+              </p>
+          </motion.div>
 
         <div className="mx-6 text-center relative mb-28 ">
             {/*=====================  Table UI display intended for large devices ============================*/}
@@ -158,9 +182,22 @@ const RewardForTask = () => {
             </tbody>
           </table>
  */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mx-6 text-center relative mb-28"
+          >
           <div className="mr-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
             {currentRewards.map((reward, index) => (
-              <div key={index} className="bg-white rounded-md shadow-md p-4 border border-gray-300">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-md shadow-md p-4 border border-gray-300 hover:shadow-lg transition-shadow duration-300"
+            >
+              {/* <div key={index} className="bg-white rounded-md shadow-md p-4 border border-gray-300"> */}
                 <span className="flex flex-wrap">
                   <img src={reward.logo} className="w-10 h-10 mx-3 rounded-lg mb-2" />
                   <h3 className="text-lg font-semibold mt-1 text-blue-700">{reward.title}</h3>
@@ -191,9 +228,14 @@ const RewardForTask = () => {
                         setIsTooltipOpen(newIsTooltipOpen);
                       }}>
                       {reward.token}
-                      <p className="text-xs pl-1 mt-2">
+
+                      { reward.token ? (
+                        <p className="text-xs pl-1 mt-2">
                         {isTooltipOpen[index] ? <FaAngleUp /> : <FaAngleDown />}
                       </p>
+                      ) : (
+                        <p className="text-xs pl-1 mt-2">-</p>
+                      )}
                       {isTooltipOpen[index] && <RewardTooltip reward={reward} />}
                     </p>
                   </span>
@@ -206,13 +248,22 @@ const RewardForTask = () => {
                     <p className="font-semibold text-green-700">{reward.active}</p>
                   </span>
                 </span>
-                <button className="py-2 px-10 m-auto mt-6 flex bg-blue-700 text-white active:bg-black checked:bg-black rounded-3xl shadow-md">
-                  Visit
-                </button>
-              </div>
+                <a href={reward.website}>
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className='py-2 px-10 m-auto mt-6 flex bg-blue-700 text-white active:bg-black checked:bg-black rounded-3xl shadow-md hover:bg-blue-600 transition-colors duration-300'
+                  >
+                    Visit
+                  </motion.button>
+                </a>
+              </motion.div>
+            
             ))}
           </div>
+          </motion.div>
 
+            
           {/* Pagination controls */}
           <div className="flex justify-center mt-4">
             {Array.from({ length: Math.ceil(rewards.length / rewardsPerPage) }, (_, index) => (
@@ -228,7 +279,7 @@ const RewardForTask = () => {
         </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

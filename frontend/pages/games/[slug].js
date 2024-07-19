@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe} from 'react-icons/fa';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Link from 'next/link';
@@ -256,151 +257,207 @@ const GameDetails = () => {
         ),
       },
     };
+   
 
-
-  const GameCard = ({ game }) => {
-    return (
-      <div className="bg-white rounded-lg mt-12 shadow-md overflow-hidden m-auto  mb-4 border-2 border-gray-200" style={{ width: "95%" }}>
-        <div className="flex lg:pt-6">
-          <img className="w-24 h-24 lg:w-40 lg:h-auto rounded-2xl m-4 lg:m-0 lg:rounded-md lg:mx-6" src={game.image} />
-          <div className="ml-4 flex-1">
-            <div className="">
-              <h2 className="text-sm w-48 mt-4 lg:mt-0 lg:text-lg font-semibold cursor-pointer lg:w-60">{game.title}</h2>
-            </div>
-
-            <div className="flex items-center mt-2">
-              <a href={game.website} className="mb-2 mr-3"><FaGlobe title={game.website} /></a>
-              {game.socialLinks.map((link, index) => {
-                let icon;
-                if (link.includes("twitter.com")) {
-                  icon = <FaTwitter title={link} />;
-                } else if (link.includes("facebook.com")) {
-                  icon = <FaFacebook title={link} />;
-                } else if (link.includes("discord.com")) {
-                  icon = <FaDiscord title={link} />;
-                } else if (link.includes("telegram.com") || link.includes("t.me")) {
-                  icon = <FaTelegram title={link} />;
-                } else if (link.includes("reddit.com")) {
-                  icon = <FaReddit title={link} />;
-                }
-                return (
-                  <a key={index} href={link} className="mr-3 mb-2">
-                    {icon}
-                  </a>
-                );
-              })}
-            </div>
-            <p className="text-sm text-blue-900 font-semibold">Developer: {game?.developer}</p>
-            <p className="mt-2 w-auto pr-3 text-sm  h-20">{game?.description}</p>
-          </div>
-        </div>
   
-        <div className="overflow-x-auto w-auto pt-6 pl-6 lg:ml-0  lg:w-full lg:mt-6 lg:inline-flex rounded-t-none rounded-b-md shadow-md bg-gray-200">
-          <div className=" scrollbar-track-gray-200 lg:w-full lg:justify-center lg:m-auto scrollbar-thin inline-flex scrollbar-thumb-red-900" style={{ maxHeight: "150px", overflowY: "auto" }}>
-            <div className="bg-white text-blue-900 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-              <p className="text-sm font-semibold text-center">Genre</p>
-              <p className="text-center font-semibold text-xs">{game?.genre}</p>
-            </div>
-            <div className="bg-white text-green-800 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-              <p className="text-sm font-semibold text-center">Platform</p>
-              <p className="text-center font-semibold text-xs">{game?.platform.length > 1 ? game?.platform.join(', ') : game?.platform}</p>
-            </div>
-            <div className="bg-white text-red-900 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md relative">
-              <p className="text-sm font-semibold text-center">Token</p>
-              <p className="text-center flex flex-wrap justify-center font-semibold text-xs cursor-pointer">
-                {game?.token}
-              </p>
-            </div>
-            <div className="bg-white text-blue-900 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-              <p className="text-sm font-semibold text-center">Free-to-Play</p>
-              <p className="text-center font-semibold text-xs">{game?.free2play ? "Yes" : "No"}</p>
-            </div>
-            <div className="bg-white text-green-800 px-4 py-2 mr-6 mb-6 w-36 rounded-md shadow-md">
-              <p className="text-sm font-semibold text-center">Chain</p>
-              <p className="text-center font-semibold text-xs">{game?.chain || 'N/A'}</p>
-            </div>
+const GameCard = ({ game }) => {
+  return (
+    <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="mt-12 overflow-hidden m-auto mb-4 transition-shadow duration-300"
+    style={{ width: "100%" }}
+  >
+    
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden m-auto lg:p-6 mb-6 border border-gray-200 hover:border-blue-500 transition-all duration-300" style={{ width: "95%" }}>
+      <div className="flex flex-col lg:flex-row">
+        <img className="w-full h-48 lg:w-48 lg:h-48 object-cover rounded-t-xl lg:rounded-xl mb-4 lg:mb-0 lg:mr-6" src={game.image} alt={game.title} />
+        <div className="flex-1 px-4 lg:px-0">
+          <div className="flex justify-between items-start mb-2">
+            <h2 className="text-xl lg:text-2xl font-bold text-blue-900 flex mx-auto lg:mx-0">{game.title}</h2>
+            {/* <Link href={`/games/${game.slug}`}>
+              <span className="text-sm font-semibold py-1 px-4 bg-blue-100 text-blue-800 rounded-full cursor-pointer hover:bg-blue-200 transition-colors duration-300">
+                View
+              </span>
+            </Link> */}
           </div>
+          <div className="flex items-center mb-3 justify-center mx-auto lg:mx-0 lg:justify-start">
+            <a href={game.website} className="mr-3 text-gray-600 hover:text-blue-600 transition-colors duration-300"><FaGlobe title={game.website} /></a>
+            {game.socialLinks.map((link, index) => {
+              let icon;
+              if (link.includes("twitter.com") || link.includes("x.com")) icon = <FaTwitter title={link} />;
+              else if (link.includes("facebook.com")) icon = <FaFacebook title={link} />;
+              else if (link.includes("discord.com") || link.includes("discord.gg")) icon = <FaDiscord title={link} />;
+              else if (link.includes("telegram.com") || link.includes("t.me")) icon = <FaTelegram title={link} />;
+              else if (link.includes("reddit.com")) icon = <FaReddit title={link} />;
+              return (
+                <a key={index} href={link} className="mx-3 text-gray-600 hover:text-blue-600 transition-colors duration-300">
+                  {icon}
+                </a>
+              );
+            })}
+          </div>
+          <p className="text-sm text-blue-800 font-semibold mb-2">Developer: {game?.developer}</p>
+          <p className="text-sm text-gray-600 mb-4">{game.description}</p>
         </div>
       </div>
-    );
+      <div className="bg-gray-100 p-4 mt-4 rounded-xl">
+        <div className="flex flex-wrap justify-start lg:justify-between gap-3">
+          <InfoTag label="Genre" value={game?.genre} color="blue" />
+          <InfoTag label="Platform" value={game?.platform.length > 1 ? game?.platform.join(', ') : game?.platform} color="green" />
+          <InfoTag label="Token" value={game?.token} color="red" />
+          <InfoTag label="Free-to-Play" value={game?.free2play ? "Yes" : "No"} color="blue" />
+          <InfoTag label="Chain" value={game?.chain || 'N/A'} color="green" />
+        </div>
+      </div>
+    </div>
+    </motion.div>
+  );
+};
+
+const InfoTag = ({ label, value, color }) => {
+  const colorClasses = {
+    blue: "bg-blue-100 text-blue-800",
+    green: "bg-green-100 text-green-800",
+    red: "bg-red-100 text-red-800",
   };
+
+  return (
+    <div className={`px-3 py-1 rounded-full ${colorClasses[color]}`}>
+      <p className="text-xs font-semibold">{label}: <span className="font-normal">{value}</span></p>
+    </div>
+  );
+};
     
   return (
-    <main className='max-w-[1928px] m-auto'>
-      <Navigation title={title}  />
+    <main className='max-w-[1928px] m-auto px-4 sm:px-6 lg:px-8'>
+      <Navigation title={title} />
       <GameCard game={game} className='mt-12' />
-      <div class="additonal-game-info grid-cols-2 grid gap-8 md:grid-cols-3 lg:grid-cols-4 mt-8 pad mx-[2.5%]">
-          <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-          ">
-              <i class="fas fa-cube text-xl text-white mt-6 mb-2"></i>
-              <p class="text-center text-xs text-blue-900">${game.token} Price</p>
-              <p id="totalBlock" class="text-white text-center"></p>
-          </div>
-  
-          <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-        ">
-              <i class="fas fa-clock text-xl text-white mt-6 mb-2"></i>
-              <p class="text-center text-xs text-blue-900">Marketcap</p>
-              <p id="averageBlockTime" class="text-white text-center"></p>
-          </div>
 
-          <div class="h-28 bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-          ">
-              <i class="fas fas fas fa-globe text-xl text-white mt-6 mb-2"></i>
-              <p class="text-center text-xs text-blue-900">Initial/Required Investment</p>
-              <p id="ethMarketcap" class="text-orange-900 text-center"> $1,999,9999</p>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="game-stats grid grid-cols-2 gap-4 md:grid-cols-4 mt-8"
+      >
+        {[
+          { icon: "fa-cube", label: `${game.token} Price`, value: "$0.00" },
+          { icon: "fa-chart-line", label: "Marketcap", value: "$0" },
+          { icon: "fa-coins", label: "Required Investment", value: "$1,999,999" },
+          { icon: "fa-sack-dollar", label: "Avg Game Earning / Day", value: "$0" },
+        ].map((stat, index) => (
+          <div key={index} className="bg-gradient-to-br from-blue-500 to-purple-600 text-white p-4 rounded-lg shadow-md">
+            <i className={`fas ${stat.icon} text-2xl mb-2`}></i>
+            <p className="text-sm font-medium">{stat.label}</p>
+            <p className="text-lg font-bold">{stat.value}</p>
           </div>
+        ))}
+      </motion.div>
 
-          <div class="h-28  bg-gray-200 shadow-md border-blue-900 border-2 rounded-md flex flex-col items-center
-          ">
-              <i class="fas fas fa-compress-arrows-alt text-xl text-white mt-6 mb-2"></i>
-              <p class="text-center text-xs text-blue-900">Avg Earning / Day</p>
-              <p id="totalTransactions" class="text-white text-center"></p>       
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="gameplay-trailer-and-gallery my-12"
+      >
+        <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
+          {game.title} Gameplay
+        </h2>
+        <div className='gameplay-container rounded-lg overflow-hidden shadow-2xl'>
+          <YouTubePlayer url={game.trailer} />
+          <div className="mt-96">
+            <GlideCarousel gallery={game.gallery} />
           </div>
-    </div> {/*---------------------  additional-game-info-end ----------------- */}
-
-    <div className="gameplay-trailer-and-gallery mx-auto my-12 ">
-        <h1 className="border-t border-t-gray-200 pt-10 text-2xl text-center font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">{game.title} Gameplay</h1>
-        
-        
-        <div className='gameplay-container rounded-md border-b px-6 bg-[#b8b8c4]/10 border-b-gray-200 py-12 w-full'>
-          <span className="">
-            <YouTubePlayer url={game.trailer} />
-          </span>
-          
-          <div className="swiper-container mt-96">
-             <GlideCarousel gallery={game.gallery} />
-
-            </div>
-         </div>
-      </div> {/* ---------------- gameplay-trailer-and-gallery-end ------------------*/}
+        </div>
+      </motion.div>
 
       {guide ? (
-          <div>
-            
-            <div className='border-t-2 border-t-orange-800 p-6 lg:px-12 rounded-lg bg-gray-100'>{documentToReactComponents(guide, renderOptions)}</div>
-          </div>
-        ) : (
-          <p className="text-center text-gray-500">No guide available for this game.</p>
-        )} {/*--------------- guide end ------------- */}
-      
-      <div className="py-8 px-3 mt-12 mb-20 border rounded-md bg-gray-50">
-        <h2 className="text-2xl font-bold mb-6 px-6 ">More Games </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {additionalGames.map((game) => (
-              <div
-              key={game._id}
-              className="bg-white mx-4 lg:mx-0 rounded-md pb-8 shadow-md p-1 border-2 border-solid border-gray-200 relative "
-            >
-              <img className="rounded-lg h-[204px] w-full " src={game.image} /> 
-              <h2 className="text-lg mt-4 font-semibold text-blue-900 cursor-pointer text-center">{game.title}</h2>
-              <p className='text-center text-gray-500'>{game.genre}</p>
-              <p className='text-center text-sm font-semibold text-orange-800'>{game?.platform.length > 1 ? game?.platform.join(', ') : game?.platform}</p>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="game-guide mt-16 mb-24"
+        >
+          <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-red-600">
+            Game Guide
+          </h2>
+          <div className="guide-content max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="p-6 lg:p-10 border-t-4 border-blue-600">
+              {documentToReactComponents(guide, {
+                ...renderOptions,
+                renderNode: {
+                  ...renderOptions.renderNode,
+                  [BLOCKS.PARAGRAPH]: (node, children) => (
+                    <p className="text-lg leading-relaxed mb-6 text-gray-700">{children}</p>
+                  ),
+                  [BLOCKS.HEADING_1]: (node, children) => (
+                    <h1 className="text-3xl font-bold mb-6 text-blue-800">{children}</h1>
+                  ),
+                  [BLOCKS.HEADING_2]: (node, children) => (
+                    <h2 className="text-2xl font-semibold mb-4 mt-8 text-blue-700">{children}</h2>
+                  ),
+                  [BLOCKS.HEADING_3]: (node, children) => (
+                    <h3 className="text-xl font-semibold mb-3 mt-6 text-blue-600">{children}</h3>
+                  ),
+                  [BLOCKS.UL_LIST]: (node, children) => (
+                    <ul className="list-disc list-inside mb-6 pl-4">{children}</ul>
+                  ),
+                  [BLOCKS.OL_LIST]: (node, children) => (
+                    <ol className="list-decimal list-inside mb-6 pl-4">{children}</ol>
+                  ),
+                  [BLOCKS.LIST_ITEM]: (node, children) => (
+                    <li className="mb-2 text-gray-700">{children}</li>
+                  ),
+                  [BLOCKS.QUOTE]: (node, children) => (
+                    <blockquote className="border-l-4 border-blue-500 pl-4 py-2 mb-6 italic text-gray-600">
+                      {children}
+                    </blockquote>
+                  ),
+                  [INLINES.HYPERLINK]: (node, children) => (
+                    <a href={node.data.uri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                      {children}
+                    </a>
+                  ),
+                },
+              })}
             </div>
-        ))};
-            
-         </div>
-      </div> 
+          </div>
+        </motion.div>
+      ) : (
+        <div className="text-center text-gray-500 my-16">
+          <p className="text-xl">No guide available for this game.</p>
+          <p className="mt-2">Check back later for updates!</p>
+        </div>
+      )}
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        className="more-games py-12 px-6 mt-12 mb-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-inner"
+      >
+        <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+          More Games You Might Like
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {additionalGames.map((game) => (
+            <motion.div
+              key={game._id}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <img className="w-full h-48 object-cover" src={game.image} alt={game.title} />
+              <div className="p-4">
+                <h3 className="text-xl font-semibold text-blue-900 mb-2">{game.title}</h3>
+                <p className='text-gray-600 mb-2'>{game.genre}</p>
+                <p className='text-sm font-medium text-orange-800'>{game?.platform.length > 1 ? game?.platform.join(', ') : game?.platform}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </main>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EffectCoverflow, Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FaArrowLeft, FaArrowRight, FaFire } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaFire, FaCalendarAlt, FaChevronRight } from 'react-icons/fa';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -10,22 +10,20 @@ import 'swiper/css/effect-coverflow';
 
 const FeaturedAirdropsSkeleton = () => {
   return (
-    <section className="featured-airdrops">
-      <div className="mb-5 ml-5 bg-gray-200 h-7 w-32 pl-8 inline-block "></div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[1, 2, 3].map((index) => (
-          <div key={index} className="bg-white shadow-md rounded-md p-4 animate-pulse">
-            <div className="h-60 bg-gray-200 rounded-t-md mb-4"></div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-              <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-              <div className="h-4 bg-gray-200 mb-2 rounded"></div>
-              <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"></button>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-8">
+      {[1, 2, 3].map((index) => (
+        <div key={index} className="bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg animate-pulse">
+          <div className="bg-gray-200 h-full rounded-2xl">
+            <div className="h-48 bg-gray-300 rounded-t-2xl"></div>
+            <div className="p-6">
+              <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-5/6"></div>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -34,7 +32,7 @@ const isNewAirdrop = (dateString) => {
   const currentDate = new Date();
   const differenceInTime = currentDate - postDate;
   const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-  return differenceInDays <= 3; // 3 days period
+  return differenceInDays <= 3;
 };
 
 const FeaturedAirdrops = () => {
@@ -54,11 +52,10 @@ const FeaturedAirdrops = () => {
       })
       .catch(error => {
         console.error('Error fetching airdrops:', error);
-        
       });
   }, []);
 
-  const breakpoints = { 
+  const breakpoints = {
     640: { slidesPerView: 1.3 },
     768: { slidesPerView: 2 },
     1024: { slidesPerView: 3 },
@@ -66,59 +63,71 @@ const FeaturedAirdrops = () => {
 
   return (
     <section className='featured-airdrops my-20 m-auto max-w-[1580px]'>
-     
+      <div className="flex items-center justify-between mb-12 px-4 md:px-8">
+        <h2 className="text-3xl md:text-4xl font-extrabold flex items-center">
+          <FaFire className="text-orange-800 mr-4 text-4xl md:text-5xl" />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
+            Featured
+          </span>
+        </h2>
+      </div>
+
       {loading ? (
         <FeaturedAirdropsSkeleton />
       ) : (
-        <div>
-          <span className='flex flex-wrap mb-2 md:px-4 lg:px-8 px-4'>
-            <FaFire className='mt-1 mr-3  text-2xl  md:text-3xl lg:text-3xl text-blue-500' />
-            <h2 className="text-2xl  md:text-3xl lg:text-3xl font-bold  inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-              Featured
-            </h2>
-          </span>
-          <div className="swiper-container">
-            <Swiper
-              modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}
-              effect={'coverflow'}
-              spaceBetween={70}
-              grabCursor={true}
-              breakpoints={breakpoints}
-              centeredSlides={true}
-              loop={true}
-              pagination={{ el: '.swiper-pagination', clickable: true }}
-              navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true }}
-              autoplay={{ delay: 2500 }}
-              coverflowEffect={{ rotate: 0, stretch: 0, depth: 50, modifier: 1, slideShadows: false }}
-              className="swiper"
-            >
-              {airdrops.map((airdrop, index) => (
-                <SwiperSlide key={index} className="swiper-slide">
-                  <div className="bg-white shadow-md rounded-md p-4 mb-3 relative">
-                  
-                    <img src={airdrop.bannerImageUrl} alt={airdrop.bannerHeading} className="w-full h-56 rounded-t-md" />
-                    <div className="p-4">
+        <div className="swiper-container px-4 md:px-8">
+          <Swiper
+            modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}
+            effect={'coverflow'}
+            spaceBetween={30}
+            grabCursor={true}
+            breakpoints={breakpoints}
+            centeredSlides={true}
+            loop={true}
+            pagination={{ el: '.swiper-pagination', clickable: true }}
+            navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true }}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            coverflowEffect={{ rotate: 5, stretch: 0, depth: 100, modifier: 2, slideShadows: false }}
+            className="swiper"
+          >
+            {airdrops.map((airdrop, index) => (
+              <SwiperSlide key={index} className="swiper-slide">
+                <div className="bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                  <div className="bg-gray-200 h-full rounded-2xl overflow-hidden">
+                    <div className="relative">
+                      <img src={airdrop.bannerImageUrl} alt={airdrop.bannerHeading} className="w-full h-48 object-cover" />
                       {isNewAirdrop(airdrop.postDate) && (
-                        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                        <span className="absolute top-2 left-2 bg-orange-800 text-gray-200 text-xs font-semibold px-3 py-1 rounded-full">
                           NEW
                         </span>
                       )}
-                      <h2 className="text-lg font-sans font-semibold text-black text-center">{airdrop.bannerHeading}</h2>
-                      <p className="text-sm font-sans mt-2 text-gray-600 h-16 text-center">{airdrop.headingDescription} It's time to join the most awaited airdrop of the year by the BInance Exchange in NewYourk</p>
+                    </div>
+                    <div className="p-6">
+                      <h2 className="text-xl font-bold text-blue-800 mb-2">{airdrop.bannerHeading}</h2>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">{airdrop.headingDescription}</p>
+                      <div className="flex items-center justify-between text-sm text-gray-500">
+                        <span className="flex items-center">
+                          <FaCalendarAlt className="mr-2 text-orange-800" />
+                          {new Date(airdrop.postDate).toLocaleDateString()}
+                        </span>
+                        <button className="flex items-center text-blue-800 hover:text-orange-800 transition-colors duration-300">
+                          Learn More <FaChevronRight className="ml-1" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <div className="slider-controler mt-16">
-              <div className="swiper-button-prev slider-arrow active:shadow-xl">
-                <span className='text-20'><FaArrowLeft /></span>
-              </div>
-              <div className="swiper-button-next slider-arrow">
-                <span className='text-20'><FaArrowRight /></span>
-              </div>
-              <div className="swiper-pagination"></div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="slider-controler mt-16 hidden lg:block">
+            <div className="swiper-button-prev slider-arrow">
+              <FaArrowLeft className="text-blue-800 text-lg p-1 hidden lg:block hover:text-white transition-colors duration-300" />
             </div>
+            <div className="swiper-button-next slider-arrow">
+              <FaArrowRight className="text-blue-800 text-lg p-1 hidden lg:block hover:text-white transition-colors duration-300" />
+            </div>
+            <div className="swiper-pagination"></div>
           </div>
         </div>
       )}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { FaPlaystation, FaTractor, FaTree} from 'react-icons/fa';
+import { FaCoins, FaChevronRight, FaTelegramPlane, FaWallet, FaExternalLinkAlt } from 'react-icons/fa';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const TokenFarming = () => {
   const router = useRouter();
@@ -10,19 +12,15 @@ const TokenFarming = () => {
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const handleNavigateToTokenFarming = () => {
-    router.push('/token-farming');
-  };
-
   useEffect(() => {
     const fetchTokens = async () => {
       try {
-        const response = await fetch('http://localhost:1225/farm-tokens'); 
+        const response = await fetch('http://localhost:1225/farm-tokens');
         const data = await response.json();
         setTokens(data);
         const uniqueBlockchains = [...new Set(data.map(token => token.blockchain))];
         setBlockchains(uniqueBlockchains);
-        setFilteredTokens(data.slice(0, 6)); // Limit to 6 tokens initially
+        setFilteredTokens(data.slice(0, 6));
         setLoading(false);
       } catch (error) {
         console.error('Error fetching tokens:', error);
@@ -35,25 +33,25 @@ const TokenFarming = () => {
   const handleFilterChange = (blockchain) => {
     setSelectedBlockchain(blockchain);
     if (blockchain) {
-      setFilteredTokens(tokens.filter(token => token.blockchain === blockchain).slice(0, 6)); // Limit to 6 tokens per blockchain
+      setFilteredTokens(tokens.filter(token => token.blockchain === blockchain).slice(0, 6));
     } else {
-      setFilteredTokens(tokens.slice(0, 6)); // Limit to 6 tokens for 'All'
+      setFilteredTokens(tokens.slice(0, 6));
     }
   };
 
   if (loading) {
     return (
       <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
-        <div className="mb-6 pl-8 w-56 animate-pulse h-8 bg-gray-400 ml-10 rounded-md"></div>
+        <div className="mb-6 pl-8 w-56 animate-pulse h-8 bg-gray-200 ml-10 rounded-md"></div>
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
           {[...Array(6)].map((_, index) => (
-            <div key={index} className="rounded-lg bg-gray-300 animate-pulse pb-6 flex flex-col items-center justify-between border">
-              <div className="bg-gray-400 w-full h-24 rounded-t-lg"></div>
-              <div className="bg-gray-400 w-16 h-16 rounded-full relative -top-8"></div>
-              <div className="w-[90%] h-6 bg-gray-400 mt-4 mb-2"></div>
-              <div className="w-[90%] h-6 bg-gray-400 mb-2"></div>
-              <div className="w-[90%] h-6 bg-gray-400 mb-2"></div>
-              <div className="w-[90%] h-6 bg-gray-400 mb-2"></div>
+            <div key={index} className="rounded-lg bg-white animate-pulse pb-6 flex flex-col items-center justify-between border border-gray-200 shadow-sm">
+              <div className="bg-gray-200 w-full h-24 rounded-t-lg"></div>
+              <div className="bg-gray-300 w-16 h-16 rounded-full relative -top-8"></div>
+              <div className="w-[90%] h-6 bg-gray-200 mt-4 mb-2"></div>
+              <div className="w-[90%] h-6 bg-gray-200 mb-2"></div>
+              <div className="w-[90%] h-6 bg-gray-200 mb-2"></div>
+              <div className="w-[90%] h-6 bg-gray-200 mb-2"></div>
             </div>
           ))}
         </div>
@@ -62,15 +60,25 @@ const TokenFarming = () => {
   }
 
   return (
-    <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto">
-      <span className="flex flex-wrap md:px-4 lg:px-8 px-4">
-        <FaTractor className="text-2xl md:text-3xl lg:text-3xl text-blue-500 lg:ml-5 mr-3 mt-2 "/>
-        <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 inline-block bg-clip-text 
-        text-transparent bg-gradient-to-r from-blue-500 to-red-500">Token Farming / Potential Airdrops</h2>
-      </span>
-      <div className="flex flex-wrap gap-4 mb-6 pl-8">
+    <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto bg-gray-200">
+      <motion.h2 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-4xl md:text-5xl font-bold flex items-center mb-12 px-4 md:px-8 text-blue-800"
+      >
+        <FaCoins className="text-orange-800 mr-4 text-4xl md:text-5xl" />
+        <span>Token Farming</span>
+      </motion.h2>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex flex-wrap gap-4 mb-8 px-8"
+      >
         <button
-          className={`px-4 py-2 rounded-lg ${selectedBlockchain === '' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
+          className={`px-6 py-2 rounded-md transition-all duration-300 ${selectedBlockchain === '' ? 'bg-blue-800 text-white shadow-md' : 'bg-white text-blue-800 hover:bg-gray-100 border border-blue-800'}`}
           onClick={() => handleFilterChange('')}
         >
           All
@@ -78,50 +86,63 @@ const TokenFarming = () => {
         {blockchains.map((blockchain) => (
           <button
             key={blockchain}
-            className={`px-4 py-2 rounded-lg ${selectedBlockchain === blockchain ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
+            className={`px-6 py-2 rounded-md transition-all duration-300 ${selectedBlockchain === blockchain ? 'bg-blue-800 text-white shadow-md' : 'bg-white text-blue-800 hover:bg-gray-100 border border-blue-800'}`}
             onClick={() => handleFilterChange(blockchain)}
           >
             {blockchain}
           </button>
         ))}
-      </div>
+      </motion.div>
 
-      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
         {filteredTokens.map((token, index) => (
-          <div key={index} className="rounded-lg bg-gray-200 pb-6 flex flex-col items-center justify-between border">
-             <h3 className="text-lg text-white font-medium bg-black text-center w-full h-24 rounded-t-lg pt-6">{token.tokenName}</h3>
-             <div className="w-16 h-16 relative -top-8 ">
-                <img src={token.logo} className="w-16 h-16 rounded-full" />
-             </div>
-
-            <span className='flex flex-wrap pt-0 p-2 border-b border-b-gray-400 w-[90%] justify-between'>
-                <p className='text-red-900 text-sm '>Platform:</p>
-                <button className='p-1 bg-blue-900 text-sm text-white px-3 rounded-3xl '>Binance App</button>
-            </span>
-
-            <span className='flex flex-wrap p-2 border-b border-b-gray-400 w-[90%] justify-between'>
-                <p className='mr-18 text-red-900 text-sm'>Requirements:</p>
-                <p className='text-sm'>Telegram, Ton wallet</p>
-            </span>
-           
-            <div className="flex-wrap flex w-[90%] justify-between mt-4 p-2">
-              <span className={`text-lg font-bold ${token.status === 'Ongoing' ? 'text-[green]' : 'text-red-500'}`}>
-                {token.status}
-              </span>
-              <a href={token.guideUrl} target="_blank" rel="noopener noreferrer" className="bg-blue-500 text-white px-3 py-1 
-                 rounded-md hover:bg-blue-600 font-semibold">
-              Guide
-             </a>
+          <motion.div 
+            key={index}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="rounded-lg bg-white shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-300"
+          >
+            <div className="h-32 bg-gradient-to-bl from-blue-800 to-burgundy flex items-center justify-center">
+              <h3 className="text-2xl text-white font-bold">{token.tokenName}</h3>
             </div>
-            
-          </div>
+            <div className="relative">
+              <img src={token.logo} className="w-24 h-24 rounded-full absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-4 border-white shadow-md" alt={token.tokenName} />
+            </div>
+            <div className="pt-16 pb-6 px-6">
+              <div className="flex justify-between items-center mb-4 text-sm">
+                <span className="text-gray-600">Platform:</span>
+                <span className="bg-orange-100 hover/active:bg-orange-200 text-orange-800 px-3 cursor-pointer py-1 rounded-full">Binance App</span>
+              </div>
+              <div className="mb-4">
+                <p className="text-gray-600">Requirements:</p>
+                <p className="font-semibold text-orange-800">{token.requirements || 'Telegram, Ton wallet'}</p>
+              </div>
+              <div className="mb-4">
+                <p className="text-gray-600">Farming Type:</p>
+                <p className="font-semibold text-orange-800">{token.stake ? 'Stake to Farm' : 'Free Farming'}</p>
+              </div>
+              <a 
+                  href={token.guideUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center w-fit float-right mb-4 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300"
+                >
+                  Guide <FaExternalLinkAlt className="ml-2" />
+                </a>
+            </div>
+          </motion.div>
         ))}
       </div>
 
-      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white
-         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:transition-all hover:ease-in-out' onClick={handleNavigateToTokenFarming}>
-          More
-      </button>
+      <Link href="/token-farming">
+        <motion.span 
+          whileHover={{ x: 10 }}
+          className="text-blue-800 hover:text-orange-800 flex justify-center w-[95%] mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300"
+        >
+          Explore All <FaChevronRight className="ml-2" />
+        </motion.span>
+      </Link>
     </section> 
   );
 };

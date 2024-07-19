@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getTimeDifference } from '../utils';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { FaNewspaper } from 'react-icons/fa';
+import { FaNewspaper, FaChevronRight } from 'react-icons/fa';
 
 const CryptoNewsSkeleton = () => {
   return (
@@ -46,12 +46,13 @@ const CryptoNews = () => {
   };
 
   return (
-    <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto w-full mb-32">
-      <span className="flex flex-wrap md:px-4 lg:px-8 px-4">
-        <FaNewspaper className="text-2xl md:text-3xl lg:text-3xl text-blue-500 lg:ml-5 mr-4 mt-1" />
-        <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6 inline-block bg-clip-text 
-        text-transparent bg-gradient-to-r from-blue-500 to-red-500">Crypto News</h2>
-      </span>
+    <section className="py-4 max-w-[1580px] m-auto w-full mb-32">
+      <h2 className="text-3xl md:text-4xl  font-extrabold flex items-center mb-12 px-4 md:px-8">
+          <FaNewspaper className="text-orange-800 mr-4 text-4xl md:text-5xl" />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
+           Crypto News
+          </span>
+        </h2>
       <div className="mx-3">
         {loading ? (
           <CryptoNewsSkeleton />
@@ -87,10 +88,11 @@ const CryptoNews = () => {
           </div>
         )}
       </div>
-      <button className='py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
-         text-black active:bg-blue-100 rounded-xl hover:ease-in-out bg-gray-200' onClick={handleNavigateToCryptoNews}>
-        More
-      </button>
+      <Link href="/crypto-news">
+          <span className="text-blue-800 hover:text-orange-800 flex justify-center mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300">
+            Explore All <FaChevronRight className="ml-2" />
+          </span>
+      </Link>
     </section>
   );
 };

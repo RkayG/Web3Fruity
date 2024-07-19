@@ -37,7 +37,7 @@ const BottomNavigationPanel = () => {
       <div className="flex justify-between items-center p-4">
         <span className='block'>
           <FaHome className='text-center flex m-auto text-red-800' />
-          <TooltipLink href="/" className="text-blue-700 font-semibold text-sm" tooltipText="Coming soon">Discover</TooltipLink>
+          <Link href="/" className="text-blue-700 font-semibold text-sm" >Discover</Link>
         </span>
         
         <span>
@@ -47,12 +47,12 @@ const BottomNavigationPanel = () => {
             <Menu.Items className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-40 bg-white shadow-lg rounded-md">
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <TooltipLink href="/airdrops" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Airdrop</TooltipLink>
+                  <Link href="/airdrops"className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Airdrop</Link>
                 )}
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <TooltipLink href="/token-farming" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Farming</TooltipLink>
+                  <Link href="/token-farming" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Farming</Link>
                 )}
               </Menu.Item>
             </Menu.Items>
@@ -61,12 +61,12 @@ const BottomNavigationPanel = () => {
         
         <span className='block'>
           <FaGamepad className='text-center flex m-auto text-red-800' />
-          <TooltipLink href="/games" tooltipText="Coming soon" className="text-blue-700 font-semibold text-sm">Games</TooltipLink>
+          <Link href="/games"  className="text-blue-700 font-semibold text-sm">Games</Link>
         </span>
         
         <span className='block'>
           <FaVideo className='text-center flex m-auto text-red-800' />
-          <TooltipLink href="/platforms" tooltipText="Coming soon" className="text-blue-700 font-semibold text-sm">Platforms</TooltipLink>
+          <Link href="/platforms"  className="text-blue-700 font-semibold text-sm">Platforms</Link>
         </span>
 
         <span className='block'>
@@ -76,12 +76,12 @@ const BottomNavigationPanel = () => {
             <Menu.Items className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-40 bg-white shadow-lg rounded-md">
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <TooltipLink href="/academy" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Academy</TooltipLink>
+                  <Link href="/academy" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>Academy</Link>
                 )}
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 {({ active }) => (
-                  <TooltipLink href="/crypto-news" tooltipText="Coming soon" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>News</TooltipLink>
+                  <Link href="/crypto-news" className={`block px-4 py-2 text-blue-700 ${active ? 'bg-gray-100' : ''}`}>News</Link>
                 )}
               </Menu.Item>
               <Menu.Item as={Fragment}>

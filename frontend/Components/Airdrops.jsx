@@ -1,153 +1,118 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import Link from 'next/link'; // Import Link for internal navigation
-import { FaParachuteBox,  } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaParachuteBox, FaChevronRight, FaCalendarAlt, FaLink, FaCoins, FaPercentage } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
-// Airdrops skeleton component
 const AirdropsSkeleton = () => {
   return (
-    <div>
-      <h2 className="w-44 h-8 bg-gray-200 rounded-md ml-4 mb-6 pl-8 inline-block">
-          
-        </h2>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:ml-4">
-        {[...Array(12)].map((_, index) => (
-          <div key={index} className="bg-white mx-4 lg:mx-0 rounded-md pb-8 animate-pulse shadow-md p-4 border-2 border-solid border-gray-200 relative min-w-[340px]">
-            <div className='h-16 w-16 bg-gray-200 rounded-full mb-4'></div>
-            <div className=" absolute top-7 left-24 w-32  bg-gray-200 rounded h-4"></div>
-            <div className="h-5 bg-gray-200 mb-2 rounded-xl absolute top-2 right-2 w-20"></div>
-            <div className="h-4 bg-gray-200 mb-2 rounded absolute top-14 left-24 w-20"></div>
-            <div className="h-4 bg-gray-200 mb-2 rounded absolute top-20 left-24 w-20"></div>
-            <div className="h-4 bg-gray-200 mb-2 rounded absolute top-14 left-56 w-20"></div>
-            <div className="h-4 bg-gray-200 rounded absolute top-20 left-56 w-20 mb-3"></div>
-            <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute top-28 right-4"></div>
-            <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute bottom-4 right-4"></div>
-            <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute top-28 left-4"></div>
-            <div className="h-3 w-16 bg-gray-200 mb-2 rounded absolute bottom-4 left-4"></div>
-            <div className="h-8 w-8 bg-gray-200 relative top-3 mt-3 mb-1 rounded-full flex justify-center m-auto"></div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-8">
+      {[...Array(6)].map((_, index) => (
+        <div key={index} className="bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg animate-pulse">
+          <div className="bg-gray-200 h-full rounded-2xl p-6">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="w-20 h-20 bg-gray-300 rounded-full"></div>
+              <div className="flex-1">
+                <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="h-4 bg-gray-300 rounded w-full"></div>
+              <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+              <div className="h-4 bg-gray-300 rounded w-4/6"></div>
+            </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
 
 const Airdrops = () => {
-  const router = useRouter();
   const [airdrops, setAirdrops] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  const handleNavigateToAirdrops = () => {
-    router.push('/airdrops');
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:1225/airdrops', {
-          params: {
-            limit: 12,
-            page: page,
-          },
+          params: { limit: 6, page: 1 },
         });
         setAirdrops(response.data.airdrops);
-        setTotalPages(response.data.totalPages);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching airdrops:', error);
-       
       }
     };
 
     fetchData();
-  }, [page]);
+  }, []);
 
   return (
-    <div className='my-20 max-w-[1580px] m-auto'>
-      
-      {!loading && 
-      <span className='flex flex-wrap md:px-4 lg:px-8 px-4 mb-6'>
-          <FaParachuteBox className=' mt-1 text-2xl md:text-3xl lg:text-3xl text-blue-500  lg:ml-5 mr-3 '/>
-          <h2 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6  inline-block bg-clip-text 
-          text-transparent bg-gradient-to-r from-blue-500 to-red-500">
-            Confirmed Airdrops
-          </h2>
-        </span>
-      }
+    <div className="my-20 max-w-[1580px] mx-auto">
+      <div className="flex items-center justify-between mb-12 px-4 md:px-8">
+        <h2 className="text-3xl md:text-4xl  font-extrabold flex items-center">
+          <FaParachuteBox className="text-orange-800 mr-4 text-4xl md:text-5xl" />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
+            Hot Airdrops
+          </span>
+        </h2>
+       
+      </div>
       
       {loading ? (
         <AirdropsSkeleton />
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3  lg:px-8 lg:m-auto">
+        <section>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-8">
           {airdrops?.map((airdrop) => (
-            <div>
-              <p className='flex justify-center m-auto py-3 px-16 font-bold text-lg text-white rounded-3xl w-fit bg-gradient-to-r from-blue-900 to-blue-500
-              '>{airdrop.title}</p>
-              <div
-                key={airdrop._id}
-                className="bg-white mx-4 lg:mx-0 rounded-md pb-8 shadow-md p-4 border border-solid border-blue-900  rounded-t-2xl 
-                 relative min-w-[340px]"
-              >
-                <span className="absolute top-0 right-0 text-xs font-semibold green py-2 px-3 rounded-tr-2xl text-white">
-                  {airdrop.platformType}
-                </span>
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-16 h-16 relative">
-                    <img src={airdrop.logo} className="w-16 h-16 rounded-full" />
+            <div key={airdrop._id} className="group bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="bg-white h-full rounded-2xl p-6 transition-all duration-300 group-hover:bg-gray-100">
+                <div className="relative mb-6">
+                  <img src={airdrop.logo} className="w-20 h-20 rounded-full mx-auto shadow-md" alt={airdrop.title} />
+                  <div className="absolute top-0 right-0 bg-orange-800 text-gray-200 text-xs font-semibold py-1 px-3 rounded-full">
+                    {airdrop.platformType}
                   </div>
-                  <Link href={`/airdrop-guide/${airdrop._id}`}>
-                    <h2 className="text-lg font-bold absolute left-24 top-5 cursor-pointer">
-                      {airdrop.title}
-                    </h2>
-                  </Link>
                 </div>
-                <p className="text-sm text-gray-500 mb-2">
-                  <span className="text-xs absolute top-20 left-24">Total Airdrop Pool</span>
-                  <span className="font-semibold absolute top-14 left-24">{airdrop.rewardPool || 'N/A'}</span>
-                </p>
-                <p className="text-sm text-gray-500 mb-2">
-                  <span className="text-xs absolute top-20 left-56">% of Total Supply</span>
-                  <span className="font-semibold absolute top-14 left-56">{airdrop.rewardPercentFromSupply || 'N/A'}</span>
-                </p>
-                <p className="text-xs text-gray-500">
-                  <span>End Date</span>
-                  <span className="font-semibold absolute bottom-4 left-4">
-                    {new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}
-                  </span>
-                </p>
-                <p className="text-xs text-gray-500">
-                  <span className="absolute top-28 right-4">Chain</span>
-                  <span className="font-semibold absolute bottom-4 right-4">{airdrop.chain || 'N/A'}</span>
-                </p>
-
-                <Link href={`/airdrops/${airdrop._id}`}>
-                  <span
-                    aria-label="view"
-                    title="view"
-                    className="absolute top-28 text-center m-auto"
-                    style={{ left: '46%' }}
-                  >
-                    <img
-                      className="w-8 h-8 hover:w-7 hover:h-7 active:w-8 active:h-8"
-                      src="go-icon-13.jpg"
-                    ></img>
-                  </span>
-                </Link>
+                <h3 className="text-2xl font-bold text-center mb-2 text-blue-800">{airdrop.title}</h3>
+                <p className="text-sm text-center text-gray-600 mb-4">{airdrop.chain}</p>
+                <div className="space-y-3 text-sm">
+                  <p className="flex items-center justify-between">
+                    <span className="flex items-center text-gray-600"><FaCoins className="mr-2 text-orange-800" /> Total Pool:</span>
+                    <span className="font-semibold text-blue-800">{airdrop.rewardPool || 'N/A'}</span>
+                  </p>
+                  <p className="flex items-center justify-between">
+                    <span className="flex items-center text-gray-600"><FaPercentage className="mr-2 text-orange-800" /> % of Supply:</span>
+                    <span className="font-semibold text-blue-800">{airdrop.rewardPercentFromSupply || 'N/A'}</span>
+                  </p>
+                  <p className="flex items-center justify-between">
+                    <span className="flex items-center text-gray-600"><FaCalendarAlt className="mr-2 text-orange-800" /> End Date:</span>
+                    <span className="font-semibold text-blue-800">{new Date(airdrop.endDate).toLocaleDateString() || 'N/A'}</span>
+                  </p>
+                </div>
               </div>
+              <Link href={`/airdrops/${airdrop._id}`}>
+                <div className="bg-gradient-to-r from-gray-900 to-orange-800 text-gray-200 p-4 rounded-b-2xl flex justify-between items-center cursor-pointer hover:from-orange-800 hover:to-blue-800 transition-all duration-300">
+                  <span className="font-semibold">View Details</span>
+                  <FaLink />
+                </div>
+              </Link>
             </div>
           ))}
+           
         </div>
+        <Link href="/airdrops" className='flex justify-center mx-auto mt-12'>
+           <motion.span 
+              whileHover={{ x: 10 }}
+              className="text-blue-600 hover:text-orange-600 flex  mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300"
+            >
+              Explore All <FaChevronRight className="ml-2" />
+            </motion.span>
+         </Link>
+        </section>
+        
       )}
-      <button
-        className="py-2 px-4 m-auto mt-6 flex justify-self-center hover:bg-blue-500 hover:text-white hover:transition-[0.2s]
-         text-black active:bg-blue-100 rounded-xl bg-gray-200 hover:ease-in-out"
-        onClick={handleNavigateToAirdrops}
-      >
-        More
-      </button>
     </div>
   );
 };
