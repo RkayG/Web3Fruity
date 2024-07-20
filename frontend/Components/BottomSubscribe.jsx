@@ -41,7 +41,7 @@ const BottomSubscribe = () => {
             Stay Ahead of the Curve
           </h2>
           <p className="mt-4 text-lg text-gray-600 md:text-xl">
-            Subscribe now and be the first to know about exciting events and lucrative opportunities!
+            Subscribe now and be the first to know about exciting events and lucrative opportunities in Crypto!
           </p>
           <AnimatePresence>
             {!isSubscribed ? (

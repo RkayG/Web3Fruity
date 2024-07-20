@@ -16,13 +16,15 @@ const NavBar = () => {
 
   const menuList = [
     { name: "Discover", path: "" },
-    { 
+    /* { 
       name: "Airdrops", 
       dropdown: [
         { name: "Confirmed Airdrops", path: "" },
         { name: "Token Farming", path: "" }
       ] 
-    },
+    }, */
+    { name: "Hot Airdrops", path: "" },
+    { name: "Token Farming", path: "" },
     { name: "Games", path: "" },
     { name: "Platforms", path: "" },
     { name: "Academy", path: "" },

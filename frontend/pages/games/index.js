@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-//import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from "react";
 import Link from 'next/link';
 import GameCard from "../../Components/GameCard";
 import Slider from "react-slick";
@@ -15,6 +14,14 @@ const Games = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 12;
 
+  const pageStateRef = useRef({
+    games: [],
+    filteredGames: [],
+    genres: [],
+    selectedGenre: "",
+    currentPage: 1,
+  });
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
@@ -24,7 +31,7 @@ const Games = () => {
         }
         const data = await response.json();
         setGames(data);
-        setFilteredGames(data.slice(1)); // Set filtered games to start from index 9
+        setFilteredGames(data.slice(1)); // Set filtered games to start from index 1
         const uniqueGenres = [...new Set(data.map(game => game.genre))];
         setGenres(uniqueGenres);
         setLoading(false);
@@ -36,6 +43,43 @@ const Games = () => {
 
     fetchGames();
   }, []);
+
+  useEffect(() => {
+    const handlePageShow = (event) => {
+      if (event.persisted) {
+        const cachedState = pageStateRef.current;
+        setGames(cachedState.games);
+        setFilteredGames(cachedState.filteredGames);
+        setGenres(cachedState.genres);
+        setSelectedGenre(cachedState.selectedGenre);
+        setCurrentPage(cachedState.currentPage);
+      }
+    };
+
+    window.addEventListener('pageshow', handlePageShow);
+
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handlePageHide = () => {
+      pageStateRef.current = {
+        games,
+        filteredGames,
+        genres,
+        selectedGenre,
+        currentPage,
+      };
+    };
+
+    window.addEventListener('pagehide', handlePageHide);
+
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+    };
+  }, [games, filteredGames, genres, selectedGenre, currentPage]);
 
   const handleGenreFilter = (genre) => {
     setSelectedGenre(genre);
@@ -53,7 +97,6 @@ const Games = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Genre slider settings
   const genreSliderSettings = {
     dots: false,
     infinite: false,
@@ -78,7 +121,6 @@ const Games = () => {
     ]
   };
 
-  // Featured slider settings
   const featuredSliderSettings = {
     dots: true,
     infinite: true,
@@ -105,7 +147,6 @@ const Games = () => {
     ]
   };
 
-  // featured games skeleton
   const SkeletonFeaturedGame = () => (
     <div className="px-2">
       <div className="relative h-[300px] w-full bg-gray-300 animate-pulse rounded-lg">
@@ -116,7 +157,6 @@ const Games = () => {
     </div>
   );
 
-  // all games skeleton
   const SkeletonGameCard = () => (
     <div className="bg-white rounded-lg shadow-md p-4 mb-4 animate-pulse">
       <div className="w-full h-48 bg-gray-300 rounded-lg mb-4"></div>
@@ -125,27 +165,27 @@ const Games = () => {
       <div className="w-1/4 h-4 bg-gray-300 rounded"></div>
     </div>
   );
+
   return (
     <div className="mb-20 max-w-[1920px] m-auto">
       <div className="relative w-full max-h-[50vh] min-h-[300px] mb-6 flex items-center justify-center bg-cover bg-center bg-[url('/images/games1.jpg')]">
-          <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.5)] to-[rgba(0,0,0,0.5)]" />
-          <div className="relative z-10 text-center text-white max-w-2xl px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-pulse">Earn While You Play</h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-8">
-              Discover top play-to-earn games and start earning rewards for your gameplay.
-            </p>
-            <Link
-              href="#"
-              className="inline-flex items-center justify-center px-6 py-3 bg-orange-300 text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
-              prefetch={false}
-            >
-              Learn More
-            </Link>
-          </div>
-    </div>
-      
-      
-    <div className="mb-12 mt-12">
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(210,143,143,0.5)] to-[rgba(0,0,0,0.5)]" />
+        <div className="relative z-10 text-center text-white max-w-2xl px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-pulse">Earn While You Play</h1>
+          <p className="text-lg sm:text-xl md:text-2xl mb-8">
+            Discover top play-to-earn games and start earning rewards for your gameplay.
+          </p>
+          <Link
+            href="#"
+            className="inline-flex items-center justify-center px-6 py-3 bg-orange-300 text-gray-900 font-medium rounded-md hover:bg-[#ffcc00] focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:ring-offset-2"
+            prefetch={false}
+          >
+            Learn More
+          </Link>
+        </div>
+      </div>
+
+      <div className="mb-12 mt-12">
         <h2 className="text-2xl font-bold mb-4 ml-4 text-center bg-clip-text 
           text-transparent bg-gradient-to-r from-blue-500 to-red-500">Featured Games</h2>
         <Slider {...featuredSliderSettings}>
@@ -167,11 +207,11 @@ const Games = () => {
 
       <h2 className="text-2xl font-bold mb-4 ml-4 text-center bg-clip-text 
           text-transparent bg-gradient-to-r from-blue-500 to-red-500">All Games</h2>
-       <div className="mb-6 py-6 bg-gray-300 overflow-x-scroll whitespace-nowrap">
+      <div className="mb-6 py-6 whitespace-nowrap">
         {genres.map((genre, index) => (
           <button
             key={index}
-            className={`mx-2 px-4 py-2 rounded-md ${selectedGenre === genre ? 'bg-blue-500 text-white' : 'bg-white text-blue-900'} hover:bg-blue-500 hover:text-white`}
+            className={`mx-2 px-4 py-2 rounded-full ${selectedGenre === genre ? 'bg-blue-500 text-white' : 'bg-gray-50 border border-gray-300 text-blue-900'} hover:bg-blue-500 hover:text-white`}
             onClick={() => handleGenreFilter(genre)}
           >
             {genre}
@@ -192,15 +232,15 @@ const Games = () => {
           {Array(12).fill().map((_, index) => <SkeletonGameCard key={index} />)}
         </div>
       ) : (
-         <>       
-            {currentGames.map((game, index) => (
-              <GameCard key={index} game={game} />
-            ))}
-            <Pagination
-              gamesPerPage={gamesPerPage}
-              totalGames={filteredGames.length}
-              paginate={paginate}
-              currentPage={currentPage}
+        <>       
+          {currentGames.map((game, index) => (
+            <GameCard key={index} game={game} />
+          ))}
+          <Pagination
+            gamesPerPage={gamesPerPage}
+            totalGames={filteredGames.length}
+            paginate={paginate}
+            currentPage={currentPage}
           />
         </>
       )}
