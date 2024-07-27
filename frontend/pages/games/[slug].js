@@ -9,6 +9,8 @@ import Link from 'next/link';
 import ReactPlayer from 'react-player/youtube';
 import Glide from '@glidejs/glide';
 import Modal from 'react-modal';
+import { Dialog } from '@headlessui/react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import '@glidejs/glide/dist/css/glide.core.min.css';
 import '@glidejs/glide/dist/css/glide.theme.min.css';
 /* import { EffectCoverflow, Autoplay, Pagination, A11y } from 'swiper/modules';
@@ -47,11 +49,144 @@ const Navigation = ({ title }) => {
     );
 };
 
-const breakpoints = { 
-  640: { slidesPerView: 1.3 },
-  768: { slidesPerView: 2 },
-  1024: { slidesPerView: 3 },
+const GalleryAndTrailer = ({ trailer, gallery }) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsModalOpen(false);
+      } else if (event.key === 'ArrowLeft') {
+        navigateImage(-1);
+      } else if (event.key === 'ArrowRight') {
+        navigateImage(1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImageIndex]);
+
+  const openModal = (index) => {
+    setSelectedImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const navigateImage = (direction) => {
+    if (gallery.length > 1) {
+      setSelectedImageIndex((prevIndex) => {
+        const newIndex = (prevIndex + direction + gallery.length) % gallery.length;
+        return newIndex;
+      });
+    }
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="lg:row-span-2">
+          <div className="aspect-w-16 aspect-h-24 rounded-lg overflow-hidden shadow-lg h-[260px]">
+            <ReactPlayer
+              url={trailer}
+              width="100%"
+              height="100%"
+              controls
+              playing
+              light={true}
+              playIcon={
+                <button className="bg-red-600 text-white rounded-full p-4 hover:bg-red-700 transition-colors duration-300">
+                  Play Trailer
+                </button>
+              }
+            />
+          </div>
+        </div>
+        
+        {gallery.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {gallery.slice(0, 5).map((image, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative cursor-pointer overflow-hidden rounded-lg shadow-md ${
+                  index === 4 ? 'col-span-2 sm:col-span-1' : ''
+                }`}
+                onClick={() => openModal(index)}
+              >
+                <img
+                  src={image}
+                  alt={`Gallery image ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+            {gallery.length > 5 && (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative cursor-pointer overflow-hidden rounded-lg shadow-md bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center"
+                onClick={() => openModal(5)}
+              >
+                <span className="text-white text-xl font-bold">+{gallery.length - 5} More</span>
+              </motion.div>
+            )}
+          </div>
+        ) : (
+          <div className="col-span-full flex items-center justify-center bg-gray-100 rounded-lg p-8">
+            <p className="text-gray-500 text-lg">Gallery not available</p>
+          </div>
+        )}
+      </div>
+
+      <Dialog
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        className="fixed inset-0 z-50 overflow-y-auto"
+      >
+        <div className="flex items-center justify-center min-h-screen">
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-75" />
+          <div className="relative bg-white rounded-lg max-w-3xl w-full md:max-w-xl mx-4">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 z-10"
+            >
+              <X size={24} className='text-white bg-red-500 hover:bg-white hover:text-red-500 transition-all'/>
+            </button>
+            {gallery.length > 0 && (
+              <>
+                <img
+                  src={gallery[selectedImageIndex]}
+                  alt={`Selected gallery image ${selectedImageIndex + 1}`}
+                  className="w-full h-[300px] lg:h-[500px] rounded-lg"
+                />
+                <button
+                  onClick={() => navigateImage(-1)}
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                <button
+                  onClick={() => navigateImage(1)}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </Dialog>
+    </div>
+  );
 };
+
   
 const GameDetails = () => {
     const [game, setGame] = useState(null);
@@ -115,157 +250,14 @@ const GameDetails = () => {
         return <div>Game not found</div>;
       }
 
-    const { title, description, logo, guide, gallery } = game;
-
-    const GlideCarousel = ({ gallery }) => {
-      const [isModalOpen, setIsModalOpen] = useState(false);
-      const [selectedImage, setSelectedImage] = useState(null);
-    
-      useEffect(() => {
-        if (gallery && gallery.length > 0) {
-          const glide = new Glide('.glide', {
-            type: 'slider',
-            startAt: 0,
-            perView: 3,
-            gap: 20,
-            keyboard: true,
-            rewind: false,
-            bound: true,
-           
-            breakpoints: {
-              1024: { perView: 2 },
-              768: { perView: 2 },
-              640: { perView: 1 }
-            }
-          });
-    
-          glide.mount();
-    
-          return () => glide.destroy();
-        }
-      }, [gallery]);
-    
-      const openModal = (image) => {
-        setSelectedImage(image);
-        setIsModalOpen(true);
-      };
-    
-      const closeModal = () => {
-        setIsModalOpen(false);
-        setSelectedImage(null);
-      };
-    
-      if (!gallery || gallery.length === 0) {
-        return <p className="text-center text-gray-500">No gallery available.</p>;
-      }
-    
-      return (
-        <>
-          <div className="glide">
-            <div className="glide__track" data-glide-el="track">
-              <ul className="glide__slides">
-                {gallery.map((image, index) => (
-                  <li key={index} className="glide__slide">
-                    <div className="bg-white shadow-md rounded-md p-1 mb-3 relative">
-                      <img
-                        src={image}
-                        alt={`Gallery image ${index + 1}`}
-                        className="w-full h-56 rounded-md cursor-pointer"
-                        onClick={() => openModal(image)}
-                      />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="glide__arrows" data-glide-el="controls">
-              <button className="glide__arrow glide__arrow--left" data-glide-dir="<">&lt;</button>
-              <button className="glide__arrow glide__arrow--right" data-glide-dir=">">&gt;</button>
-            </div>
-            <div className="glide__bullets" data-glide-el="controls[nav]">
-              {gallery.map((_, index) => (
-                <button key={index} className="glide__bullet" data-glide-dir={`=${index}`}></button>
-              ))}
-            </div>
-          </div>
-    
-          {selectedImage && (
-            <Modal
-              isOpen={isModalOpen}
-              onRequestClose={closeModal}
-              contentLabel="Selected Image"
-              style={{
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, 0.75)'
-                },
-                content: {
-                  top: '50%',
-                  left: '50%',
-                  right: 'auto',
-                  bottom: 'auto',
-                  marginRight: '-50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '70%',
-                  maxWidth: '800px',
-                  height: '70%',
-                  maxHeight: '80%',
-                  overflow: 'hidden',
-                  borderRadius: '10px',
-                  padding: '0',
-                }
-              }}
-            >
-              <div className="relative w-full h-full">
-                <button
-                  onClick={closeModal}
-                  className="absolute top-2 right-2 bg-white rounded-full p-2 text-black shadow-lg"
-                >
-                  &times;
-                </button>
-                <img
-                  src={selectedImage}
-                  alt="Selected"
-                  className="w-full h-full object-cover rounded-md"
-                />
-              </div>
-            </Modal>
-          )}
-        </>
-      );
-    };
-    
-
-    // Define custom render options
-    const renderOptions = {
-      renderNode: {
-        [BLOCKS.EMBEDDED_ASSET]: (node) => {
-          const { file, title } = node.data.target.fields;
-          return (
-            <div className="my-4 rounded-md">
-              <img src={file.url} alt={title} className="mx-auto rounded-lg" />
-              {title && <p className="text-center text-sm text-gray-600">{title}</p>}
-            </div>
-          );
-        },
-        [BLOCKS.PARAGRAPH]: (node, children) => <p className=" text-xl font-sans max-w-[690px] mb-4">{children}</p>,
-        [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-3xl font-bold mb-4">{children}</h1>,
-        [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-2xl font-bold mb-4">{children}</h2>,
-        [INLINES.HYPERLINK]: (node, children) => (
-          <a href={node.data.uri} className="text-blue-500 hover:underline">
-            {children}
-          </a>
-        ),
-      },
-    };
-   
-
+  const { title, description, logo, guide, gallery } = game
   
 const GameCard = ({ game }) => {
   return (
     <motion.div 
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
+    transition={{ delay: 0.2 }}
     className="mt-12 overflow-hidden m-auto mb-4 transition-shadow duration-300"
     style={{ width: "100%" }}
   >
@@ -338,7 +330,7 @@ const InfoTag = ({ label, value, color }) => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ delay: 0.2 }}
         className="game-stats grid grid-cols-2 gap-4 md:grid-cols-4 mt-8"
       >
         {[
@@ -358,47 +350,43 @@ const InfoTag = ({ label, value, color }) => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
+        transition={{ delay: 0.2 }}
         className="gameplay-trailer-and-gallery my-12"
       >
         <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-red-500">
           {game.title} Gameplay
         </h2>
-        <div className='gameplay-container rounded-lg overflow-hidden shadow-2xl'>
-          <YouTubePlayer url={game.trailer} />
-          <div className="mt-96">
-            <GlideCarousel gallery={game.gallery} />
-          </div>
-        </div>
+        
+         <GalleryAndTrailer trailer={game.trailer} gallery={game.gallery} />
+
       </motion.div>
 
       {guide ? (
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ delay: 0.2 }}
           className="game-guide mt-16 mb-24"
         >
           <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-red-600">
-            Game Guide
+            {title} Guide
           </h2>
-          <div className="guide-content max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="guide-content max-w-4xl mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden">
             <div className="p-6 lg:p-10 border-t-4 border-blue-600">
               {documentToReactComponents(guide, {
-                ...renderOptions,
+               
                 renderNode: {
-                  ...renderOptions.renderNode,
                   [BLOCKS.PARAGRAPH]: (node, children) => (
-                    <p className="text-lg leading-relaxed mb-6 text-gray-700">{children}</p>
+                    <p className="text-lg  mb-6 ">{children}</p>
                   ),
                   [BLOCKS.HEADING_1]: (node, children) => (
-                    <h1 className="text-3xl font-bold mb-6 text-blue-800">{children}</h1>
+                    <h1 className="text-3xl font-bold mb-6 ">{children}</h1>
                   ),
                   [BLOCKS.HEADING_2]: (node, children) => (
-                    <h2 className="text-2xl font-semibold mb-4 mt-8 text-blue-700">{children}</h2>
+                    <h2 className="text-2xl font-bold mb-4 mt-8">{children}</h2>
                   ),
                   [BLOCKS.HEADING_3]: (node, children) => (
-                    <h3 className="text-xl font-semibold mb-3 mt-6 text-blue-600">{children}</h3>
+                    <h3 className="text-xl font-bold mb-3 mt-6 ">{children}</h3>
                   ),
                   [BLOCKS.UL_LIST]: (node, children) => (
                     <ul className="list-disc list-inside mb-6 pl-4">{children}</ul>
@@ -414,8 +402,17 @@ const InfoTag = ({ label, value, color }) => {
                       {children}
                     </blockquote>
                   ),
+                  [BLOCKS.EMBEDDED_ASSET]: (node) => {
+                    const { file, title } = node.data.target.fields;
+                    return (
+                      <div className="my-4 rounded-md">
+                        <img src={file.url} alt={title} className="mx-auto rounded-lg" />
+                        {title && <p className="text-center text-sm text-gray-600">{title}</p>}
+                      </div>
+                    );
+                  },
                   [INLINES.HYPERLINK]: (node, children) => (
-                    <a href={node.data.uri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                    <a href={node.data.uri} className="text-blue-700 hover:underline" target="_blank" rel="noopener noreferrer">
                       {children}
                     </a>
                   ),
@@ -434,10 +431,10 @@ const InfoTag = ({ label, value, color }) => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8 }}
+        transition={{ delay: 0.2 }}
         className="more-games py-12 px-6 mt-12 mb-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-inner"
       >
-        <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+        <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
           More Games You Might Like
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

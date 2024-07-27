@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const withPWA = require('next-pwa')({
   dest: 'public',
+  disable: true
 });
 
 const nextConfig = {

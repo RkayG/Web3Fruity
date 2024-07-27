@@ -176,7 +176,7 @@ const Games = () => {
           : games.map(game => <GameCard key={game.id} game={game} />)
         }
       
-        <Link href="/airdrops" className='flex justify-center mx-auto'>
+        <Link href="/games" className='flex justify-center mx-auto'>
            <motion.span 
               whileHover={{ x: 10 }}
               className="text-blue-600 hover:text-orange-600 flex  mx-auto items-center cursor-pointer text-lg mt-12 font-semibold transition-colors duration-300"

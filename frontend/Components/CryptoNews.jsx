@@ -47,51 +47,45 @@ const CryptoNews = () => {
 
   return (
     <section className="py-4 max-w-[1580px] m-auto w-full mb-32">
-      <h2 className="text-3xl md:text-4xl  font-extrabold flex items-center mb-12 px-4 md:px-8">
-          <FaNewspaper className="text-orange-800 mr-4 text-4xl md:text-5xl" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
-           Crypto News
-          </span>
-        </h2>
+      <h2 className="text-3xl md:text-4xl font-extrabold flex items-center mb-12 px-4 md:px-8">
+        <FaNewspaper className="text-orange-800 mr-4 text-4xl md:text-5xl" />
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
+          Crypto News
+        </span>
+      </h2>
       <div className="mx-3">
         {loading ? (
           <CryptoNewsSkeleton />
         ) : (
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
             {news.map((item, index) => (
-              <a href={item.newsUrl} key={index}>
-                <div className="rounded-lg bg-[#f5f5f5] dark:bg-[#1a1a1a] p-6 hover:opacity-80">
+              <Link href={`/crypto-news/${item.slug}`} key={index}>
+                <div className="rounded-lg bg-[#f5f5f5] dark:bg-[#1a1a1a] p-6 transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:bg-[#e6e6e6] dark:hover:bg-[#2a2a2a]">
                   <div className="relative h-[300px] overflow-hidden rounded-lg">
                     <img
-                      className="h-full w-full object-cover object-center"
+                      className="h-full w-full object-cover object-center transition-transform duration-300 ease-in-out hover:scale-110"
                       height="300"
                       src={item.imageLink}
                       alt="News thumbnail"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h2 className="text-2xl font-bold text-white bg-black bg-opacity-50 px-2 py-2">{item.newsHeading}</h2>
+                      <h2 className="text-2xl font-bold text-white bg-black bg-opacity-50 px-2 py-2 transition-colors duration-300 ease-in-out hover:bg-opacity-70">{item.newsHeading}</h2>
                     </div>
                   </div>
                   <div className="mt-4">
-                     <p className="text-gray-500 dark:text-gray-400 mr-3">
-                      Source: 
-                      <a href={item.newsUrl} className="text-blue-200 hover:underline ml-3" title={item.newsUrl}>
-                        {item.sourceWebsiteName}
-                      </a>
-                    </p> 
-                    <p className="text-gray-500 dark:text-gray-400">{getTimeDifference(item.timestamp)}</p>
+                    <p className="text-gray-500 dark:text-gray-400 transition-colors duration-300 ease-in-out hover:text-gray-700 dark:hover:text-gray-200">{getTimeDifference(item.timestamp)}</p>
                   </div>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         )}
       </div>
       <Link href="/crypto-news">
-          <span className="text-blue-800 hover:text-orange-800 flex justify-center mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300">
-            Explore All <FaChevronRight className="ml-2" />
-          </span>
+        <span className="text-blue-800 hover:text-orange-800 flex justify-center mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-all duration-300 ease-in-out hover:translate-x-2">
+          Explore All <FaChevronRight className="ml-2" />
+        </span>
       </Link>
     </section>
   );

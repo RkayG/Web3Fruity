@@ -9,7 +9,7 @@ import { NavBar, Footer, BottomNavigationPanel } from "../Components";
 
 
 export default function App({ Component, pageProps }) {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
+ /*  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallBanner, setShowInstallBanner] = useState(false);
 
   useEffect(() => {
@@ -44,17 +44,17 @@ export default function App({ Component, pageProps }) {
   const dismissInstallBanner = () => {
     setShowInstallBanner(false);
   };
-
+ */
   return (
     <>
       <Head>
-        <link rel="manifest" href="/manifest.json" />
+        {/* <link rel="manifest" href="/manifest.json" /> */}
         <meta name="theme-color" content="#000000" />
         <link rel="icon" href="/favicon.ico" />
         <title>Web3Fruity</title>
       </Head>
       <NavBar />
-      {showInstallBanner && (
+     {/*  {showInstallBanner && (
         <div style={{
           position: 'sticky',
           top: 0,
@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
             </button>
           </div>
         </div>
-      )}
+      )} */}
       <Component {...pageProps} />
       <Footer />
       <BottomNavigationPanel />

@@ -54,14 +54,14 @@ const AcademySection = () => {
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
               >
                 <img 
-                  src={article.imageLink} 
+                  src={article.imageLink}
                   alt={article.postHeading} 
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{article.postHeading}</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{article.excerpt}</p>
-                  <Link href={`/academy/${article.id}`}>
+                  <Link href={`/academy/${article.id}`} key={index}>
                     <span className="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
                       Learn More <FaArrowRight className="ml-2" />
                     </span>

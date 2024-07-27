@@ -33,6 +33,7 @@ router.get('/airdrops', async (req, res) => {
     let page = parseInt(req.query.page) || 1;
 
     const airdrops = await Airdrop.find()
+      .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit);
     
@@ -42,6 +43,22 @@ router.get('/airdrops', async (req, res) => {
     res.json({ airdrops, totalPages });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Route to retrieve a specific airdrop by slug
+router.get('/airdrops/:slug', async (req, res) => {
+  const { slug } = req.params;
+  try {
+    const airdrop = await Airdrop.findOne({ slug: slug });
+    if (airdrop) {
+      res.json(airdrop);
+    } else {
+      res.status(404).send('airdrop not found');
+    }
+  } catch (error) {
+    console.error('Error fetching airdrop  by slug:', error);
+    res.status(500).send('Internal server error');
   }
 });
 

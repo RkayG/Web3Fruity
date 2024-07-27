@@ -13,6 +13,7 @@ const cryptoNewsRouter = require('./routes/CryptoNewsRoutes');
 const tokenFarmingRouter = require('./routes/TokenFarmingRoutes');
 const academyRouter = require('./routes/AcademyPostRoutes');
 const subscribeRouter = require('./routes/SubscriberRoutes');
+const searchRouter = require('./routes/searchRoute');
 
 // Use middleware if needed
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/', cryptoNewsRouter);
 app.use('/', tokenFarmingRouter);
 app.use('/', academyRouter);
 app.use('/', subscribeRouter);
+app.use('/', searchRouter);
 
 const port = process.env.PORT || 1225;
 

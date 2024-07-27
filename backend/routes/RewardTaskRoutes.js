@@ -33,7 +33,7 @@ router.get('/reward-tasks', async (req, res) => {
       limit = 12; // Set a default limit if 'limit' query parameter is not provided or invalid
     }
 
-    const rewardTasks = await RewardTask.find().limit(limit); // Use the limit in the MongoDB query
+    const rewardTasks = await RewardTask.find().sort({ createdAt: -1 }).limit(limit); // Use the limit in the MongoDB query
     res.json(rewardTasks);
   } catch (error) {
     res.status(500).json({ message: error.message });

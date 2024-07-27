@@ -6,6 +6,8 @@ import axios from "axios";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+
+
 //========== truncate function for game.description
 const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -30,7 +32,7 @@ const GameCard = ({ game }) => {
           <div className="bg-white rounded-lg shadow-md overflow-hidden m-auto lg:p-8 mb-4 border-2 border-gray-200
           hover:border hover:border-blue-500 transition-all duration-300" style={{ width: "95%" }}>
             <div className="flex">
-              <img className="w-24 h-24 lg:w-40 lg:h-auto rounded-2xl m-4 lg:m-0 lg:rounded-md lg:mr-6" src={game.image} />
+              <img className="w-24 h-24 lg:w-40 lg:h-auto rounded-2xl m-4 lg:m-0 lg:rounded-md lg:mr-6" src={game.image} alt={game.title} />
               <div className="ml-4 flex-1">
                 <div className="title-and-view-button-container flex">
                   <h2 className="w-48 mt-4 lg:mt-0  text-xl lg:text-2xl font-bold text-blue-900 cursor-pointer lg:w-60">{game.title}</h2>

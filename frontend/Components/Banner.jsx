@@ -25,18 +25,18 @@ const Banner = ({ bannerTexts }) => {
   const getButtonLink = (text) => {
     switch (text.toLowerCase()) {
       case 'claim free crypto':
-        return '/claim-free-crypto';
+        return '/airdrops';
       case 'play earn repeat':
-        return '/play-earn-repeat';
+        return '/games';
       case 'from apps to assets':
-        return '/apps-to-assets';
+        return '/platforms';
       default:
         return '#';
     }
   };
 
   return (
-    <div className="banner bg-burgundy py-12 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="banner bg-burgundy py-4 flex flex-col items-center justify-center relative overflow-hidden">
       <div className="banner-content max-w-3xl mx-auto text-center px-4">
         <h1 className="banner-text text-gray-200 text-2xl md:text-3xl lg:text-4xl font-serif leading-tight mb-6">
           {bannerTexts[currentIndex]}

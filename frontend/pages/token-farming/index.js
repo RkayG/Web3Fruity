@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaFilter, FaCoins, FaExternalLinkAlt } from 'react-icons/fa';
 import { Disclaimer } from '../../Components';
+import Link from 'next/link';
 
 const TokenFarming = () => {
   const [tokens, setTokens] = useState([]);
@@ -34,8 +35,11 @@ const TokenFarming = () => {
       result = result.filter(token => token.blockchain === selectedBlockchain);
     }
     if (stakeFilter !== 'all') {
-      result = result.filter(token => token.stake === (stakeFilter === 'stake'));
+      result = result.filter(token => token.stakeToFarm === stakeFilter && token.stakeToFarm === 'stake');
+      console.log(stakeFilter);
     }
+  
+    
     setFilteredTokens(result);
   };
 
@@ -129,7 +133,7 @@ const TokenFarming = () => {
         animate="visible"
         className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
       >
-        {filteredTokens.map((token, index) => (
+        {filteredTokens?.map((token, index) => (
           <motion.div 
             key={index} 
             variants={itemVariants}
@@ -144,7 +148,11 @@ const TokenFarming = () => {
             <div className="pt-16 pb-6 px-6">
               <div className="flex justify-between items-center mb-3 text-sm">
                   <span className="text-gray-600">Platform:</span>
-                  <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full">Binance App</span>
+                  <a href={token.linkToFarmingPlatform}>
+                    <span className="bg-orange-100 hover:bg-orange-900 hover:text-white flex flex-wrap cursor-pointer text-orange-800 px-3 py-1 rounded-full">{token.platform || 'N/A'}
+                        <FaExternalLinkAlt className='mt-1 ml-2' />
+                    </span>
+                  </a>
                 </div>
               <div className="mb-3">
                 <p className="text-gray-600">Requirements:</p>
@@ -156,18 +164,15 @@ const TokenFarming = () => {
               </div>
               <div className="mb-3">
                 <p className="text-gray-600">Farming Type:</p>
-                <p className="font-semibold">{token.stake ? 'Stake to Farm' : 'Free Farming'}</p>
+                <p className="font-semibold">{token.stakeToFarm ? 'Stake to Farm' : 'Free Farming'}</p>
               </div>
               <div className="flex justify-end items-center">
-                
-                <a 
-                  href={token.guideUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <Link
+                  href={`/token-farming/${token.slug}`} 
                   className="flex items-center w-fit float-right bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300"
                 >
                   Guide <FaExternalLinkAlt className="ml-2" />
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>

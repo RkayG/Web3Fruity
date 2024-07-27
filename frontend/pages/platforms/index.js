@@ -185,8 +185,8 @@ const RewardForTask = () => {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-6 text-center relative mb-28"
+            transition={{ delay: 0.2 }}
+            className=" text-center relative mb-28"
           >
           <div className="mr-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
             {currentRewards.map((reward, index) => (
@@ -194,7 +194,7 @@ const RewardForTask = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ delay: 0.2 }}
                 className="bg-white rounded-md shadow-md p-4 border border-gray-300 hover:shadow-lg transition-shadow duration-300"
             >
               {/* <div key={index} className="bg-white rounded-md shadow-md p-4 border border-gray-300"> */}

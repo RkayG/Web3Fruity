@@ -34,8 +34,8 @@ router.get('/academy', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
     
-    const academyPost = await AcademyPost.find().skip(skip).limit(limit);
-    res.json(academyPost);
+    const academyPosts = await AcademyPost.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
+    res.json(academyPosts);
     console.log('article fetched')
   } catch (error) {
     res.status(500).json({ message: error.message });

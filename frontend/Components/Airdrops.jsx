@@ -76,6 +76,7 @@ const Airdrops = () => {
                   </div>
                 </div>
                 <h3 className="text-2xl font-bold text-center mb-2 text-blue-800">{airdrop.title}</h3>
+                <p>{airdrop.slug}</p>
                 <p className="text-sm text-center text-gray-600 mb-4">{airdrop.chain}</p>
                 <div className="space-y-3 text-sm">
                   <p className="flex items-center justify-between">
@@ -92,7 +93,7 @@ const Airdrops = () => {
                   </p>
                 </div>
               </div>
-              <Link href={`/airdrops/${airdrop._id}`}>
+              <Link href={`/airdrops/${airdrop.slug}`}>
                 <div className="bg-gradient-to-r from-gray-900 to-orange-800 text-gray-200 p-4 rounded-b-2xl flex justify-between items-center cursor-pointer hover:from-orange-800 hover:to-blue-800 transition-all duration-300">
                   <span className="font-semibold">View Details</span>
                   <FaLink />

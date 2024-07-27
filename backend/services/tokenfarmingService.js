@@ -11,12 +11,12 @@ const client = createClient({
 async function fetchTokenFarmsFromContentful() {
   try {
     const response = await client.getEntries({
-      content_type: 'tokneFarms', // token farming content type name
+      content_type: 'tokenFarming', // token farming content type name
     });
     
     return response.items.map((item) => item.fields); // Extract token farming data from Contentful entries
   } catch (error) {
-    console.error(error);
+    console.error(error); 
     throw new Error('Failed to fetch token farming from Contentful');
   }
 }
@@ -28,7 +28,7 @@ async function syncTokenFarmsWithDatabase() {
   for (const tokenFarmingData of contentfultokenFarms) {
     // Check if the token farm already exists in MongoDB
     console.log(tokenFarmingData);
-    let existingTokenFarm = await TokenFarming.findOne({ title: tokenFarmingData.title });
+    let existingTokenFarm = await TokenFarming.findOne({ tokenName: tokenFarmingData.tokenName });
 
     if (existingTokenFarm) {
       // Update the existing token farming

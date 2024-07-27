@@ -16,7 +16,7 @@ router.post('/sync-contentful-featured', async (req, res) => {
 // Route for fetching all featured banners
 router.get('/featured', async (req, res) => {
   try {
-    const featured = await Featured.find();
+    const featured = await Featured.find().sort({ createdAt: -1 });
     console.log(featured);
     res.json(featured);
   } catch (error) {

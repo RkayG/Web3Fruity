@@ -16,8 +16,9 @@ const index = () => {
       <RewardForTask />
       <CryptoNews />
       <AcademySection />
-      <BottomSubscribe />
       <Disclaimer />
+      <BottomSubscribe />
+      
     </>
   );
 }

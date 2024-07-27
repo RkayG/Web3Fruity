@@ -34,7 +34,7 @@ router.get('/crypto-news', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
     
-    const cryptoNews = await CryptoNews.find().skip(skip).limit(limit);
+    const cryptoNews = await CryptoNews.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
     res.json(cryptoNews);
     console.log('news fetched')
   } catch (error) {

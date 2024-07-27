@@ -16,6 +16,7 @@ import AcademySection from "./AcademySection";
 import BottomSubscribe from "./BottomSubscribe";
 import BottomNavigationPanel from "./BottomNavigationPanel";
 import Disclaimer from "./Disclaimer";
+import GlobalSearch from "./GlobalSearch";
 
 export { NavBar, Footer, ParentBanner, Logo, Menu, ICON, Close, Arrow, FeaturedAirdrops, Airdrops, TokenFarming,
-    Games, RewardForTask, CryptoNews, AcademySection, BottomSubscribe, BottomNavigationPanel, Disclaimer };
+    Games, RewardForTask, CryptoNews, AcademySection, BottomSubscribe, BottomNavigationPanel, Disclaimer, GlobalSearch };

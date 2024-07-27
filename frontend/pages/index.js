@@ -4,6 +4,9 @@ import { BottomSubscribe } from "../Components";
 import { FaTwitter, FaTelegram } from "react-icons/fa";
 import Subscribe from "../Components/Subscribe";
 import { motion, AnimatePresence } from 'framer-motion';
+import { Inter, Roboto_Slab } from 'next/font/google'
+ 
+const roboto_slab = Roboto_Slab({ subsets: ['latin'] })
 
 // =========== Tooltip, to be removed ================
 export const TooltipLink = ({ href, className, children, tooltipText }) => {
@@ -121,7 +124,7 @@ export default function Component() {
                   <h1 className=" font-bold tracking-tighter text-blue-800 text-5xl lg:mb-6">
                       Rewarding Crypto Exploration
                   </h1>
-                  <p className="max-w-[600px] text-black md:text-xl/relaxed lg:xl/relaxed xl:text-xl/relaxed mt-3 ">
+                  <p className= {`${roboto_slab.className} max-w-[600px] text-black md:text-xl/relaxed lg:xl/relaxed xl:text-xl/relaxed mt-3 `}>
                   Are you ready to level up your crypto adventures and harvest bountiful rewards? <br/><br/>
                   <span className="text-blue-800 font-bold text-xl">Web3</span><span className="text-orange-800 text-xl font-bold">Fruity</span> is your gateway to a treasure trove of Web3 earning opportunities.
                     

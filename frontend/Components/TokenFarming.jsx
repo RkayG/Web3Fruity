@@ -65,13 +65,15 @@ const TokenFarming = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-4xl md:text-5xl font-bold flex items-center mb-12 px-4 md:px-8 text-blue-800"
+        className="text-3xl md:text-4xl  font-extrabold flex items-center mb-10 px-4 md:px-8"
       >
         <FaCoins className="text-orange-800 mr-4 text-4xl md:text-5xl" />
-        <span>Token Farming</span>
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-orange-800">
+          Token Farming
+        </span>
       </motion.h2>
 
-      <motion.div 
+      {/* <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -92,7 +94,7 @@ const TokenFarming = () => {
             {blockchain}
           </button>
         ))}
-      </motion.div>
+      </motion.div> */}
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mx-3 lg:px-6">
         {filteredTokens.map((token, index) => (
@@ -112,24 +114,26 @@ const TokenFarming = () => {
             <div className="pt-16 pb-6 px-6">
               <div className="flex justify-between items-center mb-4 text-sm">
                 <span className="text-gray-600">Platform:</span>
-                <span className="bg-orange-100 hover/active:bg-orange-200 text-orange-800 px-3 cursor-pointer py-1 rounded-full">Binance App</span>
+                <a href={token.linkToFarmingPlatform}>
+                <span className="bg-orange-100 hover:bg-orange-900 hover:text-white flex flex-wrap cursor-pointer text-orange-800 px-3 py-1 rounded-full">{token.platform || 'N/A'}
+                    <FaExternalLinkAlt className='mt-1 ml-2' />
+                </span>
+              </a>
               </div>
               <div className="mb-4">
                 <p className="text-gray-600">Requirements:</p>
-                <p className="font-semibold text-orange-800">{token.requirements || 'Telegram, Ton wallet'}</p>
+                <p className="font-semibold ">{token.requirements || 'Telegram, Ton wallet'}</p>
               </div>
               <div className="mb-4">
                 <p className="text-gray-600">Farming Type:</p>
-                <p className="font-semibold text-orange-800">{token.stake ? 'Stake to Farm' : 'Free Farming'}</p>
+                <p className="font-semibold ">{token.stakeToFarm ? 'Stake to Farm' : 'Free Farming'}</p>
               </div>
-              <a 
-                  href={token.guideUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+              <Link
+                  href={`/token-farming/${token.slug}`} 
                   className="flex items-center w-fit float-right mb-4 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300"
                 >
                   Guide <FaExternalLinkAlt className="ml-2" />
-                </a>
+              </Link>
             </div>
           </motion.div>
         ))}

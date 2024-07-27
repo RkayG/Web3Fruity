@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { FaLink, FaCoins, FaPercentage, FaCalendarAlt, FaChain } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { Disclaimer } from '../../Components';
 
 const Airdrops = () => {
   const [airdrops, setAirdrops] = useState([]);
@@ -14,7 +15,7 @@ const Airdrops = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:1225/airdrops', {
-          params: { limit: 6, page: page },
+          params: { limit: 10, page: page },
         });
         setAirdrops(response.data.airdrops);
         setTotalPages(response.data.totalPages);
@@ -46,7 +47,7 @@ const Airdrops = () => {
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ delay: 0.2 }}
           className="relative z-10 text-center text-white max-w-3xl px-4 sm:px-6 lg:px-8"
         >
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 shadow-text">Discover Airdrop Pools</h1>
@@ -72,7 +73,7 @@ const Airdrops = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.2 }}
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-8"
           >
             {airdrops?.map((airdrop, index) => (
@@ -80,7 +81,7 @@ const Airdrops = () => {
                 key={airdrop._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{  delay: 0.2 }}
                 className="  transition-all duration-300 hover:-translate-y-2"
               >
                  <div key={airdrop._id} className="group bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
@@ -108,7 +109,7 @@ const Airdrops = () => {
                   </p>
                 </div>
               </div>
-              <Link href={`/airdrops/${airdrop._id}`}>
+              <Link href={`/airdrops/${airdrop.slug}`}>
                 <div className="bg-gradient-to-r from-gray-900 to-orange-800 text-gray-200 p-4 rounded-b-2xl flex justify-between items-center cursor-pointer hover:from-orange-800 hover:to-blue-800 transition-all duration-300">
                   <span className="font-semibold">View Details</span>
                   <FaLink />
@@ -164,6 +165,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => (
     >
       Next
     </button>
+   
   </div>
 );
 
