@@ -17,6 +17,7 @@ const Games = () => {
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 12;
 
@@ -43,6 +44,8 @@ const Games = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching games:", error);
+        setError('An error occurred while fetching games. Please check your internet connection.');
+      } finally {
         setLoading(false);
       }
     };
@@ -171,6 +174,18 @@ const Games = () => {
       <div className="w-1/4 h-4 bg-gray-300 rounded"></div>
     </div>
   );
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 my-32">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+        
+      </div>
+    );
+  }
 
   return (
     <section>

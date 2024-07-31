@@ -69,6 +69,7 @@ const RewardTooltip = ({ reward }) => {
 const RewardForTask = () => {
   const [rewards, setRewards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const rewardsPerPage = 12;
 
@@ -80,6 +81,9 @@ const RewardForTask = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching rewards:", error);
+        setError('An error occurred while fetching data. Please check your internet connection.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -95,6 +99,17 @@ const RewardForTask = () => {
 
   const [tooltipData, setTooltipData] = useState(null);
   const [isTooltipOpen, setIsTooltipOpen] = useState([]);
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 my-32">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
 

@@ -31,7 +31,7 @@ const Academy = () => {
       } catch (error) {
         console.error('Error fetching articles:', error);
         setLoading(false);
-        setError('Unable to fetch articles, please refresh the browser');
+        setError('Unable to fetch articles, please check your internet.');
       }
     };
 

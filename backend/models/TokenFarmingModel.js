@@ -23,6 +23,9 @@ const tokenFarmingSchema = new mongoose.Schema(
     linkToFarmingPlatform: { type: String },
     description: { type: String },
     status: { type: String },
+    website: { type: String },
+    socialLinks: { type: Array },
+    whitepaperLink: { type: String },
     guide: { type: Object, required: true },
     stakeToFarm: { type: String}
   },

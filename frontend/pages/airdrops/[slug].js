@@ -4,7 +4,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Link from 'next/link';
 import axios from 'axios';
-import { FaTwitter, FaTelegram, FaDiscord, FaGlobe, FaFile, FaLink, FaCoins, FaPercentage, FaCalendarAlt, } from 'react-icons/fa';
+import { FaTwitter, FaTelegram, FaDiscord, FaReddit, FaGlobe, FaFile, FaLink, FaCoins, FaPercentage, FaCalendarAlt, } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Disclaimer } from '../../Components';
 
@@ -169,6 +169,7 @@ const AirdropGuide = () => {
           {discord && <SocialLink href={discord} icon={FaDiscord} label="Discord" />}
         </div>
 
+        <h2 className='text-2xl font-bold mt-6 mb-4 text-blue-800'>About Project</h2>
         <p className="text-lg mb-6 text-gray-700">
           {showFullDescription ? description : truncatedDescription}
           {description?.length > 200 && (
@@ -183,7 +184,7 @@ const AirdropGuide = () => {
 
         {guide ? (
           <div>
-            <h2 className="text-2xl font-bold mb-4 text-blue-800">Steps To Join Airdrop</h2>
+            <h2 className="text-2xl font-bold mb-6 mt-12 text-blue-800">Steps To Join Airdrop</h2>
             <div className='border-t-2 border-t-orange-800 p-6 lg:px-12 rounded-lg bg-gray-50 shadow-inner'>
               {documentToReactComponents(guide, renderOptions)}
             </div>
@@ -193,11 +194,28 @@ const AirdropGuide = () => {
         )}
       </motion.div>
 
+      <div className="flex items-center mb-3 justify-center mx-auto lg:mx-0 lg:justify-start">
+            <a href={airdropData.website} className="mr-3 text-gray-600 hover:text-blue-600 transition-colors duration-300"><FaGlobe title={airdropData.website} /></a>
+            {airdropData.socialLinks.map((link, index) => {
+              let icon;
+              if (link.includes("twitter.com") || link.includes("x.com")) icon = <FaTwitter title={link} />;
+              else if (link.includes("facebook.com")) icon = <FaFacebook title={link} />;
+              else if (link.includes("discord.com") || link.includes("discord.gg")) icon = <FaDiscord title={link} />;
+              else if (link.includes("telegram.com") || link.includes("t.me")) icon = <FaTelegram title={link} />;
+              else if (link.includes("reddit.com")) icon = <FaReddit title={link} />;
+              return (
+                <a key={index} href={link} className="mx-3 text-gray-600 hover:text-blue-600 transition-colors duration-300">
+                  {icon}
+                </a>
+              );
+            })}
+          </div>
+
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="py-8 px-3 mt-12 mb-20 border rounded-lg bg-gray-50 shadow-md"
+        className="py-8 px-5 mt-32 mb-20 border rounded-lg bg-gray-50 shadow-md"
       >
         <h2 className="text-2xl font-bold mb-6 px-6 text-blue-900">More Airdrops</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

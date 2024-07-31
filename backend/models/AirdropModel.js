@@ -14,12 +14,15 @@ const airdropSchema = new mongoose.Schema(
     slug: { type: String, unique: true },
     //projectName: { type: String, required: true},
     description: { type: String },
+    referralLink: { type: String },
     rewardPool: { type: String },
     rewardPercentFromSupply: { type: String },
     endDate: { type: Date },
     platformType: { type: String, required: true },
     chain: { type: String },
     website: { type: String },
+    socialLinks: { type: Array },
+    whitepaperLink: { type: String },
     guide: { type: Object }
   },
   

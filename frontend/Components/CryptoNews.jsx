@@ -83,7 +83,7 @@ const CryptoNews = () => {
         )}
       </div>
       <Link href="/crypto-news">
-        <span className="text-blue-800 hover:text-orange-800 flex justify-center mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-all duration-300 ease-in-out hover:translate-x-2">
+        <span className="text-blue-800 hover:text-orange-800 flex w-[96%] justify-center mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-all duration-300 ease-in-out hover:translate-x-2">
           Explore All <FaChevronRight className="ml-2" />
         </span>
       </Link>

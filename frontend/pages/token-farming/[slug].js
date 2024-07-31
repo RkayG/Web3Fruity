@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
-import { FaChevronLeft, FaCalendarAlt, FaCoins, FaExternalLinkAlt, FaFacebookF, FaTwitter, FaLinkedinIn, FaLink } from 'react-icons/fa';
+import { FaChevronLeft, FaCalendarAlt, FaCoins, FaExternalLinkAlt, FaFacebookF, FaTwitter, FaLinkedinIn, FaLink,
+     FaReddit, FaDiscord, FaTelegram, FaFacebook, FaGlobe, FaFileAlt
+} from 'react-icons/fa';
 import { Disclaimer } from '../../Components';
 
 const Navigation = ({ title }) => {
@@ -32,25 +34,35 @@ const ShareButton = ({ icon, color, onClick, label }) => (
 
 const TokenFarmingGuide = () => {
   const [tokenData, setTokenData] = useState(null);
+  const [additionalTokens, setAdditionalTokens] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    // -----fetch data from server----------------------
     const fetchTokenData = async (slug) => {
       try {
         const response = await fetch(`http://localhost:1225/farm-tokens/${slug}`);
         const data = await response.json();
         setTokenData(data);
         setLoading(false);
+
+         // Fetch additional tokens
+         const additionalTokensResponse = await fetch('http://localhost:1225/farm-tokens');
+         const allTokens = await additionalTokensResponse.json();
+         const filteredTokens = allTokens.filter(token => token.slug !== slug).slice(0, 3);
+         setAdditionalTokens(filteredTokens);
       } catch (error) {
         console.error('Failed to load token data:', error);
         setError('Failed to load token data');
         setLoading(false);
       }
     };
+    //----------------fetch data from server end --------------------
 
+    //---- page router
     if (router.isReady) {
         console.log(router.query);
       const { slug } = router.query;
@@ -61,6 +73,7 @@ const TokenFarmingGuide = () => {
     }
   }, [router.isReady, router.query.slug]);
 
+  /*------------- Share links setting -----------------------------------------------
   const shareOnFacebook = () => {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
   };
@@ -79,7 +92,10 @@ const TokenFarmingGuide = () => {
       setTimeout(() => setCopied(false), 2000);
     });
   };
+   -------Share links setting end   -------------------------------------------------------------------- */
 
+
+ /*  ----if loading fails */
   if (error) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -90,6 +106,7 @@ const TokenFarmingGuide = () => {
     );
   }
 
+  /* ----track loading state */
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -102,6 +119,7 @@ const TokenFarmingGuide = () => {
     );
   }
 
+  /*----------- Guide content formatter - page formatting for texts, links, and images ----------------------------- */
  const { tokenName, platform, requirements, blockchain, guide, linkToFarmingPlatform, website, whitepaper, twitter, telegram, discord } = tokenData;
  const renderOptions = {
     renderNode: {
@@ -124,8 +142,22 @@ const TokenFarmingGuide = () => {
       ),
     },
   };
+  /*----------- Guide contend formatter end ------------------------------------------------------------------------------ */
+
+  /* -----Set Social links display ----------------------------------------- */
+  const SocialLink = ({ href, icon, title }) => (
+    <a
+      href={href}
+      className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"
+      title={title}
+    >
+      {icon}
+    </a>
+  );
+ /* -------------- Set Social links display end --------------------------------------------------- */
 
   return (
+   /*  SECTION START */
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -133,6 +165,7 @@ const TokenFarmingGuide = () => {
     >
       <Navigation title={tokenName} />
 
+    {/* =========== Section heading =========================== */}
       <div className="max-w-4xl mx-auto px-4 py-12">
         <motion.h1 
           className="text-4xl font-bold text-center mb-8  text-blue-800"
@@ -142,7 +175,10 @@ const TokenFarmingGuide = () => {
         >
           {tokenData.tokenName} 
         </motion.h1>
+    {/* ========= Section heading end ========================== */}
+    
         
+       {/*  ====================== Token Farming hero card =============================================================== */}
         <motion.div 
           className="bg-white rounded-lg shadow-lg overflow-hidden mb-8"
           initial={{ y: 20, opacity: 0 }}
@@ -175,68 +211,10 @@ const TokenFarmingGuide = () => {
             </div>
           </div>
         </motion.div>
+       {/*  =============================== Token Farming Hero card end ================================================================ */}
 
-        <motion.div
-          className="flex justify-center space-x-4 mb-8"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <ShareButton
-            icon={<FaFacebookF />}
-            color="bg-blue-600"
-            onClick={shareOnFacebook}
-            label="Share on Facebook"
-          />
-          <ShareButton
-            icon={<FaTwitter />}
-            color="bg-blue-400"
-            onClick={shareOnTwitter}
-            label="Share on Twitter"
-          />
-          <ShareButton
-            icon={<FaLinkedinIn />}
-            color="bg-blue-700"
-            onClick={shareOnLinkedIn}
-            label="Share on LinkedIn"
-          />
-          <ShareButton
-            icon={<FaLink />}
-            color="bg-gray-600"
-            onClick={copyLink}
-            label="Copy link"
-          />
-        </motion.div>
-        {copied && (
-          <motion.p
-            className="text-green-600 text-center mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            Link copied to clipboard!
-          </motion.p>
-        )}
-
-        <motion.div
-          className="bg-white rounded-lg shadow-lg px-1 mb-8"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-           {guide ? (
-                <div>
-                    <h2 className="text-2xl font-bold text-center mb-4 mt-8 text-blue-800">{tokenName} Farming Guide</h2>
-                    <div className='border-t-2 border-t-orange-800 p-6 lg:px-12 rounded-lg bg-gray-50 shadow-inner'>
-                    {documentToReactComponents(guide, renderOptions)}
-                    </div>
-                </div>
-                ) : (
-                <p className="text-center text-gray-500">No guide available for this farming.</p>
-            )}
-        </motion.div>
-
-        <motion.div
+      {/* ============================ Participate Button ====================================================== */}
+       <motion.div
           className="text-center"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -250,10 +228,137 @@ const TokenFarmingGuide = () => {
           > Participate <FaExternalLinkAlt className="ml-2" />
           </a>
         </motion.div>
+        {/* ======================== Participate Button end ================================================== */}
+
+
+        {/* ================== Farming Guide ============================================================= */}
+        <motion.div
+          className="bg-white rounded-lg shadow-lg px-1 mb-8"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+           {guide ? (
+                <div>
+                    <h2 className="text-2xl font-bold text-center mb-4 mt-8 text-blue-800">{tokenName} Farming Guide</h2>
+                    <div className='border-t-2 border-t-orange-800 p-6 lg:px-12 rounded-lg bg-gray-50 shadow-inner'>
+                    {documentToReactComponents(guide, renderOptions)}
+                    </div>
+                
+                </div>
+                ) : (
+                <p className="text-center text-gray-500">No guide available for this farming.</p>
+            )}
+        </motion.div>
+        {/* ======================= Farming Guide end ========================================================= */}
+
+
+       {/*===================== Project links =========================================================== */}
+        <motion.div
+        className="max-w-4xl mx-auto px-4 py-8 bg-white rounded-lg mb-8"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.7 }}
+      >
+        <h2 className="text-2xl font-bold text-center mb-6 text-blue-800">Connect with {tokenData.tokenName}</h2>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <SocialLink href={tokenData.website} icon={<FaGlobe size={20} />} title="Official Website" />
+          
+          {tokenData.socialLinks.map((link, index) => {
+            let icon;
+            let title;
+            if (link.includes("twitter.com") || link.includes("x.com")) {
+              icon = <FaTwitter size={20} />;
+              title = "Twitter";
+            } else if (link.includes("facebook.com")) {
+              icon = <FaFacebook size={20} />;
+              title = "Facebook";
+            } else if (link.includes("discord.com") || link.includes("discord.gg")) {
+              icon = <FaDiscord size={20} />;
+              title = "Discord";
+            } else if (link.includes("telegram.com") || link.includes("t.me")) {
+              icon = <FaTelegram size={20} />;
+              title = "Telegram";
+            } else if (link.includes("reddit.com")) {
+              icon = <FaReddit size={20} />;
+              title = "Reddit";
+            }
+            return <SocialLink key={index} href={link} icon={icon} title={title} />;
+          })}
+          {tokenData.whitepaperLink && (
+            <a
+              href={tokenData.whitepaperLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105"
+            >
+              <FaFileAlt className="mr-2" />
+              Whitepaper
+            </a>
+          )}
+        </div>
+      </motion.div>
+      {/* ============================== Project links end ======================================================= */}
+
+        
       </div>
 
+    {/*============== Share functionality, incomplete =======================
+       <motion.div
+          className="flex justify-center space-x-4 mb-8"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <p className='font-semibold text-[green] mt-1'>Share:</p>
+          <ShareButton icon={<FaFacebookF />} color="bg-blue-600" onClick={shareOnFacebook} label="Share on Facebook" />
+          <ShareButton icon={<FaTwitter />} color="bg-blue-400" onClick={shareOnTwitter} label="Share on Twitter" />
+          <ShareButton icon={<FaLinkedinIn />} color="bg-blue-700" onClick={shareOnLinkedIn} label="Share on LinkedIn" />
+          <ShareButton icon={<FaLink />} color="bg-gray-600" onClick={copyLink} label="Copy link" />
+        </motion.div>
+        {copied && (
+          <motion.p
+            className="text-green-600 text-center mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            Link copied to clipboard!
+          </motion.p>
+        )} 
+        ========================================================================== */}
+
+     {/*=============== Additonal tokens to farm ==========  */}
+      <motion.div
+        className="max-w-5xl mx-auto px-4 py-12"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.7 }}
+      >
+        <h2 className="text-2xl font-bold text-center mb-8 text-blue-800">More Tokens to Farm</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {additionalTokens.map((token) => (
+            <Link href={`/token-farming/${token.slug}`} key={token.slug}>
+              <div className="bg-white min-h-[250px] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="h-32 bg-gradient-to-bl from-blue-800 to-purple-800 flex items-center justify-center">
+                  <img src={token.logo} alt={token.tokenName} className="w-20 h-20 rounded-full border-2 border-white" />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2 text-blue-900">{token.tokenName}</h3>
+                  <p className="text-sm text-gray-600">{token.platform}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </motion.div>
+     {/*  ================================ Additional tokens end  ============================== */}
+
+    {/* Disclaimer componennt */}
       <Disclaimer />
+
     </motion.section>
+    /* SECTION END */
   );
 };
 

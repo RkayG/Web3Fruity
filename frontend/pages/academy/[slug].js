@@ -63,6 +63,8 @@ const AcademyArticleContent = () => {
     }
   }, [router.isReady, router.query.slug]);
 
+
+  //======= Extract Headings to have a table of contents ===================================
   useEffect(() => {
     if (acadmmyArticleData && acadmmyArticleData.content) {
       const extractedHeadings = [];
@@ -86,6 +88,7 @@ const AcademyArticleContent = () => {
       setHeadings(extractedHeadings);
     }
   }, [acadmmyArticleData]);
+ //===================== Extract headings end ===============
 
   if (error) {
     return <div className="text-red-500">{error}</div>;

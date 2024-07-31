@@ -8,6 +8,7 @@ import { Disclaimer } from '../../Components';
 const Airdrops = () => {
   const [airdrops, setAirdrops] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -22,6 +23,8 @@ const Airdrops = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching airdrops:', error);
+        setError('An error occurred while fetching data. Please check your internet connection.');
+      } finally {
         setLoading(false);
       }
     };
@@ -34,6 +37,18 @@ const Airdrops = () => {
       setPage(newPage);
     }
   };
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 my-32">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+        
+      </div>
+    );
+  }
 
   return (
     <motion.div

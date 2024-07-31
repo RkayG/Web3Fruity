@@ -74,7 +74,7 @@ const SearchResults = () => {
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-6 my-32">
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
           <p className="font-bold">Error</p>
           <p>{error}</p>

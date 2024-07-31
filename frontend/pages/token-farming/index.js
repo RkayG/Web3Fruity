@@ -6,6 +6,8 @@ import Link from 'next/link';
 
 const TokenFarming = () => {
   const [tokens, setTokens] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filteredTokens, setFilteredTokens] = useState([]);
   const [blockchains, setBlockchains] = useState([]);
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
@@ -23,6 +25,9 @@ const TokenFarming = () => {
         setFilteredTokens(data);
       } catch (error) {
         console.error('Error fetching tokens:', error);
+        setError('An error occurred while fetching data. Please check your internet connection.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -56,6 +61,17 @@ const TokenFarming = () => {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1 },
   };
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 my-32">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto px-4">

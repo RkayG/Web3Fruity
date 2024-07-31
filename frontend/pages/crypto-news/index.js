@@ -72,6 +72,25 @@ const CryptoNews = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 my-32">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+        <button 
+        onClick={handleRetry}
+        className="bg-blue-500 flex justify-center mx-auto mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Retry
+      </button>
+      </div>
+    );
+  }
+
+  
+
   const renderNewsItem = (item, index) => {
     const isLargeCard = index === 0 || index % 4 === 0;
     const cardClass = isLargeCard
@@ -136,17 +155,7 @@ const CryptoNews = () => {
         <h2 className="lg:text-[57px] text-2xl font-bold text-center py-10 mb-20 -mt-3 bg-gradient-to-r from-orange-600 to-blue-800 bg-clip-text text-transparent">
           Latest Cryptocurrency News & Insights
         </h2>
-        {error && (
-          <div className="text-center mb-8">
-            <p className='font-semibold text-red-500 mb-4'>{error}</p>
-            <button 
-              onClick={handleRetry}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Retry
-            </button>
-          </div>
-        )}
+        
         <AnimatePresence>
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
             {news.map(renderNewsItem)}
