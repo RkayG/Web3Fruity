@@ -134,22 +134,21 @@ export default function Component() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <TooltipLink
+                  <Link
                     href="/airdrops"
                     className="inline-flex h-9 lg/md:w-fit items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
-                    tooltipText="Coming soon"
+                    prefetch={false}
                   >
                     Start Earning
-                  </TooltipLink>
+                  </Link>
                  
-                    <TooltipLink
+                    <Link
                       href="/academy"
                       className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-200 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 focus-visible:ring-gray-300"
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Academy
-                    </TooltipLink>
+                    </Link>
                     
                 </div>
               </div>
@@ -205,14 +204,13 @@ export default function Component() {
                   </li>
                   
                 </ul>
-                  <TooltipLink
+                  <Link
                       href=  "/airdrops"
                       className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Start Earning
-                  </TooltipLink>
+                  </Link>
               </div>
               <img
                 src="/images/airdrops3.jpg"
@@ -276,14 +274,13 @@ export default function Component() {
                     </div>
                   </li>
                 </ul>
-                <TooltipLink
+                <Link
                       href="/token-farming"
                       className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Start Farming
-                  </TooltipLink>
+                  </Link>
               </div>
             </div>
           </div>
@@ -341,14 +338,13 @@ export default function Component() {
                     </div>
                   </li>
                 </ul>
-                  <TooltipLink
+                  <Link
                       href="/games"
                       className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Start Playing
-                  </TooltipLink>
+                  </Link>
               </div>
               <img
                 src="/images/gameworld.jpg"
@@ -404,14 +400,13 @@ export default function Component() {
                   </li>
                  
                 </ul>
-                  <TooltipLink
+                  <Link
                       href="/platforms"
                       className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Start Earning
-                  </TooltipLink>
+                  </Link>
               </div>
              
             </div>
@@ -462,14 +457,13 @@ export default function Component() {
                   </li>
                  
                 </ul>
-                  <TooltipLink
-                      href="/blog"
+                  <Link
+                      href="/academy"
                       className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Start Learning
-                  </TooltipLink>
+                  </Link>
               </div>
               <img
                 src="/images/crypto-education2.jpg"
@@ -533,14 +527,13 @@ export default function Component() {
                   </li>
                  
                 </ul>
-                  <TooltipLink
+                  <Link
                       href="/crypto-news"
-                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+                      className="inline-flex h-9 lg/md:w-fit lg/md:ml-14 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"        
                       prefetch={false}
-                      tooltipText="Coming soon"
                     >
                       Start Reading
-                  </TooltipLink>
+                  </Link>
               </div>
              
             </div>

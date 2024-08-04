@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaFilter, FaCoins, FaExternalLinkAlt } from 'react-icons/fa';
-import { Disclaimer } from '../../Components';
+import { FaFilter, FaCoins, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { BottomSubscribe, Disclaimer } from '../../Components';
 import Link from 'next/link';
 
 const TokenFarming = () => {
@@ -13,6 +13,8 @@ const TokenFarming = () => {
   const [selectedBlockchain, setSelectedBlockchain] = useState('');
   const [stakeFilter, setStakeFilter] = useState('all');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tokensPerPage] = useState(5);
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -34,34 +36,6 @@ const TokenFarming = () => {
     fetchTokens();
   }, []);
 
-  const applyFilters = () => {
-    let result = tokens;
-    if (selectedBlockchain) {
-      result = result.filter(token => token.blockchain === selectedBlockchain);
-    }
-    if (stakeFilter !== 'all') {
-      result = result.filter(token => token.stakeToFarm === stakeFilter && token.stakeToFarm === 'stake');
-      console.log(stakeFilter);
-    }
-  
-    
-    setFilteredTokens(result);
-  };
-
-  useEffect(() => {
-    applyFilters();
-  }, [selectedBlockchain, stakeFilter, tokens]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
-
   if (error) {
     return (
       <div className="max-w-4xl mx-auto p-6 my-32">
@@ -73,8 +47,46 @@ const TokenFarming = () => {
     );
   }
 
+  const applyFilters = () => {
+    let result = tokens;
+    if (selectedBlockchain) {
+      result = result.filter(token => token.blockchain === selectedBlockchain);
+    }
+    if (stakeFilter !== 'all') {
+      result = result.filter(token => token.stakeToFarm === stakeFilter && token.stakeToFarm === 'stake');
+    }
+    
+    setFilteredTokens(result);
+    setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [selectedBlockchain, stakeFilter, tokens]);
+
+  // Get current tokens
+  const indexOfLastToken = currentPage * tokensPerPage;
+  const indexOfFirstToken = indexOfLastToken - tokensPerPage;
+  const currentTokens = filteredTokens.slice(indexOfFirstToken, indexOfLastToken);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
+
+
   return (
-    <section className="py-12 md:py-24 lg:py-32 max-w-[1580px] m-auto px-4">
+    <section>
+    <div className="pt-12 md:pt-24 lg:pt-24 max-w-[1580px] m-auto mx-2">
       <motion.h2 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -98,7 +110,7 @@ const TokenFarming = () => {
         </button>
 
         {isFilterOpen && (
-          <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
+          <div className="mt-4 p-4 mx-4 bg-white rounded-lg shadow-md">
             <h3 className="text-lg font-semibold mb-3">Blockchain</h3>
             <div className="flex flex-wrap gap-2 mb-4">
               <button
@@ -149,13 +161,15 @@ const TokenFarming = () => {
         animate="visible"
         className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
       >
-        {filteredTokens?.map((token, index) => (
+        {currentTokens.map((token, index) => (
           <motion.div 
             key={index} 
             variants={itemVariants}
-            className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-white rounded-lg shadow-lg mx-4 overflow-hidden transition-transform duration-300 hover:scale-105"
           >
-             <div className="h-32 bg-gradient-to-bl from-blue-800 to-burgundy flex items-center justify-center">
+            <div className="h-32 bg-gradient-to-bl from-blue-800 to-burgundy flex items-center justify-center">
               <h3 className="text-2xl text-white font-bold">{token.tokenName}</h3>
             </div>
             <div className="relative">
@@ -163,13 +177,14 @@ const TokenFarming = () => {
             </div>
             <div className="pt-16 pb-6 px-6">
               <div className="flex justify-between items-center mb-3 text-sm">
-                  <span className="text-gray-600">Platform:</span>
-                  <a href={token.linkToFarmingPlatform}>
-                    <span className="bg-orange-100 hover:bg-orange-900 hover:text-white flex flex-wrap cursor-pointer text-orange-800 px-3 py-1 rounded-full">{token.platform || 'N/A'}
-                        <FaExternalLinkAlt className='mt-1 ml-2' />
-                    </span>
-                  </a>
-                </div>
+                <span className="text-gray-600">Platform:</span>
+                <a href={token.linkToFarmingPlatform}>
+                  <span className="bg-orange-100 hover:bg-orange-900 hover:text-white flex flex-wrap cursor-pointer text-orange-800 px-3 py-1 rounded-full">
+                    {token.platform || 'N/A'}
+                    <FaExternalLinkAlt className='mt-1 ml-2' />
+                  </span>
+                </a>
+              </div>
               <div className="mb-3">
                 <p className="text-gray-600">Requirements:</p>
                 <p className="font-semibold">{token.requirements || 'Telegram, Ton wallet'}</p>
@@ -192,7 +207,7 @@ const TokenFarming = () => {
               </div>
             </div>
           </motion.div>
-        ))}
+        ))} 
       </motion.div>
 
       {filteredTokens.length === 0 && (
@@ -206,7 +221,38 @@ const TokenFarming = () => {
         </motion.p>
       )}
 
-      <Disclaimer />
+      {filteredTokens.length > tokensPerPage && (
+        <div className="flex justify-center mt-8 mb-32">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-full disabled:opacity-50"
+          >
+            <FaChevronLeft />
+          </button>
+          {Array.from({ length: Math.ceil(filteredTokens.length / tokensPerPage) }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => paginate(i + 1)}
+              className={`mx-1 px-4 py-2 rounded-full ${
+                currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-black'
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === Math.ceil(filteredTokens.length / tokensPerPage)}
+            className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-full disabled:opacity-50"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+      )}
+    </div>
+    <Disclaimer />
+      <BottomSubscribe />
     </section> 
   );
 };

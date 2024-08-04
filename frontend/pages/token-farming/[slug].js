@@ -148,6 +148,8 @@ const TokenFarmingGuide = () => {
   const SocialLink = ({ href, icon, title }) => (
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"
       title={title}
     >
@@ -221,7 +223,7 @@ const TokenFarmingGuide = () => {
           transition={{ delay: 0.6 }}
         >
           <a 
-            href={tokenData.linkToFarmingPlatform} 
+            href={tokenData.referralLink} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors duration-300 text-lg font-semibold"

@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import Link from 'next/link';
 import { motion } from "framer-motion";
+import { BottomSubscribe } from "../../Components";
 
 const RewardTooltip = ({ reward }) => {
   const [tokenData, setTokenData] = useState(null);
@@ -117,7 +118,7 @@ const RewardForTask = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="pb-8 mb-20 w-full h-auto max-w-[1920px] m-auto"
+      className=" w-full h-auto max-w-[1920px] m-auto"
     >
       {loading ? (
         <div className="loading-dots m-auto my-28">
@@ -294,6 +295,7 @@ const RewardForTask = () => {
         </div>
         </div>
       )}
+      <BottomSubscribe />
     </motion.div>
   );
 };

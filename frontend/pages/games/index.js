@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Inter, Roboto_Slab, Sevillana, Pacifico } from 'next/font/google'
 import { BottomSubscribe } from "../../Components";
+import { motion } from "framer-motion";
  
 const roboto_slab = Roboto_Slab({ subsets: ['latin'] })
 const sevillana = Sevillana({ subsets: ['latin'], weight: '400' })
@@ -157,12 +158,19 @@ const Games = () => {
   };
 
   const SkeletonFeaturedGame = () => (
-    <div className="px-2">
-      <div className="relative h-[300px] w-full bg-gray-300 animate-pulse rounded-lg">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-3/4 h-8 bg-gray-400 rounded"></div>
+    <div className="mx-2">
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
+      >
+        <div className="w-full h-48 bg-gray-300"></div>
+        <div className="p-4">
+          <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-2/3"></div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 
@@ -216,14 +224,19 @@ const Games = () => {
                 ? Array(9).fill().map((_, index) => <SkeletonFeaturedGame key={index} />)
                 : games.slice(0, 9).map((game, index) => (
                   <Link href={`/games/${game.slug}`}>
-                    <div key={index} className="px-2">
-                      <div className="relative h-[300px] w-full">
-                        <img src={game.image} alt={game.title} className="object-cover h-full w-full rounded-lg" />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg">
-                          <h3 className={` ${roboto_slab.className} text-gray-300 text-4xl font-extrabold text-center p-2 shadow-inner shadow-pink-300`}>{game.title}</h3>
-                        </div>
+                   <motion.div
+                      key={game._id}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-white rounded-lg mx-2 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <img className="w-full h-48 object-cover" src={game.image} alt={game.title} />
+                      <div className="p-4">
+                        <h3 className="text-xl font-semibold text-blue-900 mb-2">{game.title}</h3>
+                        <p className='text-gray-600 mb-2'>{game.genre}</p>
+                        <p className='text-sm font-medium text-orange-800'>{game?.platform.length > 1 ? game?.platform.join(', ') : game?.platform}</p>
                       </div>
-                    </div>
+                    </motion.div>
                   </Link>
                   ))
               }
@@ -235,7 +248,7 @@ const Games = () => {
         <h2 className="text-2xl font-bold mb-4 ml-4 text-center bg-clip-text 
             text-transparent bg-gradient-to-r from-blue-500 to-red-500">All Games</h2>
 
-        <div className="mb-4 py-4 whitespace-nowrap">
+        <div className="mb-4 py-4 whitespace-nowrap ml-4">
           {genres.map((genre, index) => (
             <button
               key={index}

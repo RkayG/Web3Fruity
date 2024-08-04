@@ -8,21 +8,21 @@ import { GlobalSearch } from '../Components/index';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activePage, setActivePage] = useState('About');
+  const [activePage, setActivePage] = useState('');
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
   const dropdownRef = useRef(null);
 
   const menuList = [
-    { name: "Discover", path: "" },
-    { name: "Airdrops", path: "" },
-    { name: "Farming", path: "" },
-    { name: "Games", path: "" },
-    { name: "Platforms", path: "" },
-    { name: "Academy", path: "" },
-    { name: "Crypto News", path: "" },
-    { name: "About", path: "/" },
+    { name: "Discover", path: "/discover" },
+    { name: "Airdrops", path: "/airdrops" },
+    { name: "Farming", path: "/token-farming" },
+    { name: "Games", path: "/games" },
+    { name: "Platforms", path: "/platforms" },
+    { name: "Academy", path: "/academy" },
+    { name: "Crypto News", path: "/crypto-news" },
+    { name: "About", path: "/about" },
   ];
 
   const socialLinks = [
@@ -31,6 +31,16 @@ const NavBar = () => {
     { icon: <FaInstagram />, url: "#" },
     { icon: <FaLinkedin />, url: "#" },
   ];
+
+  useEffect(() => {
+    const currentPath = router.asPath;
+    const activeItem = menuList.find(item => currentPath.startsWith(item.path));
+    if (activeItem) {
+      setActivePage(activeItem.name);
+    } else {
+      setActivePage('');
+    }
+  }, [router.asPath]);
 
   const NavItem = ({ el, mobile = false }) => (
     <div className={`${mobile ? 'mb-4' : ''} relative`} ref={el.dropdown ? dropdownRef : null}>
@@ -70,9 +80,9 @@ const NavBar = () => {
       ) : (
         <Link href={el.path}>
           <span className={`font-medium cursor-pointer transition-colors duration-200 block
-            ${activePage === el.name ? 'text-orange-700' : 'text-gray-800 hover:text-orange-700'}
+            ${router.asPath.startsWith(el.path) ? 'text-orange-700' : 'text-gray-800 hover:text-orange-700'}
             ${mobile ? 'text-lg py-2' : ''}`}
-            onClick={() => { setActivePage(el.name), setIsMenuOpen(false) }}
+            onClick={() => setIsMenuOpen(false)}
           >
             {el.name}
           </span>
@@ -90,7 +100,7 @@ const NavBar = () => {
     >
       <div className="px-4 py-5 mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/discover" className="flex items-center space-x-2">
             <Logo color="text-black" />
             <span className="text-2xl font-bold tracking-wide text-blue-800">
               Web<span className="font-serif">3</span><span className="text-orange-800">Fruity</span>

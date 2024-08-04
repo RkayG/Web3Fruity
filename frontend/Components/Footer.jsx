@@ -4,17 +4,17 @@ import { FaTwitter, FaTelegram, FaDiscord, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   const productList = [
-    {name: "Airdrops", path: ""},
-    {name: "Token Farming", path: ""},
-    {name: "Games", path: ""},
-    {name: "Reward For Tasks", path: ""}
+    {name: "Airdrops", path: "/airdrops"},
+    {name: "Token Farming", path: "/token-farming"},
+    {name: "Games", path: "/games"},
+    {name: "Reward For Tasks", path: "/platforms"}
   ];
   const contactList = ["Contact Us", "Advertise"];
   const usefulLink = [
-    {name:"Discover", path:""},
-    {name: "About Us", path: "/"},
-    {name: "Academy", path: ""},
-    {name: "News", path: ""}
+    {name:"Discover", path:"/discover"},
+    {name: "About Us", path: "/about"},
+    {name: "Academy", path: "/academy"},
+    {name: "News", path: "/crypto-news"}
   ];
 
   return (

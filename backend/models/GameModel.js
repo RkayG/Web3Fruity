@@ -17,6 +17,8 @@ const GameSchema = new mongoose.Schema(
     free2play: { type: String, required: true },
     developer: { type: String, required: true },
     website: { type: String, required: true },
+    initialInvestment: { type: String, },
+    avgEarnPerWeek: { type: String },
     socialLinks: { type: Array },
     chain: { type: String },
     trailer: {type: String },

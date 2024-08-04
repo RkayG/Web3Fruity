@@ -11,19 +11,37 @@ import 'swiper/css/effect-coverflow';
 
 const FeaturedAirdropsSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-8">
-      {[1, 2, 3].map((index) => (
-        <div key={index} className="bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg animate-pulse">
-          <div className="bg-gray-200 h-full rounded-2xl">
-            <div className="h-48 bg-gray-300 rounded-t-2xl"></div>
-            <div className="p-6">
-              <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
-              <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+    <div className="px-4 md:px-8">
+      <Swiper
+        spaceBetween={30}
+        slidesPerView={1.2}
+        centeredSlides={true}
+        loop={true}
+        breakpoints={{
+          640: { slidesPerView: 1.3 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+      >
+        {[1, 2, 3, 4, 5].map((index) => (
+          <SwiperSlide key={index}>
+            <div className="bg-gradient-to-br from-blue-800 to-orange-800 p-1 rounded-2xl shadow-lg animate-pulse">
+              <div className="bg-gray-200 h-full rounded-2xl overflow-hidden">
+                <div className="h-48 bg-gray-300 rounded-t-2xl"></div>
+                <div className="p-6">
+                  <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-300 rounded w-5/6 mb-4"></div>
+                  <div className="flex items-center justify-between">
+                    <div className="w-20 h-8 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full"></div>
+                    <div className="w-24 h-6 bg-gray-300 rounded"></div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };
@@ -80,7 +98,7 @@ const FeaturedAirdrops = () => {
           <Swiper
             modules={[EffectCoverflow, Autoplay, Navigation, Pagination, A11y]}
             effect={'coverflow'}
-            spaceBetween={30}
+            spaceBetween={50}
             grabCursor={true}
             breakpoints={breakpoints}
             centeredSlides={true}

@@ -4,7 +4,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Link from 'next/link';
 import axios from 'axios';
-import { FaTwitter, FaTelegram, FaDiscord, FaReddit, FaGlobe, FaFile, FaLink, FaCoins, FaPercentage, FaCalendarAlt, } from 'react-icons/fa';
+import { FaTwitter, FaTelegram, FaDiscord, FaReddit, FaGlobe, FaFile, FaLink, FaCoins, FaPercentage, FaCalendarAlt, FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Disclaimer } from '../../Components';
 
@@ -159,15 +159,23 @@ const AirdropGuide = () => {
           </div>
         </motion.div>
 
-        {/* {logo && <img src={logo} alt={title} className="w-32 h-32 mx-auto rounded-full shadow-md" />}
-        <h1 className="text-4xl font-bold text-center my-6 text-blue-900">{title}</h1> */}
-        <div className="social-links flex justify-center space-x-4 mb-6 mt-6">
-          {website && <SocialLink href={website} icon={FaGlobe} label="Website" />}
-          {whitepaper && <SocialLink href={whitepaper} icon={FaFile} label="Whitepaper" />}
-          {twitter && <SocialLink href={twitter} icon={FaTwitter} label="Twitter" />}
-          {telegram && <SocialLink href={telegram} icon={FaTelegram} label="Telegram" />}
-          {discord && <SocialLink href={discord} icon={FaDiscord} label="Discord" />}
-        </div>
+        {/* ============================ Participate Button ====================================================== */}
+       <motion.div
+          className="text-center"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <a 
+            href={airdropData.website} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-flex items-center mt-6 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors duration-300 text-lg font-semibold"
+          > Participate <FaExternalLinkAlt className="ml-2" />
+          </a>
+        </motion.div>
+        {/* ======================== Participate Button end ================================================== */}
+
 
         <h2 className='text-2xl font-bold mt-6 mb-4 text-blue-800'>About Project</h2>
         <p className="text-lg mb-6 text-gray-700">
@@ -194,23 +202,43 @@ const AirdropGuide = () => {
         )}
       </motion.div>
 
-      <div className="flex items-center mb-3 justify-center mx-auto lg:mx-0 lg:justify-start">
-            <a href={airdropData.website} className="mr-3 text-gray-600 hover:text-blue-600 transition-colors duration-300"><FaGlobe title={airdropData.website} /></a>
+
+      {/*============ project social ilnks =====================*/}
+      <h2 className="text-2xl font-bold text-center mb-6 text-blue-800">Connect with {airdropData.title}</h2>
+      <div className="flex items-center mb-4 justify-center mx-auto lg:mx-0 ">
+            <a href={airdropData.website} className="flex items-center mr-3 justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110"><FaGlobe title={airdropData.website} /></a>
             {airdropData.socialLinks.map((link, index) => {
               let icon;
-              if (link.includes("twitter.com") || link.includes("x.com")) icon = <FaTwitter title={link} />;
-              else if (link.includes("facebook.com")) icon = <FaFacebook title={link} />;
-              else if (link.includes("discord.com") || link.includes("discord.gg")) icon = <FaDiscord title={link} />;
-              else if (link.includes("telegram.com") || link.includes("t.me")) icon = <FaTelegram title={link} />;
-              else if (link.includes("reddit.com")) icon = <FaReddit title={link} />;
+              if (link.includes("twitter.com") || link.includes("x.com")) icon = <FaTwitter size={24}  title={link} />;
+              else if (link.includes("facebook.com")) icon = <FaFacebook size={24} title={link} />;
+              else if (link.includes("discord.com") || link.includes("discord.gg")) icon = <FaDiscord size={24} title={link} />;
+              else if (link.includes("telegram.com") || link.includes("t.me")) icon = <FaTelegram size={24} title={link} />;
+              else if (link.includes("reddit.com")) icon = <FaReddit size={24} title={link} />;
               return (
-                <a key={index} href={link} className="mx-3 text-gray-600 hover:text-blue-600 transition-colors duration-300">
+                <a key={index} href={link} className="flex items-center mx-3 justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
                   {icon}
                 </a>
               );
             })}
-          </div>
+        </div>
+        {/* ===================== project social links end =============== */}
 
+        {/* Whitepaper */}
+        {airdropData.whitepaperLink && (
+            <a
+              href={airdropData.whitepaperLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center mx-auto px-4 py-2 w-fit bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105"
+            >
+              <FaFileAlt className="mr-2" />
+              Whitepaper
+            </a>
+          )}
+        {/* whitepaper end */}
+
+
+      {/* ================== additional airdrops display ============== */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -274,8 +302,11 @@ const AirdropGuide = () => {
           </Link>
         </div>
       </motion.div>
+      {/*============ additional airdrops display end =============================*/}
 
+      {/* disclaimer component */}
       <Disclaimer />
+
     </motion.section>
   );
 };

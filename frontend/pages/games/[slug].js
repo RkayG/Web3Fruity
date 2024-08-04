@@ -1,40 +1,17 @@
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe} from 'react-icons/fa';
+import { FaTwitter, FaFacebook, FaDiscord, FaTelegram, FaReddit, FaGlobe, FaDollarSign, FaChartLine, FaCoins, FaSackDollar } from 'react-icons/fa';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Link from 'next/link';
 import ReactPlayer from 'react-player/youtube';
-import Glide from '@glidejs/glide';
-import Modal from 'react-modal';
 import { Dialog } from '@headlessui/react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import '@glidejs/glide/dist/css/glide.core.min.css';
 import '@glidejs/glide/dist/css/glide.theme.min.css';
-/* import { EffectCoverflow, Autoplay, Pagination, A11y } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/autoplay';
-import 'swiper/css/effect-coverflow';
- */
-
-const YouTubePlayer = ({ url }) => {
-  return (
-    <div className="player-wrappern shadow-md rounded-md flex justify-center pb-16/9 sm:pb-16/9 md:pb-16/9 lg:pb-16/9 xl:pb-16/9 h-0">
-      <ReactPlayer
-        className="react-player rounded-md w-full h-full"
-        url={url}
-        
-        controls
-      />
-    </div>
-  );
-};
 
 const Navigation = ({ title }) => {
   
@@ -189,28 +166,38 @@ const GalleryAndTrailer = ({ trailer, gallery }) => {
 
   
 const GameDetails = () => {
-    const [game, setGame] = useState(null);
-    const [additionalGames, setAdditionalGames] = useState([]);
-    const [error, setError] = useState(null);
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
-    //const [showFullDescription, setShowFullDescription] = useState(false);
-    const router = useRouter();
-  
-    useEffect(() => {
-      const fetchGame = async (_slug) => {
-        try {
-          const response = await fetch(`http://localhost:1225/games/${_slug}`);
-          const gameData = await response.json();
-          // console.log(gameData);
-          setGame(gameData);
-          setLoading(false);
-        } catch (error) {
-          console.error('Failed to load Game info:', error);
-          setError('Failed to load game info');
+  const [game, setGame] = useState(null);
+  const [additionalGames, setAdditionalGames] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [price, setPrice] = useState('$0.00');
+  const [marketCap, setMarketCap] = useState('$0');
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchGame = async (_slug) => {
+      try {
+        const response = await fetch(`http://localhost:1225/games/${_slug}`);
+        const gameData = await response.json();
+        setGame(gameData);
+        setLoading(false);
+
+        // Fetch coin data
+        if (gameData.token_api_id) {
+          try {
+            const coinResponse = await axios.get(`https://api.coingecko.com/api/v3/coins/${gameData.token_api_id}`);
+            const coinData = coinResponse.data;
+            setPrice(`$${coinData.market_data.current_price.usd.toFixed(2)}`);
+            setMarketCap(`$${coinData.market_data.market_cap.usd.toLocaleString()}`);
+          } catch (error) {
+            console.error('Error fetching coin data:', error);
+          }
         }
-      };
-  
+      } catch (error) {
+        console.error('Failed to load Game info:', error);
+        setError('Failed to load game info');
+      }
+    };
       const fetchAdditionalGames = async () => {
         try {
           const response = await axios.get('http://localhost:1225/games', {
@@ -334,17 +321,20 @@ const InfoTag = ({ label, value, color }) => {
         className="game-stats grid grid-cols-2 gap-4 md:grid-cols-4 mt-8"
       >
         {[
-          { icon: "fa-cube", label: `${game.token} Price`, value: "$0.00" },
-          { icon: "fa-chart-line", label: "Marketcap", value: "$0" },
-          { icon: "fa-coins", label: "Required Investment", value: "$1,999,999" },
-          { icon: "fa-sack-dollar", label: "Avg Game Earning / Day", value: "$0" },
+          { Icon: FaDollarSign, label: `${game?.token} Price`, value: price },
+          { Icon: FaChartLine, label: "Marketcap", value: marketCap },
+          { Icon: FaCoins, label: "Required Investment", value: `${game?.initialInvestment || 'N/A'}` },
+          { Icon: FaFacebook, label: "Avg Income / Week", value: `${game?.avgEarnPerWeek || 'N/A'}` },
         ].map((stat, index) => (
           <div key={index} className="bg-gradient-to-br from-blue-500 to-purple-600 text-white p-4 rounded-lg shadow-md">
-            <i className={`fas ${stat.icon} text-2xl mb-2`}></i>
-            <p className="text-sm font-medium">{stat.label}</p>
+            <div className='flex flex-wrap'>
+              <stat.Icon className="text-lg mb-2 mr-2" />
+              <p className="text-sm font-medium">{stat.label}</p>
+            </div>
             <p className="text-lg font-bold">{stat.value}</p>
           </div>
         ))}
+
       </motion.div>
 
       <motion.div 

@@ -50,6 +50,8 @@ const AcademySection = () => {
                 key={article.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 transition={{ delay: index * 0.1 }}
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
               >
@@ -61,7 +63,7 @@ const AcademySection = () => {
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2 text-gray-900 dark:text-white">{article.postHeading}</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{article.excerpt}</p>
-                  <Link href={`/academy/${article.id}`} key={index}>
+                  <Link href={`/academy/${article.slug}`} key={index}>
                     <span className="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
                       Learn More <FaArrowRight className="ml-2" />
                     </span>

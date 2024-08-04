@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { FaLink, FaCoins, FaPercentage, FaCalendarAlt, FaChain } from 'react-icons/fa';
+import { FaLink, FaCoins, FaPercentage, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { Disclaimer } from '../../Components';
+import { BottomSubscribe, Disclaimer } from '../../Components';
 
 const Airdrops = () => {
   const [airdrops, setAirdrops] = useState([]);
@@ -55,7 +55,7 @@ const Airdrops = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className='mb-20 m-auto max-w-[1580px]'
+      className=' m-auto max-w-[1580px]'
     >
       <section className="relative w-full h-[60vh] min-h-[400px] mb-12 flex items-center justify-center bg-cover bg-center bg-[url('/images/airdrops1.jpg')]">
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.7)] to-[rgba(0,0,0,0.4)]" />
@@ -134,11 +134,14 @@ const Airdrops = () => {
               </motion.div>
             ))}
           </motion.div>
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-12 mb-32">
             <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
           </div>
         </>
       )}
+
+      <Disclaimer />
+      <BottomSubscribe />
     </motion.div>
   );
 };
@@ -158,9 +161,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => (
     <button
       onClick={() => onPageChange(currentPage - 1)}
       disabled={currentPage === 1}
-      className="px-4 py-2 rounded-md bg-blue-500 text-white disabled:opacity-50"
-    >
-      Previous
+      className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-full disabled:opacity-50"
+      >
+         <FaChevronLeft />
     </button>
     {[...Array(totalPages)].map((_, i) => (
       <button
@@ -176,11 +179,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => (
     <button
       onClick={() => onPageChange(currentPage + 1)}
       disabled={currentPage === totalPages}
-      className="px-4 py-2 rounded-md bg-blue-500 text-white disabled:opacity-50"
-    >
-      Next
+      className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-full disabled:opacity-50"
+      >
+        <FaChevronRight />
     </button>
-   
   </div>
 );
 
