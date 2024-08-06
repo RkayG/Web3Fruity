@@ -244,7 +244,7 @@ const GameCard = ({ game }) => {
     <motion.div 
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.2 }}
+    transition={{ delay: 0.5 }}
     className="mt-12 overflow-hidden m-auto mb-4 transition-shadow duration-300"
     style={{ width: "100%" }}
   >
@@ -317,7 +317,7 @@ const InfoTag = ({ label, value, color }) => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: 0.5 }}
         className="game-stats grid grid-cols-2 gap-4 md:grid-cols-4 mt-8"
       >
         {[
