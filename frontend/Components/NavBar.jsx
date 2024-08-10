@@ -15,7 +15,7 @@ const NavBar = () => {
   const dropdownRef = useRef(null);
 
   const menuList = [
-    { name: "Discover", path: "/discover" },
+    { name: "Discover", path: "/" },
     { name: "Airdrops", path: "/airdrops" },
     { name: "Farming", path: "/token-farming" },
     { name: "Games", path: "/games" },

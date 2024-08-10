@@ -36,7 +36,7 @@ const BottomNavigationPanel = () => {
       <div className="flex justify-between items-center p-4">
         <span className='block'>
           <FaHome className='text-center flex m-auto text-red-800' />
-          <Link href="/discover" className="text-blue-700 font-semibold text-sm" >Discover</Link>
+          <Link href="/" className="text-blue-700 font-semibold text-sm" >Discover</Link>
         </span>
         
         <span>
