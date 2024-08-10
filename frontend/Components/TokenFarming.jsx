@@ -142,7 +142,7 @@ const TokenFarming = () => {
           whileHover={{ x: 10 }}
           className="text-blue-800 hover:text-orange-800 flex justify-center w-[95%] mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300"
         >
-          Explore All <FaChevronRight className="ml-2" />
+          Explore Token Farming <FaChevronRight className="ml-2" />
         </motion.span>
       </Link>
     </section> 

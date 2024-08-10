@@ -112,7 +112,7 @@ const Airdrops = () => {
               whileHover={{ x: 10 }}
               className="text-blue-600 hover:text-orange-600 flex  mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300"
             >
-              Explore All <FaChevronRight className="ml-2" />
+              Explore Airdrops <FaChevronRight className="ml-2" />
             </motion.span>
          </Link>
         </section>

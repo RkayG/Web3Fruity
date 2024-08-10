@@ -221,7 +221,7 @@ const RewardForTask = () => {
             whileHover={{ x: 10 }}
             className="text-blue-800 hover:text-orange-800 flex w-[96%] justify-center mx-auto items-center cursor-pointer text-lg mt-16 font-semibold transition-colors duration-300"
           >
-            Explore All <FaChevronRight className="ml-2" />
+            Explore Reward Tasks <FaChevronRight className="ml-2" />
           </motion.span>
         </Link>
       </div>

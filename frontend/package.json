@@ -2,6 +2,9 @@
   "name": "web3fruity",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.20.2"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

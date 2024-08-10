@@ -9,9 +9,6 @@ import Link from 'next/link';
 import ReactPlayer from 'react-player/youtube';
 import { Dialog } from '@headlessui/react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import '@glidejs/glide/dist/css/glide.core.min.css';
-import '@glidejs/glide/dist/css/glide.theme.min.css';
-
 
 const Navigation = ({ title }) => {
   
