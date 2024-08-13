@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaCheck, FaEnvelope, FaSignature } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const BottomSubscribe = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ const BottomSubscribe = () => {
     }
 
     try {
-      await axios.post('http://localhost:1225/subscribe', { email });
+      await axios.post(`${apiUrl}/subscribe`, { email });
       setMessage('Subscription successful!');
       setMessageType('success');
       setIsSubscribed(true);

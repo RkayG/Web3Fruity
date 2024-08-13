@@ -8,7 +8,7 @@ import { formatTimestamp } from '../../utils';
 import { BottomSubscribe } from '../../Components';
 import { motion } from 'framer-motion';
 import { FaChevronLeft, FaCalendarAlt, FaUser, FaFacebookF, FaTwitter, FaLinkedinIn, FaLink } from 'react-icons/fa';
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Navigation = ({ title }) => {
   return (
@@ -45,7 +45,7 @@ const CryptoNewsContent = () => {
   useEffect(() => {
     const fetchCryptoNews = async (slug) => {
       try {
-        const response = await fetch(`http://localhost:1225/crypto-news/${slug}`);
+        const response = await fetch(`${apiUrl}/crypto-news/${slug}`);
         const cryptoNews = await response.json();
         setCryptoNewsData(cryptoNews);
         setLoading(false);
@@ -58,7 +58,7 @@ const CryptoNewsContent = () => {
 
     const fetchAdditionalCryptoNews = async (slug) => {
       try {
-        const response = await axios.get('http://localhost:1225/crypto-news', {
+        const response = await axios.get(`${apiUrl}/crypto-news`, {
           params: { limit: 6 },
         });
         const cryptoNews = response.data.filter((news) => news.slug !== slug);

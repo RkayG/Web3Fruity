@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FaShip, FaShare, FaBookReader, FaSearch, FaCaretDown } from 'react-icons/fa';
 import { Close } from '../../Components';
 import { formatTimestamp } from '../../utils';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Academy = () => {
   const [articles, setArticles] = useState([]);
@@ -24,7 +25,7 @@ const Academy = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('http://localhost:1225/academy');
+        const response = await axios.get(`${apiUrl}/academy`);
         setArticles(response.data);
         setCategories(['All', ...new Set(response.data.map(article => article.category))]);
         setLoading(false);

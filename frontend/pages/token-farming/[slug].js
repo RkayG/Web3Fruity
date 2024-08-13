@@ -9,6 +9,8 @@ import { FaChevronLeft, FaCalendarAlt, FaCoins, FaExternalLinkAlt, FaFacebookF, 
 } from 'react-icons/fa';
 import { Disclaimer } from '../../Components';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const Navigation = ({ title }) => {
   return (
     <nav className="flex items-center space-x-2 text-gray-600 px-4 py-6 bg-gray-100">
@@ -44,13 +46,13 @@ const TokenFarmingGuide = () => {
     // -----fetch data from server----------------------
     const fetchTokenData = async (slug) => {
       try {
-        const response = await fetch(`http://localhost:1225/farm-tokens/${slug}`);
+        const response = await fetch(`${apiUrl}/farm-tokens/${slug}`);
         const data = await response.json();
         setTokenData(data);
         setLoading(false);
 
          // Fetch additional tokens
-         const additionalTokensResponse = await fetch('http://localhost:1225/farm-tokens');
+         const additionalTokensResponse = await fetch(`${apiUrl}/farm-tokens`);
          const allTokens = await additionalTokensResponse.json();
          const filteredTokens = allTokens.filter(token => token.slug !== slug).slice(0, 3);
          setAdditionalTokens(filteredTokens);

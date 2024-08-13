@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FaLightbulb, FaArrowRight } from 'react-icons/fa';
 import Link from 'next/link';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const AcademySection = () => {
   const [articles, setArticles] = useState([]);
@@ -11,7 +12,7 @@ const AcademySection = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('http://localhost:1225/academy');
+        const response = await axios.get(`${apiUrl}/academy`);
         setArticles(response.data.slice(0, 3));
         setIsLoading(false);
       } catch (err) {

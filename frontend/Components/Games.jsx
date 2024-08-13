@@ -6,6 +6,7 @@ import axios from "axios";
 import Link from "next/link";
 import GameCard from "./GameCard";
 import { motion } from "framer-motion";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /* const RewardTooltip = ({ game, targetRef }) => {
   const [tokenData, setTokenData] = useState(null);
@@ -142,7 +143,7 @@ const Games = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch("http://localhost:1225/games");
+        const response = await fetch(`${apiUrl}/games`);
         if (!response.ok) {
           throw new Error("Failed to fetch games.");
         }

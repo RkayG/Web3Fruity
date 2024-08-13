@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Inter, Roboto_Slab, Sevillana, Pacifico } from 'next/font/google'
 import { BottomSubscribe } from "../../Components";
 import { motion } from "framer-motion";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
  
 const roboto_slab = Roboto_Slab({ subsets: ['latin'] })
 const sevillana = Sevillana({ subsets: ['latin'], weight: '400' })
@@ -33,7 +34,7 @@ const Games = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch("http://localhost:1225/games");
+        const response = await fetch(`${apiUrl}/games`);
         if (!response.ok) {
           throw new Error("Failed to fetch games.");
         }

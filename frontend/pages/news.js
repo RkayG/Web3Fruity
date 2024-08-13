@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getTimeDifference } from '../utils';
 import Link from 'next/link';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const CryptoNews = () => {
   const [news, setNews] = useState([]);
@@ -11,7 +12,7 @@ const CryptoNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('http://localhost:1225/crypto-news');
+        const response = await fetch(`${apiUrl}/crypto-news`);
         const data = await response.json();
         setNews(data);
         setLoading(false);

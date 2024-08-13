@@ -4,6 +4,7 @@ import { FaAngleUp, FaAngleDown, FaVideo, FaChevronRight } from 'react-icons/fa'
 import { useRouter } from 'next/router';
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 //================= fetch game token price and display in a tooltip
 const RewardTooltip = ({ reward }) => {
@@ -171,7 +172,7 @@ const RewardForTask = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:1225/reward-tasks", {
+        const response = await axios.get(`${apiUrl}/reward-tasks`, {
           params: { limit: 12 }
         });
         setRewards(response.data);

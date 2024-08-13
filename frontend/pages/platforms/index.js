@@ -4,6 +4,7 @@ import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import Link from 'next/link';
 import { motion } from "framer-motion";
 import { BottomSubscribe } from "../../Components";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const RewardTooltip = ({ reward }) => {
   const [tokenData, setTokenData] = useState(null);
@@ -77,7 +78,7 @@ const RewardForTask = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:1225/reward-tasks");
+        const response = await axios.get(`${apiUrl}/reward-tasks`);
         setRewards(response.data);
         setLoading(false);
       } catch (error) {

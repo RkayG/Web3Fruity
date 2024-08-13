@@ -3,6 +3,7 @@ import { getTimeDifference } from '../utils';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { FaNewspaper, FaChevronRight } from 'react-icons/fa';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const CryptoNewsSkeleton = () => {
   return (
@@ -28,7 +29,7 @@ const CryptoNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('http://localhost:1225/crypto-news');
+        const response = await fetch(`${apiUrl}/crypto-news`);
         const data = await response.json();
         console.log(data);
         setNews(data.slice(0, 3)); // Limit to 3 articles

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaFilter, FaCoins, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BottomSubscribe, Disclaimer } from '../../Components';
 import Link from 'next/link';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const TokenFarming = () => {
   const [tokens, setTokens] = useState([]);
@@ -19,7 +20,7 @@ const TokenFarming = () => {
   useEffect(() => {
     const fetchTokens = async () => {
       try {
-        const response = await fetch('http://localhost:1225/farm-tokens');
+        const response = await fetch(`${apiUrl}//farm-tokens`);
         const data = await response.json();
         setTokens(data);
         const uniqueBlockchains = [...new Set(data.map(token => token.blockchain))];

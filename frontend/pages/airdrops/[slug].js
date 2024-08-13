@@ -7,6 +7,7 @@ import axios from 'axios';
 import { FaTwitter, FaTelegram, FaDiscord, FaReddit, FaGlobe, FaFile, FaLink, FaCoins, FaPercentage, FaCalendarAlt, FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Disclaimer } from '../../Components';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Navigation = ({ title }) => {
   
@@ -37,7 +38,7 @@ const AirdropGuide = () => {
   useEffect(() => {
     const fetchAirdrop = async (slug) => {
       try {
-        const response = await fetch(`http://localhost:1225/airdrops/${slug}`);
+        const response = await fetch(`${apiUrl}/airdrops/${slug}`);
         const airdrop = await response.json();
         setAirdropData(airdrop);
       } catch (error) {
@@ -48,7 +49,7 @@ const AirdropGuide = () => {
 
     const fetchAdditionalAirdrops = async (slug) => {
       try {
-        const response = await axios.get('http://localhost:1225/airdrops', {
+        const response = await axios.get(`${apiUrl}/airdrops`, {
           params: { limit: 7, page: 1 },
         });
         const moreAirdrops = response.data.airdrops.filter((airdrop) => airdrop.slug !== slug);

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { FaParachuteBox, FaChevronRight, FaCalendarAlt, FaLink, FaCoins, FaPercentage } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const AirdropsSkeleton = () => {
   return (
@@ -41,7 +42,7 @@ const Airdrops = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:1225/airdrops', {
+        const response = await axios.get(`${apiUrl}/airdrops`, {
           params: { limit: 6, page: 1 },
         });
         setAirdrops(response.data.airdrops);

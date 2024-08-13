@@ -9,6 +9,7 @@ import Link from 'next/link';
 import ReactPlayer from 'react-player/youtube';
 import { Dialog } from '@headlessui/react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Navigation = ({ title }) => {
   
@@ -174,7 +175,7 @@ const GameDetails = () => {
   useEffect(() => {
     const fetchGame = async (_slug) => {
       try {
-        const response = await fetch(`http://localhost:1225/games/${_slug}`);
+        const response = await fetch(`${apiUrl}/games/${_slug}`);
         const gameData = await response.json();
         setGame(gameData);
         setLoading(false);
@@ -197,7 +198,7 @@ const GameDetails = () => {
     };
       const fetchAdditionalGames = async () => {
         try {
-          const response = await axios.get('http://localhost:1225/games', {
+          const response = await axios.get(`${apiUrl}/games`, {
             params: {
               limit: 4,
             },

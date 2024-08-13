@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
 import { BottomSubscribe } from '../Components';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const SearchResults = () => {
   const [results, setResults] = useState({});
@@ -16,7 +17,7 @@ const SearchResults = () => {
       const fetchResults = async () => {
         try {
           setLoading(true);
-          const response = await axios.get(`http://localhost:1225/search`, { params: { query } });
+          const response = await axios.get(`${apiUrl}/search`, { params: { query } });
           setResults(response.data);
           setError(null);
         } catch (error) {

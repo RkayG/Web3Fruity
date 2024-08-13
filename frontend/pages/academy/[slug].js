@@ -7,6 +7,7 @@ import axios from 'axios';
 import { formatTimestamp } from '../../utils';
 import { BottomSubscribe } from '../../Components';
 import { FaCopy, FaFacebook, FaTwitter } from 'react-icons/fa';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const Navigation = ({ title }) => {
   return (
@@ -31,7 +32,7 @@ const AcademyArticleContent = () => {
   useEffect(() => {
     const fetchAcademyArticles = async (slug) => {
       try {
-        const response = await fetch(`http://localhost:1225/academy/${slug}`);
+        const response = await fetch(`${apiUrl}/academy/${slug}`);
         const article = await response.json();
         setAcademyArticleData(article);
       } catch (error) {
@@ -42,7 +43,7 @@ const AcademyArticleContent = () => {
 
     const fetchAdditionalArticles = async (slug) => {
       try {
-        const response = await axios.get('http://localhost:1225/academy', {
+        const response = await axios.get(`${apiUrl}/academy`, {
           params: {
             limit: 6,
           },

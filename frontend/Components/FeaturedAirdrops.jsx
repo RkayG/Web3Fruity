@@ -8,6 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-coverflow';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const FeaturedAirdropsSkeleton = () => {
   return (
@@ -59,7 +60,7 @@ const FeaturedAirdrops = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:1225/api/featured')
+    fetch(`${apiUrl}/api/featured`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
