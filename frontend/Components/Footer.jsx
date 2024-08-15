@@ -18,7 +18,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className='relative text-white bg-gradient-to-l from-orange-900 to-blue-900'>
+    <div className='relative text-white bg-gradient-to-l from-orange-900 to-blue-900'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div className='space-y-4'>
@@ -74,7 +74,7 @@ const Footer = () => {
       </div>
 
       <div className='absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500'></div>
-    </footer>
+    </div>
   )
 }
 

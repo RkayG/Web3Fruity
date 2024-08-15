@@ -50,6 +50,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         {/* <link rel="manifest" href="/manifest.json" /> */}
         <meta name="theme-color" content="#000000" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
         <title>Web3Fruity</title>
       </Head>
