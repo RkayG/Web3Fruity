@@ -77,7 +77,7 @@ export default function App({ Component, pageProps }) {
           </div>
         </div>
       )} */}
-      {/* <Component {...pageProps} /> */}
+      <Component {...pageProps} />
       <Footer />
       <BottomNavigationPanel />
     </>
