@@ -4,7 +4,7 @@ import { BottomSubscribe } from "../Components";
 import { FaTwitter, FaTelegram } from "react-icons/fa";
 import Subscribe from "../Components/Subscribe";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Inter, Roboto_Slab } from 'next/font/google'
+import { Inter, Roboto_Slab } from '@next/font/google'
  
 const roboto_slab = Roboto_Slab({ subsets: ['latin'] })
 

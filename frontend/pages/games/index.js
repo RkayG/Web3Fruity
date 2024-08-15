@@ -4,7 +4,7 @@ import GameCard from "../../Components/GameCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Inter, Roboto_Slab, Sevillana, Pacifico } from 'next/font/google'
+import { Inter, Roboto_Slab, Sevillana, Pacifico } from '@next/font/google'
 import { BottomSubscribe } from "../../Components";
 import { motion } from "framer-motion";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
