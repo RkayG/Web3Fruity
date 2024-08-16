@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { BottomSubscribe, Footer, NavBar } from "../Components";
+import { BottomSubscribe } from "../Components";
 import { FaTwitter, FaTelegram } from "react-icons/fa";
 import Subscribe from "../Components/Subscribe";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -78,7 +78,6 @@ export default function Component() {
 
   return (
     <div className="flex flex-col min-h-[100dvh] ">
-      <NavBar />
       <div className="banner bg-burgundy h-36 sm:h-28 flex flex-col items-center justify-center px-4 text-center overflow-hidden relative">
         <motion.div 
           className="absolute inset-0"
@@ -550,7 +549,6 @@ export default function Component() {
         </div>
       </main>
       <BottomSubscribe />
-      <Footer />
     </div>
   )
 }
