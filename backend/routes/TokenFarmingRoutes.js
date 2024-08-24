@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const TokenFarming = require('../models/TokenFarmingModel');
 const syncTokenFarmsWithDatabase = require('../services/tokenfarmingService');
+const cacheMiddleware = require('../middleware/cacheMiddleware');
 
 // Route to sync farming tokens from Contentful
 router.post('/sync-contentful-farm-tokens', async (req, res) => {
@@ -14,19 +15,9 @@ router.post('/sync-contentful-farm-tokens', async (req, res) => {
   }
 });
 
-// Route to create a new farming token
-router.post('/farm-tokens', async (req, res) => {
-  try {
-    const token = await TokenFarming.create(req.body);
-    console.log(token);
-    res.status(201).json(token);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
 
 // Route to retrieve all farming tokens
-router.get('/farm-tokens', async (req, res) => {
+router.get('/farm-tokens', cacheMiddleware(3000), async (req, res) => {
   try {
     let limit = parseInt(req.query.limit); // Parse 'limit' query parameter
     if (isNaN(limit)) {
@@ -34,7 +25,7 @@ router.get('/farm-tokens', async (req, res) => {
     }
 
     const tokens = await TokenFarming.find().sort({ createdAt: -1 }).limit(limit); // Use the limit in the MongoDB query
-    console.log(tokens);
+    console.log('farm-tokens fetched');
     res.json(tokens);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -42,7 +33,7 @@ router.get('/farm-tokens', async (req, res) => {
 });
 
 // Route to retrieve a specific farming token by slug
-router.get('/farm-tokens/:slug', async (req, res) => {
+router.get('/farm-tokens/:slug', cacheMiddleware(3000), async (req, res) => {
   const { slug } = req.params;
   try {
     const token = await TokenFarming.findOne({ slug: slug });
@@ -58,7 +49,7 @@ router.get('/farm-tokens/:slug', async (req, res) => {
 });
 
 // Route to retrieve a specific farming token by ID
-router.get('/farm-tokens/:id', async (req, res) => {
+router.get('/farm-tokens/:id', cacheMiddleware(3000), async (req, res) => {
   try {
     const token = await TokenFarming.findById(req.params.id);
     if (!token) {
@@ -70,6 +61,24 @@ router.get('/farm-tokens/:id', async (req, res) => {
   }
 });
 
+// function to clear cache
+const clearCache = (key) => {
+  cache.del(key);
+};
+
+// Route to create a new farming token
+router.post('/farm-tokens',  async (req, res) => {
+  try {
+    const token = await TokenFarming.create(req.body);
+    console.log(token);
+    clearCache('/farm-tokens'); // Clear the cache for the main listing
+    res.status(201).json(token);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+
 // Route to update a specific farming token by ID
 router.patch('/farm-tokens/:id', async (req, res) => {
   try {
@@ -77,6 +86,8 @@ router.patch('/farm-tokens/:id', async (req, res) => {
     if (!token) {
       return res.status(404).json({ message: 'Farming Token not found' });
     }
+    clearCache('/farm-tokens'); // Clear the cache for the main listing
+    clearCache(`/farm-tokens/${cryptoNews.id}`); // Clear the cache for this specific farm-token item
     res.json(token);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -90,6 +101,8 @@ router.delete('/farm-tokens/:id', async (req, res) => {
     if (!token) {
       return res.status(404).json({ message: 'Farning Token not found' });
     }
+    clearCache('/farm-tokens'); // Clear the cache for the main listing
+    clearCache(`/farm-tokens/${cryptoNews.id}`); // Clear the cache for this specific farm-token item
     res.json({ message: 'Farming Token deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
