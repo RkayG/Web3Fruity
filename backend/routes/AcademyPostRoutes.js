@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const AcademyPost = require('../models/AcademyPostModel');
 const syncAcademyPostsWithDatabase = require('../services/AcademyPostService');
-const cacheMiddleware = require('../middleware/cacheMiddleware');
+const { cache, cacheMiddleware} = require('../middleware/cacheMiddleware');
 
 // Route to sync academy posts with Contentful
 router.post('/sync-contentful-academy-posts', async (req, res) => {
@@ -19,7 +19,7 @@ router.post('/sync-contentful-academy-posts', async (req, res) => {
 
 
 // Route to retrieve all Academy Posts
-router.get('/academy', cacheMiddleware(3000), async (req, res) => {
+router.get('/academy', cacheMiddleware(604800), async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 12;
     const page = parseInt(req.query.page) || 1;
@@ -34,7 +34,7 @@ router.get('/academy', cacheMiddleware(3000), async (req, res) => {
 });
 
 // Route to retrieve a specific Academy Post by slug
-router.get('/academy/:slug', cacheMiddleware(3000), async (req, res) => {
+router.get('/academy/:slug', cacheMiddleware(604800), async (req, res) => {
   const { slug } = req.params;
   try {
     const academyPost = await AcademyPost.findOne({ slug: slug });

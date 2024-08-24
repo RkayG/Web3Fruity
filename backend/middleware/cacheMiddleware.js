@@ -1,6 +1,6 @@
 // cacheMiddleware.js
 const NodeCache = require('node-cache');
-const cache = new NodeCache({ stdTTL: 300 }); // Cache for 5 minutes
+const cache = new NodeCache({ stdTTL: 86400 }); // Cache for 1 day
 
 const cacheMiddleware = (duration) => (req, res, next) => {
   const key = req.originalUrl || req.url;
@@ -18,4 +18,4 @@ const cacheMiddleware = (duration) => (req, res, next) => {
   }
 };
 
-module.exports = cacheMiddleware;
+module.exports = { cacheMiddleware, cache };

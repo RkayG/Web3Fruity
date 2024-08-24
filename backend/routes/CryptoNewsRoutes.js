@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const CryptoNews = require('../models/CryptoNewsModel');
 const syncNewsWithDatabase = require('../services/CryptoNewsService');
-const cacheMiddleware = require('../middleware/cacheMiddleware');
+const { cache, cacheMiddleware} = require('../middleware/cacheMiddleware');
 
 // Route to sync crypto news with Contentful
 router.post('/sync-contentful-news', async (req, res) => {
@@ -19,7 +19,7 @@ router.post('/sync-contentful-news', async (req, res) => {
 
 
 // Route to retrieve all Crypto News
-router.get('/crypto-news', cacheMiddleware(3000), async (req, res) => {
+router.get('/crypto-news', cacheMiddleware(604800), async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 12;
     const page = parseInt(req.query.page) || 1;
@@ -34,7 +34,7 @@ router.get('/crypto-news', cacheMiddleware(3000), async (req, res) => {
 });
 
 // Route to retrieve a specific Crypto News by slug
-router.get('/crypto-news/:slug', cacheMiddleware(3000), async (req, res) => {
+router.get('/crypto-news/:slug', cacheMiddleware(604800), async (req, res) => {
   const { slug } = req.params;
   try {
     const cryptoNews = await CryptoNews.findOne({ slug: slug });
