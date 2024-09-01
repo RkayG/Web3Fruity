@@ -360,7 +360,7 @@ const InfoTag = ({ label, value, color }) => {
             {title} Guide
           </h2>
           <div className="guide-content max-w-4xl mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden">
-            <div className="p-6 lg:p-10 border-t-4 border-blue-600">
+            <div className="p-6 lg:p-10 ">
               {documentToReactComponents(guide, {
                
                 renderNode: {

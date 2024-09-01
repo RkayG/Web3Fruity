@@ -19,7 +19,7 @@ router.post('/sync-contentful-games', async (req, res) => {
 
 
 // Route to retrieve all games
-router.get('/games', cacheMiddleware(604800), async (req, res) => {
+router.get('/games', cacheMiddleware(2592000), async (req, res) => {
   try {
     let limit = parseInt(req.query.limit) || 12;
     const games = await Game.find().sort({ createdAt: -1 }).limit(limit);
@@ -31,7 +31,7 @@ router.get('/games', cacheMiddleware(604800), async (req, res) => {
 });
 
 // Route to retrieve a specific game by slug
-router.get('/games/:slug', cacheMiddleware(604800), async (req, res) => {
+router.get('/games/:slug', cacheMiddleware(2592000), async (req, res) => {
   const { slug } = req.params;
   try {
     const game = await Game.findOne({ slug: slug });

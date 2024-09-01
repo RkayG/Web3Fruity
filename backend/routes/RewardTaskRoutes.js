@@ -17,7 +17,7 @@ router.post('/sync-contentful-reward-tasks', async (req, res) => {
 
 
 // Route to retrieve all reward for tasks
-router.get('/reward-tasks', cacheMiddleware(604800), async (req, res) => {
+router.get('/reward-tasks', cacheMiddleware(2592000), async (req, res) => {
   try {
     let limit = parseInt(req.query.limit); // Parse 'limit' query parameter
     if (isNaN(limit)) {
@@ -34,7 +34,7 @@ router.get('/reward-tasks', cacheMiddleware(604800), async (req, res) => {
 
 
 // Route to retrieve a specific reward for task by ID
-router.get('/reward-tasks/:id', cacheMiddleware(604800), async (req, res) => {
+router.get('/reward-tasks/:id', cacheMiddleware(2592000), async (req, res) => {
   try {
     const rewardTask = await RewardTask.findById(req.params.id);
     if (!rewardTask) {

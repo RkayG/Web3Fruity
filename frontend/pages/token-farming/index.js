@@ -20,7 +20,7 @@ const TokenFarming = () => {
   useEffect(() => {
     const fetchTokens = async () => {
       try {
-        const response = await fetch(`${apiUrl}//farm-tokens`);
+        const response = await fetch(`${apiUrl}/farm-tokens`);
         const data = await response.json();
         setTokens(data);
         const uniqueBlockchains = [...new Set(data.map(token => token.blockchain))];

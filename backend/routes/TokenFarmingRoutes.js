@@ -17,7 +17,7 @@ router.post('/sync-contentful-farm-tokens', async (req, res) => {
 
 
 // Route to retrieve all farming tokens
-router.get('/farm-tokens', cacheMiddleware(604800), async (req, res) => {
+router.get('/farm-tokens', cacheMiddleware(2592000), async (req, res) => {
   try {
     let limit = parseInt(req.query.limit); // Parse 'limit' query parameter
     if (isNaN(limit)) {
@@ -33,7 +33,7 @@ router.get('/farm-tokens', cacheMiddleware(604800), async (req, res) => {
 });
 
 // Route to retrieve a specific farming token by slug
-router.get('/farm-tokens/:slug', cacheMiddleware(604800), async (req, res) => {
+router.get('/farm-tokens/:slug', cacheMiddleware(2592000), async (req, res) => {
   const { slug } = req.params;
   try {
     const token = await TokenFarming.findOne({ slug: slug });
@@ -49,7 +49,7 @@ router.get('/farm-tokens/:slug', cacheMiddleware(604800), async (req, res) => {
 });
 
 // Route to retrieve a specific farming token by ID
-router.get('/farm-tokens/:id', cacheMiddleware(604800), async (req, res) => {
+router.get('/farm-tokens/:id', cacheMiddleware(2592000), async (req, res) => {
   try {
     const token = await TokenFarming.findById(req.params.id);
     if (!token) {

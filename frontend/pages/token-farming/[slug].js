@@ -237,7 +237,7 @@ const TokenFarmingGuide = () => {
 
         {/* ================== Farming Guide ============================================================= */}
         <motion.div
-          className="bg-white rounded-lg shadow-lg px-1 mb-8"
+          className="bg-white rounded-lg px-1 mb-8"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}

@@ -4,8 +4,8 @@ const Airdrop = require('../models/AirdropModel');
 const syncAirdropsWithDatabase = require('../services/airdropService');
 const NodeCache = require('node-cache');
 
-// Initialize the cache with a TTL (Time to Live) of 1 week
-const cache = new NodeCache({ stdTTL: 604800 });
+// Initialize the cache with a TTL (Time to Live) of 30 days
+const cache = new NodeCache({ stdTTL: 2592000 });
 
 // Route to sync airdrops from Contentful
 router.post('/sync-contentful-airdrops', async (req, res) => {

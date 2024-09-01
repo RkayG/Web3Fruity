@@ -15,7 +15,7 @@ router.post('/sync-contentful-featured', async (req, res) => {
 });
 
 // Route for fetching all featured banners
-router.get('/featured', cacheMiddleware(604800), async (req, res) => {
+router.get('/featured', cacheMiddleware(2592000), async (req, res) => {
   try {
     const featured = await Featured.find().sort({ createdAt: -1 });
     console.log('featured events fetched');
@@ -26,7 +26,7 @@ router.get('/featured', cacheMiddleware(604800), async (req, res) => {
 });
 
 // Route for retrieving a specific featured banner
-router.get('/featured/:id', cacheMiddleware(604800),  getFeatured, (req, res) => {
+router.get('/featured/:id', cacheMiddleware(2592000),  getFeatured, (req, res) => {
   res.json(res.featured);
 });
 
