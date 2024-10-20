@@ -8,6 +8,7 @@ const { cache, cacheMiddleware } = require('../middleware/cacheMiddleware');
 router.post('/sync-contentful-featured', async (req, res) => {
   try {
     await syncFeaturedWithDatabase();
+    cache.flushAll();
     res.status(200).json({ message: 'Featured banners synced successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
