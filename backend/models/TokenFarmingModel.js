@@ -6,12 +6,15 @@ const slugify = require('slugify');
  *      logo: url of logo image
  *      tokenNmame: e.g Notcoin, PI Network
  *      blockchain: e.g TON, Solana, BSC
- *      status: e.g Ongoing, Ended: 
  *      guideUrl:  url to internal guide blog post
  *      farmingType: Free/Stake
  */
 // Other/extra fields: 
 //      description: brief farming details
+//      requirements: requirements for farmning tokens
+//      stakeToFarm: whether token is farming is free or paid
+//      whitepaperlink, socialLinks, website, linkToFarmingPlatform
+//      description, platform, status
 
 const tokenFarmingSchema = new mongoose.Schema(
   {
